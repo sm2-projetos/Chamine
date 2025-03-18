@@ -1,0 +1,129 @@
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .login-container {
+        width: 100%;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)), url('https://images.pexels.com/photos/957024/forest-trees-perspective-bright-957024.jpeg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 20px;
+    }
+
+    .login-box {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        width: 100%;
+        max-width: 400px;
+        position: relative;
+    }
+
+    .login-box::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(to right, #00a65a, #00d68f);
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .login-header img {
+        height: 70px;
+        margin-bottom: 25px;
+    }
+
+    .login-header h2 {
+        color: #2c3e50;
+        font-size: 1.8em;
+        margin-bottom: 10px;
+        font-weight: 600;
+    }
+
+    .login-header p {
+        color: #666;
+        font-size: 1em;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+        position: relative;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #2c3e50;
+        font-weight: 500;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 15px;
+        padding-left: 45px;
+        border: 2px solid #e1e1e1;
+        border-radius: 10px;
+        font-size: 1em;
+        background: white;
+    }
+
+    .form-group i {
+        position: absolute;
+        left: 15px;
+        top: 47px;
+        color: #666;
+        font-size: 1.1em;
+    }
+
+    .form-group input:focus {
+        border-color: #00a65a;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(0, 166, 90, 0.1);
+    }
+
+    .login-btn {
+        width: 100%;
+        padding: 15px;
+        background: linear-gradient(to right, #00a65a, #00d68f);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1.1em;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .login-btn:hover {
+        background: linear-gradient(to right, #008d4c, #00bf7d);
+        transform: translateY(-2px);
+    }
+
+    .forgot-password {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .forgot-password a {
+        color: #2c3e50;
+        text-decoration: none;
+        font-size: 0.9em;
+    }
+
+    .forgot-password a:hover {
+        color: #00a65a;
+    }

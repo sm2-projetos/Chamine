@@ -1,0 +1,781 @@
+  /* Mantive os estilos CSS originais */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    margin: 2cm;
+}
+
+.form-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00a65a; /* Added green border */
+}
+
+.form-info {
+    text-align: right;
+    font-size: 0.9em;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 8px;
+    vertical-align: top;
+}
+
+.checkboxes {
+    white-space: nowrap;
+}
+
+.chemical-list {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.sidebar {
+    width: 250px; 
+    background: #2c3e50;
+    min-height: 100vh;
+    padding: 20px 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar-header {
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 20px;
+}
+
+.sidebar-header h2 {
+    color: white;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.menu-section {
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
+
+.menu-section-title {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.8em;
+    text-transform: uppercase;
+    padding: 0 10px;
+    margin-bottom: 10px;
+}
+
+.menu-item {
+    padding: 12px 15px;
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    margin: 2px 0;
+}
+
+.menu-item i {
+    width: 20px;
+    text-align: center;
+}
+
+.menu-item:hover {
+    background: #00a65a;
+    color: white;
+    transform: translateX(5px);
+}
+
+.menu-item.active {
+    background: #00a65a;
+    color: white;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    text-align: center;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 6px;
+    margin-top: 20px;
+}
+
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #00a65a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.user-details {
+    flex: 1;
+    text-align: left;
+}
+
+.user-name {
+    color: white;
+    font-size: 0.9em;
+}
+
+.user-role {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.8em;
+}
+
+.main-content {
+    margin-left: 250px;
+    flex: 1;
+    padding-top: 90px; /* Add this to prevent content from going under header */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header {
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; /* Add this */
+    top: 0; /* Add this */
+    right: 0; /* Add this */
+    left: 250px; /* Match sidebar width */
+    z-index: 1000; /* Add this to keep header above other content */
+}
+
+.header img {
+    height: 50px;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    border-bottom: 2px solid #00a65a;
+    padding-bottom: 5px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.stat-number {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #00a65a;
+}
+
+.stat-label {
+    font-size: 0.9em;
+    color: #666;
+    margin-top: 5px;
+}
+
+.alert-item {
+    padding: 15px;
+    margin: 10px 0;
+    border-left: 3px solid #00a65a;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.action-button {
+    padding: 15px;
+    background: #00a65a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.action-button:hover {
+    background: #008d4c;
+}
+
+.notifications {
+    position: relative;
+    margin-right: 20px;
+}
+
+.notification-icon {
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    position: relative;
+}
+
+.notification-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #00a65a;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    width: 300px;
+    display: none;
+    z-index: 1000;
+}
+
+.notification-dropdown.show {
+    display: block;
+}
+
+.chart-container {
+    margin-top: 15px;
+    height: 200px;
+}
+
+.stat-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.stat-info {
+    flex: 1;
+}
+
+/* Estilos específicos para o formulário */
+
+.form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.form-section {
+    background: white;
+    padding: 30px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.form-section h2 {
+    color: #333;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00a65a;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #00a65a;
+    box-shadow: 0 0 0 2px rgba(0,166,90,0.1);
+    outline: none;
+}
+
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    color: white;
+}
+
+.btn-primary {
+    background: #00a65a;
+}
+
+.btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.select-reports {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.select-reports select {
+    height: 120px;
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.reports-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.report-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 4px;
+    background: white;
+    transition: all 0.3s ease;
+}
+
+.report-item:hover {
+    background: #f0f0f0;
+}
+
+.report-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+}
+
+.report-item label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    margin: 0;
+    cursor: pointer;
+}
+
+.report-title {
+    font-weight: 500;
+    color: #333;
+}
+
+.report-id {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.os-number {
+    font-size: 1.5em;
+    color: #00a65a;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.os-date {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.history-timeline {
+    position: relative;
+    padding-left: 30px;
+}
+
+.timeline-item {
+    position: relative;
+    padding: 15px 0;
+    border-left: 2px solid #00a65a;
+    margin-left: 15px;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -8px;
+    top: 20px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #00a65a;
+}
+
+.timeline-date {
+    font-size: 0.85em;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.timeline-content {
+    background: white;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.status-active {
+    background: #e1f7e9;
+    color: #00a65a;
+}
+
+.linked-reports {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.report-card {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.action-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    color: white;
+    font-weight: 500;
+}
+
+.btn-edit {
+    background: #17a2b8;
+}
+
+.btn-link {
+    background: #6f42c1;
+}
+
+.btn-generate {
+    background: #00a65a;
+}
+
+.btn-finish {
+    background: #dc3545;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.observation-section {
+    background: white;
+    padding: 30px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-weight: 400;
+    font-size: 18px;
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+    width: 100%; 
+    min-height: 100px; 
+    margin-top: 10px; 
+    padding: 12px; 
+    border: 1px solid #ddd; 
+    border-radius: 4px; 
+    font-size: 14px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.table th {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    font-weight: bold;
+    padding: 15px;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+}
+
+.table td {
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #f8fff8;
+}
+
+.table .btn {
+    padding: 8px 16px;
+    margin: 0 5px;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.table .btn-primary {
+    background: #00a65a;
+    color: white;
+}
+
+.table .btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.table .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #fafafa;
+}
+
+.btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    color: white;
+}
+
+.btn-primary {
+    background: #00a65a;
+}
+
+.btn-danger {
+    background: #d9534f;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.alert {
+    padding: 15px;
+    background-color: #4caf50;
+    color: white;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+/* Add these styles to your existing CSS */
+.action-icon {
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: rgb(255, 255, 255);
+    width: 25px;
+    height: 25px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 5px;
+}
+
+.icon-edit {
+    background: #00a65a;
+}
+
+.icon-delete {
+    background: #dc3545;
+}
+
+.action-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.table-lista-clientes h1 {
+    color: #2e7d32;
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00a65a;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Add this icon before the heading */
+.table-lista-clientes h1::before {
+    content: '\f0c0';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 30px;
+    color: #00a65a;
+}
