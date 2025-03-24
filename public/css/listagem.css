@@ -1,4 +1,4 @@
-  /* Mantive os estilos CSS originais */
+/* Mantive os estilos CSS originais */
   * {
     margin: 0;
     padding: 0;
@@ -158,13 +158,13 @@ td, th {
 }
 
 .main-content {
-    margin-left: 250px;
+    margin-left: 230px !important;
     flex: 1;
     padding-top: 90px; /* Add this to prevent content from going under header */
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 20px;
     background: white;
@@ -574,7 +574,6 @@ textarea.form-control {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
-    margin-top: 30px;
 }
 
 .action-btn {
@@ -634,7 +633,7 @@ textarea.form-control {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
     padding: 20px;
     background: white;

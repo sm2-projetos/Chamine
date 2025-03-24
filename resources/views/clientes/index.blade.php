@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/listagem.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
 </head>
 
 @include('layouts.sidebar')
@@ -44,16 +46,18 @@
                                 <td>{{ $cliente->email }}</td>
                                 <td>{{ $cliente->telefone }}</td>
                                 <td>
-                                    <a href="{{ route('clientes.edit', $cliente->id_cliente) }}" class="action-icon icon-edit" title="Editar">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('clientes.destroy', $cliente->id_cliente) }}" method="POST" class="inline-form">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="action-icon icon-delete" title="Excluir" onclick="return confirm('Tem certeza que deseja mover este cliente para a lixeira?')">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
+                                    <div class="action-buttons">
+                                        <a href="{{ route('clientes.edit', $cliente->id_cliente) }}" class="btn-icon icon-edit" title="Editar">
+                                            <i class="fas fa-pen-to-square"></i>
+                                        </a>
+                                        <form action="{{ route('clientes.destroy', $cliente->id_cliente) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn-icon icon-delete" title="Excluir" onclick="return confirm('Tem certeza que deseja mover este cliente para a lixeira?')">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
