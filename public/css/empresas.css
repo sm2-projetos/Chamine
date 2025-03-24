@@ -1,0 +1,151 @@
+/* Estilos específicos para a página de listagem de empresas */
+.empresas-lista-container .container {
+    max-width: 1800px; /* Aumentado para ser consistente com a página de clientes */
+    margin: 0 auto 0 10px;
+    padding: 30px;
+    background: white;
+    border-radius: 12px; /* Aumentado para um efeito mais suave */
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1); /* Sombra ligeiramente mais pronunciada */
+    overflow: hidden; /* Isso garante que todo o conteúdo interno também respeite o border-radius */
+}
+
+/* Estilo para o contêiner interno da tabela */
+.table-lista-empresas {
+    padding: 5px;
+    border-radius: 8px;
+}
+
+/* Ajuste para a tabela seguir o estilo arredondado */
+.empresas-lista-container .table {
+    width: 100%;
+    border-collapse: separate; /* Importante para funcionar com border-radius */
+    border-spacing: 0;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden; /* Para garantir que a tabela respeite o border-radius */
+}
+
+.empresas-lista-container h1 {
+    color: #2e7d32;
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00a65a;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.empresas-lista-container h1::before {
+    content: '\f0c0';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 30px;
+    color: #00a65a;
+}
+
+.empresas-lista-container .table th,
+.empresas-lista-container .table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.empresas-lista-container .table th {
+    background-color: #00a65a;
+    color: white;
+}
+
+/* Ações na tabela */
+.empresas-lista-container .action-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Ícones Font Awesome - estilo somente ícone sem fundo */
+.empresas-lista-container .btn-icon {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    color: #6c757d;
+    transition: color 0.2s ease;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+
+.empresas-lista-container .btn-icon i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empresas-lista-container .btn-icon:hover {
+    background: none !important;
+    transform: none;
+    box-shadow: none;
+}
+
+.empresas-lista-container .icon-edit:hover {
+    color: #00a65a;
+}
+
+.empresas-lista-container .icon-delete:hover {
+    color: #dc3545;
+}
+
+/* Estilos para botões com tamanho uniforme */
+.empresas-lista-container .btn {
+    padding: 6px 10px; /* Reduzido para equilibrar */
+    min-width: 70px; /* Largura mínima para todos os botões */
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    margin-right: 5px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.empresas-lista-container .btn-primary {
+    background: #00a65a;
+}
+
+.empresas-lista-container .btn-danger {
+    background: #dc3545; /* Atualizado para o vermelho padrão do Bootstrap */
+}
+
+.empresas-lista-container .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Para formulários dentro das células da tabela */
+.empresas-lista-container td form {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Alerta de confirmação */
+.empresas-lista-container .alert-success,
+.empresas-lista-container .alert {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+}
