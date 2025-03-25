@@ -1,7 +1,7 @@
 /* Estilos específicos para a página de listagem de empresas */
 .empresas-lista-container .container {
     max-width: 1800px; /* Aumentado para ser consistente com a página de clientes */
-    margin: 0 auto 0 10px;
+    margin: 0 8vh 0 -10px;
     padding: 30px;
     background: white;
     border-radius: 12px; /* Aumentado para um efeito mais suave */

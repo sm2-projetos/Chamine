@@ -158,15 +158,18 @@ td, th {
 }
 
 .main-content {
-    margin-left: 230px !important;
-    flex: 1;
-    padding-top: 90px; /* Add this to prevent content from going under header */
+    margin-left: 250px !important; /* Ajustado para coincidir com a largura da sidebar */
+    width: calc(100% - 250px);
+    box-sizing: border-box;
+    padding: 90px 20px 20px 20px; /* Aumentado o padding lateral */
 }
 
 .container {
-    max-width: 1600px;
-    margin: 0 auto;
-    padding: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 20px; /* Mais padding para respiração */
+    margin: 0;
     background: white;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -174,7 +177,7 @@ td, th {
 
 .header {
     background-color: white;
-    padding: 20px;
+    padding: 20px 10px; /* Reduzir padding horizontal */
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     margin-bottom: 20px;
     display: flex;
@@ -185,6 +188,7 @@ td, th {
     right: 0; /* Add this */
     left: 250px; /* Match sidebar width */
     z-index: 1000; /* Add this to keep header above other content */
+    width: calc(100% - 250px);
 }
 
 .header img {
@@ -731,18 +735,18 @@ textarea.form-control {
 
 /* Add these styles to your existing CSS */
 .action-icon {
-    font-size: 18px;
-    padding: 8px;
+    font-size: 16px;
+    padding: 6px;
     border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s ease;
     color: rgb(255, 255, 255);
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin: 5px 5px;
+    margin: 3px;
 }
 
 .icon-edit {
@@ -777,4 +781,133 @@ textarea.form-control {
     font-weight: 900;
     font-size: 30px;
     color: #00a65a;
+}
+
+/* Adicionando estas configurações ao final do arquivo para sobrescrever as configurações anteriores */
+
+/* Ajustes para o main-content */
+.main-content {
+    margin-left: 250px !important; /* Ajustado para coincidir com a largura da sidebar */
+    width: calc(100% - 250px);
+    box-sizing: border-box;
+    padding: 90px 20px 20px 0px; /* Aumentado o padding lateral */
+}
+
+/* Ajustes para o container */
+.container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 20px; /* Mais padding para respiração */
+    margin: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Ajustes para tabela */
+.table-lista-clientes {
+    width: 100%;
+    overflow-x: auto; /* Permite rolagem horizontal quando necessário */
+}
+
+.table {
+    width: 100%;
+    table-layout: auto; /* Permite que as colunas se ajustem naturalmente */
+    font-size: 14px; /* Tamanho de fonte mais legível */
+    min-width: 800px; /* Garante largura mínima para tabela */
+}
+
+/* Remove especificações fixas de largura para permitir ajuste natural */
+.table th:nth-child(1), 
+.table td:nth-child(1) { /* ID */
+    width: auto;
+    min-width: 60px;
+}
+
+.table th:nth-child(2), 
+.table td:nth-child(2) { /* Nome */
+    width: auto;
+    min-width: 150px;
+}
+
+.table th:nth-child(3), 
+.table td:nth-child(3) { /* CNPJ/CPF */
+    width: auto;
+    min-width: 120px;
+}
+
+.table th:nth-child(4), 
+.table td:nth-child(4) { /* Endereço */
+    width: auto;
+    min-width: 200px;
+}
+
+.table th:nth-child(5), 
+.table td:nth-child(5) { /* Email */
+    width: auto;
+    min-width: 180px;
+}
+
+.table th:nth-child(6), 
+.table td:nth-child(6) { /* Telefone */
+    width: auto;
+    min-width: 120px;
+}
+
+.table th:nth-child(7), 
+.table td:nth-child(7) { /* Ações */
+    width: auto;
+    min-width: 100px;
+    text-align: center;
+}
+
+/* Melhor espaçamento das células para conforto visual */
+.table th, 
+.table td {
+    padding: 10px 8px;
+    white-space: normal; /* Permite quebra de linha */
+    word-break: break-word; /* Quebra palavras para evitar transbordamento */
+}
+
+/* Ajustar ações para economizar espaço */
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Configurações responsivas para diferentes tamanhos de tela */
+@media screen and (max-width: 1400px) {
+    .main-content {
+        padding: 90px 15px 20px 15px;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+    
+    .table {
+        font-size: 13px;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .main-content {
+        padding: 90px 10px 20px 10px;
+    }
+    
+    .table th, 
+    .table td {
+        padding: 8px 6px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .action-icon {
+        font-size: 14px;
+        padding: 5px;
+        width: 18px;
+        height: 18px;
+    }
 }
