@@ -1,31 +1,33 @@
-/* Estilos específicos para a página de listagem de empresas */
-.empresas-lista-container .container {
-    max-width: 1800px; /* Aumentado para ser consistente com a página de clientes */
-    margin: 0 auto 0 10px;
-    padding: 30px;
+/* Estilos específicos para a página de listagem de clientes */
+.clientes-lista-container .container {
+    max-width: 1800px;
+    margin: 0 auto 0 20px; /* Aumentado de 10px para 20px */
+    padding: 30px 30px 30px 40px; /* Aumentado o padding à esquerda */
     background: white;
-    border-radius: 12px; /* Aumentado para um efeito mais suave */
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1); /* Sombra ligeiramente mais pronunciada */
-    overflow: hidden; /* Isso garante que todo o conteúdo interno também respeite o border-radius */
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    overflow: hidden;
 }
 
 /* Estilo para o contêiner interno da tabela */
-.table-lista-empresas {
-    padding: 5px;
+.table-lista-clientes {
+    padding: 5px 5px 5px 15px; /* Adicionado padding à esquerda */
     border-radius: 8px;
+    overflow-x: auto; /* Adiciona rolagem horizontal em telas pequenas */
 }
 
 /* Ajuste para a tabela seguir o estilo arredondado */
-.empresas-lista-container .table {
+.clientes-lista-container .table {
     width: 100%;
-    border-collapse: separate; /* Importante para funcionar com border-radius */
+    border-collapse: separate;
     border-spacing: 0;
     margin-top: 20px;
     border-radius: 8px;
-    overflow: hidden; /* Para garantir que a tabela respeite o border-radius */
+    overflow: hidden;
+    table-layout: auto; /* Permite que a tabela se ajuste ao conteúdo */
 }
 
-.empresas-lista-container h1 {
+.clientes-lista-container h1 {
     color: #2e7d32;
     font-size: 24px;
     margin-bottom: 20px;
@@ -37,28 +39,72 @@
     gap: 10px;
 }
 
-.empresas-lista-container h1::before {
-    content: '\f0c0';
+.clientes-lista-container h1::before {
+    content: '\f007'; /* Ícone de usuário individual */
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     font-size: 30px;
     color: #00a65a;
 }
 
-.empresas-lista-container .table th,
-.empresas-lista-container .table td {
+.clientes-lista-container .table th,
+.clientes-lista-container .table td {
     padding: 12px;
     border: 1px solid #ddd;
     text-align: left;
+    white-space: nowrap; /* Evita quebra de texto em telas pequenas */
 }
 
-.empresas-lista-container .table th {
+.clientes-lista-container .table th {
     background-color: #00a65a;
     color: white;
 }
 
+/* Ajuste de largura para colunas específicas da tabela de clientes */
+.clientes-lista-container .table th:nth-child(1), /* ID */
+.clientes-lista-container .table td:nth-child(1) {
+    width: 6%;
+    min-width: 60px;
+}
+
+.clientes-lista-container .table th:nth-child(2), /* Nome */
+.clientes-lista-container .table td:nth-child(2) {
+    width: 22%;
+    min-width: 180px;
+}
+
+.clientes-lista-container .table th:nth-child(3), /* CNPJ/CPF */
+.clientes-lista-container .table td:nth-child(3) {
+    width: 14%;
+    min-width: 130px;
+}
+
+.clientes-lista-container .table th:nth-child(4), /* Endereço */
+.clientes-lista-container .table td:nth-child(4) {
+    width: 20%;
+    min-width: 160px;
+}
+
+.clientes-lista-container .table th:nth-child(5), /* Email */
+.clientes-lista-container .table td:nth-child(5) {
+    width: 18%;
+    min-width: 150px;
+}
+
+.clientes-lista-container .table th:nth-child(6), /* Telefone */
+.clientes-lista-container .table td:nth-child(6) {
+    width: 12%;
+    min-width: 120px;
+}
+
+.clientes-lista-container .table th:nth-child(7), /* Ações */
+.clientes-lista-container .table td:nth-child(7) {
+    width: 8%;
+    min-width: 90px;
+}
+
 /* Ações na tabela */
-.empresas-lista-container .action-buttons {
+.clientes-lista-container .action-buttons {
     display: flex;
     gap: 15px;
     align-items: center;
@@ -66,8 +112,8 @@
     height: 100%;
 }
 
-/* Ícones Font Awesome - estilo somente ícone sem fundo */
-.empresas-lista-container .btn-icon {
+/* Ícones Font Awesome */
+.clientes-lista-container .btn-icon {
     background: none;
     border: none;
     padding: 0;
@@ -82,72 +128,53 @@
     line-height: 1;
 }
 
-.empresas-lista-container .btn-icon i {
+.clientes-lista-container .btn-icon i {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.empresas-lista-container .btn-icon:hover {
+.clientes-lista-container .btn-icon:hover {
     background: none !important;
     transform: none;
     box-shadow: none;
 }
 
-.empresas-lista-container .icon-edit:hover {
-    color: #00a65a;
+.clientes-lista-container .icon-edit:hover {
+    color: #007bff;
 }
 
-.empresas-lista-container .icon-delete:hover {
+.clientes-lista-container .icon-delete:hover {
     color: #dc3545;
 }
 
-/* Estilos para botões com tamanho uniforme */
-.empresas-lista-container .btn {
-    padding: 6px 10px; /* Reduzido para equilibrar */
-    min-width: 70px; /* Largura mínima para todos os botões */
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    border: none;
-    text-decoration: none;
-    color: white;
-    display: inline-block;
-    margin-right: 5px;
-    text-align: center;
-    font-size: 0.9em;
-}
-
-.empresas-lista-container .btn-primary {
-    background: #00a65a;
-}
-
-.empresas-lista-container .btn-danger {
-    background: #dc3545; /* Atualizado para o vermelho padrão do Bootstrap */
-}
-
-.empresas-lista-container .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-/* Para formulários dentro das células da tabela */
-.empresas-lista-container td form {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-}
-
 /* Alerta de confirmação */
-.empresas-lista-container .alert-success,
-.empresas-lista-container .alert {
+.clientes-lista-container .alert-success {
     background-color: #d4edda;
     color: #155724;
     padding: 15px;
     border-radius: 4px;
     margin-bottom: 20px;
     border: 1px solid #c3e6cb;
+}
+
+/* Mensagem sem clientes */
+.clientes-lista-container .no-clientes {
+    text-align: center;
+    color: #6c757d;
+    padding: 20px;
+}
+
+/* Para formulários dentro das células da tabela */
+.clientes-lista-container td form {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Efeito de hover nas linhas da tabela */
+.clientes-lista-container .table tr:hover {
+    background-color: #f5f5f5;
 }
 
 /* Ajustes responsivos para telas grandes */
