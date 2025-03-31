@@ -10,14 +10,15 @@ body {
     display: flex;
 }
 
+/* Ajusta lateral da sidebar e garante que o conteúdo principal fique fluido */
 .sidebar {
-    width: 250px;
-    background: #2c3e50;
+    width: 240px; /* Ligeiramente menor para caber melhor em 1360x720 */
     min-height: 100vh;
-    padding: 20px 0;
     position: fixed;
     left: 0;
     top: 0;
+    background: #2c3e50;
+    padding: 20px 0;
     box-shadow: 2px 0 5px rgba(0,0,0,0.1);
 }
 
@@ -121,9 +122,11 @@ body {
     font-size: 0.8em;
 }
 
+/* Mantém o conteúdo sempre centralizado e responsivo */
 .main-content {
-    margin-left: 230px !important;
+    margin-left: 240px !important;
     flex: 1;
+    min-width: 0; /* Permite encolher em telas menores */
 }
 
 .container {
@@ -273,4 +276,42 @@ body {
 
 .stat-info {
     flex: 1;
+}
+
+/* filepath: d:\xamppp\htdocs\Chamine\public\css\clientes.css */
+/* Mantém o contêiner da lista de clientes centralizado e reduz fontes em 1360x720 */
+.clientes-lista-container .container {
+    max-width: 1400px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+@media (max-width: 1366px) {
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        font-size: 0.85em;
+    }
+    .clientes-lista-container h1 {
+        font-size: 22px;
+    }
+}
+
+/* Ajustes gerais para tabelas responsivas */
+.table-lista-clientes {
+    overflow-x: auto;
+    margin: 0 -10px; /* Permite rolagem horizontal extra */
+    padding: 0 10px; 
+}
+
+/* Deixa o sidebar colapsar em telas realmente pequenas */
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        min-height: auto;
+    }
+    .main-content {
+        margin-left: 0 !important;
+        margin-top: 20px;
+    }
 }

@@ -35,12 +35,13 @@
     color: #00a65a;
 }
 
+/* Estilização igual para ambos os cabeçalhos */
 .empresa-form-container h2 {
-    color: #333;
-    font-size: 20px;
-    margin-bottom: 15px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #ddd;
+    color: #2e7d32;
+    font-size: 24px;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00a65a;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -51,7 +52,7 @@
     content: '\f007'; /* Ícone de usuário individual */
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
-    font-size: 22px;
+    font-size: 30px;
     color: #00a65a;
 }
 
@@ -81,11 +82,12 @@
     outline: none;
 }
 
+/* Mesma estilização para os campos readonly, mas com fundo diferente */
 .empresa-form-container .form-control[readonly] {
     background-color: #f8f9fa;
     cursor: not-allowed;
-    border-color: #e9ecef;
-    color: #495057;
+    border-color: #ddd;
+    color: #333;
 }
 
 .empresa-form-container .button-group {
@@ -142,28 +144,26 @@
     background: #c82333;
 }
 
-/* Cliente info section - Ajustado para mesmo tamanho do formulário de empresas */
+/* Cliente info section - Agora com o mesmo estilo do formulário principal */
 .empresa-form-container .cliente-info {
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-    border: 1px solid #e9ecef;
-    width: 100%; /* Garante que ocupe a mesma largura */
+    width: 100%;
     box-sizing: border-box;
+    margin-bottom: 30px;
+    /* Removido o background e bordas para ficar idêntico ao formulário principal */
 }
 
 .empresa-form-container .cliente-info .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px; /* Mesmo valor do formulário principal */
 }
 
 .empresa-form-container .cliente-info label {
-    color: #6c757d; /* Cor mais suave para diferenciar do formulário principal */
-    font-size: 0.95em;
+    color: #333; /* Mesma cor do formulário principal */
+    font-size: 16px; /* Mesmo tamanho do formulário principal */
+    font-weight: 500;
 }
 
 .empresa-form-container .cliente-info .form-control {
-    font-size: 15px;
+    font-size: 16px; /* Mesmo tamanho do formulário principal */
 }
 
 /* Divisão do formulário em colunas em telas maiores */
@@ -176,21 +176,6 @@
     .empresa-form-container .form-row .form-group {
         flex: 1;
     }
-    
-    /* Garante alinhamento consistente entre seções */
-    .empresa-form-container .cliente-info .form-row,
-    .empresa-form-container form .form-row {
-        display: flex;
-        gap: 20px;
-        margin-left: 0;
-        margin-right: 0;
-    }
-    
-    .empresa-form-container .cliente-info .form-row .form-group,
-    .empresa-form-container form .form-row .form-group {
-        flex: 1;
-        padding: 0;
-    }
 }
 
 /* Ajustes responsivos para diferentes tamanhos de tela */
@@ -199,20 +184,14 @@
         padding: 20px 30px;
     }
     
-    .empresa-form-container h1 {
+    .empresa-form-container h1,
+    .empresa-form-container h2 {
         font-size: 22px;
     }
     
-    .empresa-form-container h1::before {
-        font-size: 26px;
-    }
-    
-    .empresa-form-container h2 {
-        font-size: 18px;
-    }
-    
+    .empresa-form-container h1::before,
     .empresa-form-container h2::before {
-        font-size: 20px;
+        font-size: 26px;
     }
 }
 
@@ -223,11 +202,13 @@
         max-width: calc(100% - 30px);
     }
     
-    .empresa-form-container h1 {
+    .empresa-form-container h1,
+    .empresa-form-container h2 {
         font-size: 20px;
     }
     
-    .empresa-form-container h1::before {
+    .empresa-form-container h1::before,
+    .empresa-form-container h2::before {
         font-size: 24px;
     }
     
@@ -240,10 +221,6 @@
         padding: 8px 16px;
         font-size: 15px;
     }
-    
-    .empresa-form-container .cliente-info {
-        padding: 15px;
-    }
 }
 
 @media (max-width: 576px) {
@@ -252,21 +229,15 @@
         border-radius: 8px;
     }
     
-    .empresa-form-container h1 {
+    .empresa-form-container h1,
+    .empresa-form-container h2 {
         font-size: 18px;
         margin-bottom: 15px;
     }
     
-    .empresa-form-container h1::before {
-        font-size: 20px;
-    }
-    
-    .empresa-form-container h2 {
-        font-size: 16px;
-    }
-    
+    .empresa-form-container h1::before,
     .empresa-form-container h2::before {
-        font-size: 18px;
+        font-size: 20px;
     }
     
     .empresa-form-container .form-group {

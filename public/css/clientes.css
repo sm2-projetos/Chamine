@@ -1,8 +1,8 @@
 /* Estilos específicos para a página de listagem de clientes */
 .clientes-lista-container .container {
-    max-width: 1800px;
-    margin: 0 auto 0 20px; /* Aumentado de 10px para 20px */
-    padding: 30px 30px 30px 40px; /* Aumentado o padding à esquerda */
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
     background: white;
     border-radius: 12px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
@@ -11,20 +11,22 @@
 
 /* Estilo para o contêiner interno da tabela */
 .table-lista-clientes {
-    padding: 5px 5px 5px 15px; /* Adicionado padding à esquerda */
+    width: 100%;
+    overflow-x: auto; /* Cria a barra de rolagem horizontal sempre que necessário */
+    padding: 0 10px;
     border-radius: 8px;
-    overflow-x: auto; /* Adiciona rolagem horizontal em telas pequenas */
 }
 
 /* Ajuste para a tabela seguir o estilo arredondado */
 .clientes-lista-container .table {
+    table-layout: fixed; /* Faz com que as colunas tenham tamanho fixo */
+    min-width: 1000px;  /* Ajuste conforme necessário */
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     margin-top: 20px;
     border-radius: 8px;
     overflow: hidden;
-    table-layout: auto; /* Permite que a tabela se ajuste ao conteúdo */
 }
 
 .clientes-lista-container h1 {
@@ -53,6 +55,8 @@
     border: 1px solid #ddd;
     text-align: left;
     white-space: nowrap; /* Evita quebra de texto em telas pequenas */
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .clientes-lista-container .table th {
@@ -184,6 +188,17 @@
     }
 }
 
+/* Ajuste a fonte e o cabeçalho em resoluções menores */
+@media (max-width: 1366px) {
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        font-size: 0.85em;
+    }
+    .clientes-lista-container h1 {
+        font-size: 22px;
+    }
+}
+
 /* Ajustes responsivos para telas médias */
 @media (max-width: 992px) {
     .clientes-lista-container .container {
@@ -200,15 +215,14 @@
 /* Ajustes responsivos para tablets */
 @media (max-width: 768px) {
     .clientes-lista-container .container {
-        padding: 15px 25px 15px 25px; /* Padding igual nos dois lados */
+        padding: 10px;
         margin: 0 15px 0 15px; /* Margens iguais nos dois lados */
         max-width: calc(100% - 30px); /* Largura considerando as margens */
     }
     
     .clientes-lista-container .table {
-        min-width: 100%;
         display: block;
-        overflow-x: auto;
+        min-width: 600px;
     }
     
     .table-lista-clientes {
