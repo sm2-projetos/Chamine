@@ -1,0 +1,218 @@
+/* Estilos gerais do dashboard - mantendo classes mas ajustando valores para o padrão visual */
+.dashboard-page {
+    display: flex;
+    flex-direction: column;
+    margin-left: 260px; /* Espaço para a sidebar */
+    padding: 20px;
+    background-color: #f5f7f9; /* Mantido */
+    min-height: 100vh;
+}
+
+/* Container principal do dashboard - ajustado para seguir padrão visual */
+.dashboard-container {
+    max-width: 1200px; /* Ajustado para o tamanho do empresa-form */
+    margin: 0 auto 0 20px; /* Seguindo o padrão do empresa-form */
+    width: 100%;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1); /* Mesmo do empresa-form */
+    padding: 30px 40px; /* Mesmo do empresa-form */
+    overflow: hidden;
+}
+
+/* Título da página - ajustado para seguir o estilo do h1 do empresa-form */
+.dashboard-title {
+    color: #2e7d32; /* Mantido */
+    font-size: 24px; /* Mantido */
+    margin-bottom: 25px; /* Ajustado */
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00a65a; /* Mesmo do empresa-form */
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Adicionando ícone ao título como no empresa-form */
+.dashboard-title::before {
+    content: '\f0e4'; /* Ícone de dashboard/painel */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 30px;
+    color: #00a65a; /* Mesmo do empresa-form */
+}
+
+/* Grid de cartões */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Cartão individual - ajustado para seguir o padrão visual */
+.dashboard-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1); /* Mesmo do empresa-form */
+    padding: 20px;
+    transition: all 0.3s ease; /* Mesmo do empresa-form para botões */
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px); /* Mesmo do empresa-form para botões */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Mesmo do empresa-form para botões */
+}
+
+/* Cabeçalho do cartão */
+.dashboard-card-header {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #00a65a; /* Mesmo do empresa-form */
+    padding-bottom: 10px;
+}
+
+.dashboard-card-title {
+    color: #2e7d32; /* Mesmo do empresa-form */
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* Conteúdo do cartão */
+.dashboard-card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Estatísticas */
+.dashboard-stats {
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-stat-number {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2e7d32; /* Mesmo do empresa-form */
+}
+
+.dashboard-stat-label {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Botões de ação - ajustados para seguir o padrão dos botões */
+.dashboard-action-button {
+    background-color: #00a65a; /* Mesmo do empresa-form */
+    color: white;
+    border: none;
+    padding: 10px 20px; /* Mesmo do empresa-form */
+    border-radius: 4px; /* Mesmo do empresa-form */
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px; /* Mesmo do empresa-form */
+    transition: all 0.3s ease; /* Mesmo do empresa-form */
+    min-width: 120px; /* Mesmo do empresa-form */
+}
+
+.dashboard-action-button:hover {
+    background-color: #008d4c; /* Mesmo do empresa-form */
+    transform: translateY(-2px); /* Mesmo do empresa-form */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Mesmo do empresa-form */
+}
+
+/* Contêiner do gráfico */
+.dashboard-chart-container {
+    height: 180px;
+    margin-top: 10px;
+    border-radius: 4px; /* Mesmo do empresa-form para inputs */
+    overflow: hidden;
+}
+
+/* Responsividade - ajustada para seguir padrão dos media queries */
+@media (max-width: 1200px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboard-container {
+        padding: 20px 30px; /* Mesmo do empresa-form */
+    }
+    
+    .dashboard-title {
+        font-size: 22px; /* Mesmo do empresa-form */
+    }
+    
+    .dashboard-title::before {
+        font-size: 26px; /* Mesmo do empresa-form */
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-page {
+        margin-left: 0; /* Mantido */
+        padding: 15px;
+    }
+    
+    .dashboard-container {
+        padding: 15px 25px; /* Mesmo do empresa-form */
+        margin: 0 15px 0 15px; /* Mesmo do empresa-form */
+        max-width: calc(100% - 30px); /* Mesmo do empresa-form */
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .dashboard-title {
+        font-size: 20px; /* Mesmo do empresa-form */
+    }
+    
+    .dashboard-title::before {
+        font-size: 24px; /* Mesmo do empresa-form */
+    }
+    
+    .dashboard-card {
+        padding: 15px;
+    }
+    
+    .dashboard-stat-number {
+        font-size: 28px;
+    }
+    
+    .dashboard-action-button {
+        padding: 8px 16px; /* Mesmo do empresa-form */
+        font-size: 15px; /* Mesmo do empresa-form */
+    }
+    
+    .dashboard-chart-container {
+        height: 150px;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-container {
+        padding: 10px 15px; /* Mesmo do empresa-form */
+        border-radius: 8px; /* Mesmo do empresa-form */
+    }
+    
+    .dashboard-title {
+        font-size: 18px; /* Mesmo do empresa-form */
+        margin-bottom: 15px; /* Mesmo do empresa-form */
+    }
+    
+    .dashboard-title::before {
+        font-size: 20px; /* Mesmo do empresa-form */
+    }
+    
+    .dashboard-card-title {
+        font-size: 16px;
+    }
+    
+    .dashboard-action-button {
+        width: 100%; /* Mesmo do empresa-form */
+    }
+}
