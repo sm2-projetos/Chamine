@@ -13,58 +13,56 @@
     @include('layouts.sidebar')
 
     <div class="main-content cliente-form-container">
-        <div class="container">
-            <div class="form-container">
-                <h1>Cadastrar Cliente</h1>
-                <form action="{{ route('clientes.store') }}" method="POST">
-                    @csrf
-                    <div class="cliente-section">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="nome">Nome</label>
-                                <input type="text" id="nome" name="nome" class="form-control" placeholder="Digite o nome do cliente" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="cnpj_cpf">CPF/CNPJ</label>
-                                <input type="text" id="cnpj_cpf" name="cnpj_cpf" class="form-control" placeholder="Digite o CNPJ ou CPF do cliente" required>
-                            </div>
+        <div class="form-container">
+            <h1>Cadastrar Cliente</h1>
+            <form action="{{ route('clientes.store') }}" method="POST">
+                @csrf
+                <div class="cliente-section">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" class="form-control" placeholder="Digite o nome do cliente" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="endereco">Endereço</label>
-                            <input type="text" id="endereco" name="endereco" class="form-control" placeholder="Digite o endereço do cliente" required>
-                        </div>
-
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="email">E-mail</label>
-                                <input type="email" id="email" name="email" class="form-control" placeholder="Digite o e-mail do cliente" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telefone">Telefone</label>
-                                <input type="text" id="telefone" name="telefone" class="form-control" placeholder="Digite o telefone do cliente" required>
-                            </div>
+                            <label for="cnpj_cpf">CPF/CNPJ</label>
+                            <input type="text" id="cnpj_cpf" name="cnpj_cpf" class="form-control" placeholder="Digite o CNPJ ou CPF do cliente" required>
                         </div>
                     </div>
 
-                    <div id="empresa-forms" class="empresa-section">
-                        <h2>Cadastrar Empresa</h2>
-                        <!-- Formulário de empresa inicial vazio -->
+                    <div class="form-group">
+                        <label for="endereco">Endereço</label>
+                        <input type="text" id="endereco" name="endereco" class="form-control" placeholder="Digite o endereço do cliente" required>
                     </div>
 
-                    <div class="action-buttons">
-                        <button type="button" id="add-empresa" class="btn btn-secondary">Adicionar Empresa</button>
-                        <button type="button" id="remove-empresa" class="btn btn-danger" style="display: none;">Remover Empresa</button>
-                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Digite o e-mail do cliente" required>
+                        </div>
 
-                    <div class="button-group">
-                        <button type="submit" class="btn btn-primary">Cadastrar</button>
-                        <a href="{{ route('clientes.index') }}" class="btn btn-secondary">Cancelar</a>
+                        <div class="form-group">
+                            <label for="telefone">Telefone</label>
+                            <input type="text" id="telefone" name="telefone" class="form-control" placeholder="Digite o telefone do cliente" required>
+                        </div>
                     </div>
-                </form>
-            </div>
+                </div>
+
+                <div id="empresa-forms" class="empresa-section">
+                    <h2>Cadastrar Empresa</h2>
+                    <!-- Formulário de empresa inicial vazio -->
+                </div>
+
+                <div class="action-buttons">
+                    <button type="button" id="add-empresa" class="btn btn-secondary">Adicionar Empresa</button>
+                    <button type="button" id="remove-empresa" class="btn btn-danger" style="display: none;">Remover Empresa</button>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    <a href="{{ route('clientes.index') }}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
         </div>
     </div>
 

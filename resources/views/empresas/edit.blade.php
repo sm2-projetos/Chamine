@@ -11,81 +11,79 @@
 </head>
 <body>
     @include('layouts.sidebar')
-    <div class="main-content empresa-form-container">
-        <div class="container">
-            <div class="form-container">
-                <div class="cliente-info">
-                    <h2>Dados do Cliente</h2>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="cliente_nome">Nome do Cliente</label>
-                            <input type="text" id="cliente_nome" class="form-control" value="{{ $cliente->nome }}" readonly>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cliente_cnpj_cpf">CPF/CNPJ do Cliente</label>
-                            <input type="text" id="cliente_cnpj_cpf" class="form-control" value="{{ $cliente->cnpj_cpf }}" readonly>
-                        </div>
+    < class="main-content empresa-form-container">
+        <div class="form-container">
+            <div class="cliente-info">
+                <h2>Dados do Cliente</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cliente_nome">Nome do Cliente</label>
+                        <input type="text" id="cliente_nome" class="form-control" value="{{ $cliente->nome }}" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label for="cliente_endereco">Endereço do Cliente</label>
-                        <input type="text" id="cliente_endereco" class="form-control" value="{{ $cliente->endereco }}" readonly>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="cliente_email">E-mail do Cliente</label>
-                            <input type="email" id="cliente_email" class="form-control" value="{{ $cliente->email }}" readonly>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cliente_telefone">Telefone do Cliente</label>
-                            <input type="text" id="cliente_telefone" class="form-control" value="{{ $cliente->telefone }}" readonly>
-                        </div>
+                        <label for="cliente_cnpj_cpf">CPF/CNPJ do Cliente</label>
+                        <input type="text" id="cliente_cnpj_cpf" class="form-control" value="{{ $cliente->cnpj_cpf }}" readonly>
                     </div>
                 </div>
 
-                <h1>Editar Empresa</h1>
-                <form action="{{ route('empresas.update', $empresa->id) }}" method="POST">
-                    @csrf
-                    @method('PUT')
-                    
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nome">Nome</label>
-                            <input type="text" id="nome" name="nome" class="form-control" value="{{ $empresa->nome }}" required>
-                        </div>
+                <div class="form-group">
+                    <label for="cliente_endereco">Endereço do Cliente</label>
+                    <input type="text" id="cliente_endereco" class="form-control" value="{{ $cliente->endereco }}" readonly>
+                </div>
 
-                        <div class="form-group">
-                            <label for="cnpj">CNPJ</label>
-                            <input type="text" id="cnpj" name="cnpj" class="form-control" value="{{ $empresa->cnpj }}" required>
-                        </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cliente_email">E-mail do Cliente</label>
+                        <input type="email" id="cliente_email" class="form-control" value="{{ $cliente->email }}" readonly>
                     </div>
 
                     <div class="form-group">
-                        <label for="endereco">Endereço</label>
-                        <input type="text" id="endereco" name="endereco" class="form-control" value="{{ $empresa->endereco }}" required>
+                        <label for="cliente_telefone">Telefone do Cliente</label>
+                        <input type="text" id="cliente_telefone" class="form-control" value="{{ $cliente->telefone }}" readonly>
                     </div>
+                </div>
+            </div>
 
-                    <div class="form-group">
-                        <label for="contato">Contato</label>
-                        <input type="text" id="contato" name="contato" class="form-control" value="{{ $empresa->contato }}" required>
-                    </div>
-
-                    <div class="button-group">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
-                        <a href="{{ route('empresas.index') }}" class="btn btn-secondary">Cancelar</a>
-                    </div>
-                </form>
+            <h1>Editar Empresa</h1>
+            <form action="{{ route('empresas.update', $empresa->id) }}" method="POST">
+                @csrf
+                @method('PUT')
                 
-                <div class="button-group" style="margin-top: 20px;">
-                    <form action="{{ route('empresas.destroy', $empresa->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta empresa?')">Excluir</button>
-                    </form>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nome">Nome</label>
+                        <input type="text" id="nome" name="nome" class="form-control" value="{{ $empresa->nome }}" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cnpj">CNPJ</label>
+                        <input type="text" id="cnpj" name="cnpj" class="form-control" value="{{ $empresa->cnpj }}" required>
+                    </div>
                 </div>
+
+                <div class="form-group">
+                    <label for="endereco">Endereço</label>
+                    <input type="text" id="endereco" name="endereco" class="form-control" value="{{ $empresa->endereco }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="contato">Contato</label>
+                    <input type="text" id="contato" name="contato" class="form-control" value="{{ $empresa->contato }}" required>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                    <a href="{{ route('empresas.index') }}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+            
+            <div class="button-group" style="margin-top: 20px;">
+                <form action="{{ route('empresas.destroy', $empresa->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir esta empresa?')">Excluir</button>
+                </form>
             </div>
         </div>
     </div>

@@ -1,53 +1,161 @@
 /* Estilos específicos para a página de listagem de clientes */
-.clientes-lista-container .container {
-    max-width: 1200px;
-    margin: 20px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    overflow: hidden;
+.clientes-lista-container {
+    width: 100%; /* Ocupa toda a largura disponível */
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza horizontalmente */
 }
 
 /* Estilo para o contêiner interno da tabela */
 .table-lista-clientes {
     width: 100%;
-    overflow-x: auto; /* Cria a barra de rolagem horizontal sempre que necessário */
-    padding: 0 10px;
-    border-radius: 8px;
+    overflow-x: auto; /* Permite rolagem horizontal quando necessário */
+    margin: 0 auto; /* Centraliza o container */
+    max-width: 95%; /* Impede que a tabela toque nas bordas da tela */
 }
 
 /* Ajuste para a tabela seguir o estilo arredondado */
-.clientes-lista-container .table {
-    table-layout: fixed; /* Faz com que as colunas tenham tamanho fixo */
-    min-width: 1000px;  /* Ajuste conforme necessário */
+.table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    margin-top: 20px;
+    margin: 20px auto; /* Centraliza a tabela */
     border-radius: 8px;
     overflow: hidden;
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
 }
 
 .clientes-lista-container h1 {
     color: #2e7d32;
     font-size: 24px;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
+    margin: 0 auto 20px auto; /* Centraliza o título */
+    padding: 15px;
     border-bottom: 2px solid #00a65a;
     font-weight: 500;
     display: flex;
     align-items: center;
+    justify-content: center; /* Centraliza o conteúdo do título */
     gap: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 95%; /* Mesma largura do container da tabela */
+    text-align: center;
 }
 
 .clientes-lista-container h1::before {
-    content: '\f007'; /* Ícone de usuário individual */
+    content: '\f007';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     font-size: 30px;
     color: #00a65a;
 }
+
+/* Tamanhos responsivos da tabela baseados no tamanho da tela */
+@media (min-width: 1600px) {
+    .table-lista-clientes {
+        max-width: 1500px; /* Tabela mais larga em telas grandes */
+    }
+    
+    .clientes-lista-container h1 {
+        max-width: 1500px;
+    }
+}
+
+@media (max-width: 1599px) and (min-width: 1200px) {
+    .table-lista-clientes {
+        max-width: 90%; /* Tabela média em telas médias-grandes */
+    }
+    
+    .clientes-lista-container h1 {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .table-lista-clientes {
+        max-width: 95%; /* Tabela um pouco menor em telas médias */
+    }
+    
+    .clientes-lista-container h1 {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+    .table-lista-clientes {
+        max-width: 98%; /* Tabela mais estreita em tablets */
+    }
+    
+    .clientes-lista-container h1 {
+        max-width: 98%;
+        font-size: 20px;
+    }
+    
+    .clientes-lista-container h1::before {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 767px) {
+    .table-lista-clientes {
+        max-width: 100%; /* Tabela ocupa toda a largura em mobile */
+        padding: 0 10px; /* Pequeno padding nas laterais */
+    }
+    
+    .clientes-lista-container h1 {
+        max-width: 100%;
+        padding: 10px;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .clientes-lista-container h1::before {
+        font-size: 20px;
+    }
+    
+    .table {
+        margin: 10px auto;
+    }
+    
+    /* Tabela responsiva em dispositivos móveis */
+    .table-lista-clientes {
+        overflow-x: auto;
+    }
+    
+    .table {
+        min-width: 600px; /* Garante largura mínima para conteúdo da tabela */
+    }
+}
+
+/* Ajustes para melhorar a exibição em dispositivos móveis */
+@media (max-width: 576px) {
+    .clientes-lista-container {
+        padding: 0 5px;
+    }
+
+    .table-lista-clientes {
+        padding: 0 5px;
+    }
+    
+    .clientes-lista-container h1 {
+        font-size: 18px;
+        padding: 10px;
+    }
+    
+    .clientes-lista-container h1::before {
+        font-size: 22px;
+    }
+}
+
+/* Manter os outros estilos existentes... */
 
 .clientes-lista-container .table th,
 .clientes-lista-container .table td {
@@ -160,6 +268,9 @@
     border-radius: 4px;
     margin-bottom: 20px;
     border: 1px solid #c3e6cb;
+    margin: 0 auto 20px auto; /* Centraliza o alerta */
+    max-width: 90%; /* Limita a largura do alerta */
+    text-align: center;
 }
 
 /* Mensagem sem clientes */
@@ -167,6 +278,12 @@
     text-align: center;
     color: #6c757d;
     padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px; /* Largura máxima para a mensagem */
+    margin: 20px auto; /* Centraliza a mensagem */
 }
 
 /* Para formulários dentro das células da tabela */

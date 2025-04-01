@@ -1,18 +1,21 @@
 /* Estilos específicos para a página de listagem de empresas */
-.empresas-lista-container .container {
-    max-width: 1800px; /* Aumentado para ser consistente com a página de clientes */
-    margin: 0 8vh 0 -10px;
-    padding: 30px;
-    background: white;
-    border-radius: 12px; /* Aumentado para um efeito mais suave */
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1); /* Sombra ligeiramente mais pronunciada */
-    overflow: hidden; /* Isso garante que todo o conteúdo interno também respeite o border-radius */
+.empresas-lista-container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+    display: flex;
+    justify-content: center;
 }
 
 /* Estilo para o contêiner interno da tabela */
 .table-lista-empresas {
-    padding: 5px;
-    border-radius: 8px;
+    width: 100%;
+    padding: 0;
+    border-radius: 0;
 }
 
 /* Ajuste para a tabela seguir o estilo arredondado */
@@ -23,18 +26,24 @@
     margin-top: 20px;
     border-radius: 8px;
     overflow: hidden; /* Para garantir que a tabela respeite o border-radius */
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
 }
 
 .empresas-lista-container h1 {
     color: #2e7d32;
     font-size: 24px;
     margin-bottom: 20px;
-    padding-bottom: 10px;
+    padding: 15px;
     border-bottom: 2px solid #00a65a;
     font-weight: 500;
     display: flex;
     align-items: center;
     gap: 10px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
 }
 
 .empresas-lista-container h1::before {

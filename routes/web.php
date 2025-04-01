@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/os', [OSController::class, 'store'])->name('os.store'); // Adicione esta linha
     Route::resource('os', OSController::class);
     Route::get('/os/{id}/form', [OSController::class, 'showForm'])->name('os.form');
+    Route::get('/os', 'OsController@index')->name('os.index'); 
 
     Route::get('/os', function(){
         return view('os/create');

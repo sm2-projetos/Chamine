@@ -1,18 +1,30 @@
 /* Estilos específicos para os formulários de empresas */
-.empresa-form-container .container {
-    max-width: 1200px;
-    margin: 0 auto 0 20px;
-    padding: 30px 40px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-    overflow: hidden;
+.empresa-form-container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
 }
 
-.empresa-form-container .form-container {
-    padding: 10px 5px;
-    max-width: 800px;
+.empresa-form-container .container {
+    max-width: 1200px;
     margin: 0 auto;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+}
+
+/* Manter fundo branco no formulário */
+.empresa-form-container .form-container {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 1200px;
 }
 
 .empresa-form-container h1 {
