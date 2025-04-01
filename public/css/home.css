@@ -122,7 +122,7 @@ body {
 }
 
 .main-content {
-    margin-left: 230px !important;
+    margin-left: 175px !important;
     flex: 1;
 }
 
@@ -131,6 +131,13 @@ body {
     margin: 0 auto;
     padding: 20px;
 }
+
+.container-home {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 
 .header {
     background-color: white;
@@ -144,7 +151,7 @@ body {
 
 .header img {
     height: 50px;
-    padding-left: 20px;
+    padding-left: 70px;
 }
 
 .dashboard-grid {

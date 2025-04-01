@@ -1,36 +1,35 @@
-/* CSS específico para página de clientes com namespacing para evitar conflitos */
-
-/* Container principal */
-.clientes-page {
-    margin-left: 250px;
-    width: calc(100% - 250px);
-    box-sizing: border-box;
-    padding: 90px 20px 20px 20px;
-    display: flex;
-    justify-content: center;
-}
-
-/* Container centralizado */
-.clientes-container {
-    max-width: 1800px;
-    width: 100%;
-    margin: 0 20px 0 -20px;
-    padding: 30px;
+/* Estilos específicos para a página de listagem de clientes */
+.clientes-lista-container .container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
     background: white;
     border-radius: 12px;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     overflow: hidden;
 }
 
-/* Wrapper interno */
-.clientes-wrapper {
-    padding: 5px;
-    border-radius: 8px;
+/* Estilo para o contêiner interno da tabela */
+.table-lista-clientes {
     width: 100%;
+    overflow-x: auto; /* Cria a barra de rolagem horizontal sempre que necessário */
+    padding: 0 10px;
+    border-radius: 8px;
 }
 
-/* Título da página */
-.clientes-title {
+/* Ajuste para a tabela seguir o estilo arredondado */
+.clientes-lista-container .table {
+    table-layout: fixed; /* Faz com que as colunas tenham tamanho fixo */
+    min-width: 1000px;  /* Ajuste conforme necessário */
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.clientes-lista-container h1 {
     color: #2e7d32;
     font-size: 24px;
     margin-bottom: 20px;
@@ -42,420 +41,275 @@
     gap: 10px;
 }
 
-.clientes-title::before {
-    content: '\f0c0';
+.clientes-lista-container h1::before {
+    content: '\f007'; /* Ícone de usuário individual */
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     font-size: 30px;
     color: #00a65a;
 }
 
-/* Alertas */
-.clientes-alert {
-    padding: 15px;
-    border-radius: 4px;
-    margin-bottom: 20px;
-}
-
-.clientes-alert-success {
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-}
-
-/* Tabela */
-.clientes-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    margin-top: 20px;
-    border-radius: 8px;
+.clientes-lista-container .table th,
+.clientes-lista-container .table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    white-space: nowrap; /* Evita quebra de texto em telas pequenas */
     overflow: hidden;
-    box-shadow: 0 0 20px rgba(0,0,0,0.05);
-    max-height: 600px; /* Altura máxima antes de mostrar rolagem */
+    text-overflow: ellipsis;
 }
 
-/* Fixa o cabeçalho quando rolar a tabela */
-.clientes-thead {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-/* Cabeçalho da tabela */
-.clientes-th {
+.clientes-lista-container .table th {
     background-color: #00a65a;
     color: white;
-    font-weight: 500;
-    padding: 12px;
-    text-align: left;
-    border: 1px solid #ddd;
 }
 
-/* Células da tabela */
-.clientes-td {
-    padding: 12px;
-    border: 1px solid #ddd;
-    text-align: left;
+/* Ajuste de largura para colunas específicas da tabela de clientes */
+.clientes-lista-container .table th:nth-child(1), /* ID */
+.clientes-lista-container .table td:nth-child(1) {
+    width: 6%;
+    min-width: 60px;
 }
 
-/* Linhas zebradas e hover */
-.clientes-tbody .clientes-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.clientes-tbody .clientes-tr:hover {
-    background-color: #f1f1f1;
-}
-
-/* Larguras específicas para as colunas */
-.clientes-th-id, .clientes-td-id {
-    width: 5%;
-    text-align: center;
-}
-
-.clientes-th-nome, .clientes-td-nome {
-    width: 18%;
-}
-
-.clientes-th-documento, .clientes-td-documento {
-    width: 12%;
-}
-
-.clientes-th-endereco, .clientes-td-endereco {
+.clientes-lista-container .table th:nth-child(2), /* Nome */
+.clientes-lista-container .table td:nth-child(2) {
     width: 22%;
+    min-width: 180px;
 }
 
-.clientes-th-email, .clientes-td-email {
+.clientes-lista-container .table th:nth-child(3), /* CNPJ/CPF */
+.clientes-lista-container .table td:nth-child(3) {
+    width: 14%;
+    min-width: 130px;
+}
+
+.clientes-lista-container .table th:nth-child(4), /* Endereço */
+.clientes-lista-container .table td:nth-child(4) {
+    width: 20%;
+    min-width: 160px;
+}
+
+.clientes-lista-container .table th:nth-child(5), /* Email */
+.clientes-lista-container .table td:nth-child(5) {
     width: 18%;
+    min-width: 150px;
 }
 
-.clientes-th-telefone, .clientes-td-telefone {
+.clientes-lista-container .table th:nth-child(6), /* Telefone */
+.clientes-lista-container .table td:nth-child(6) {
     width: 12%;
+    min-width: 120px;
 }
 
-.clientes-th-acoes, .clientes-td-acoes {
-    width: 13%;
-    text-align: center;
+.clientes-lista-container .table th:nth-child(7), /* Ações */
+.clientes-lista-container .table td:nth-child(7) {
+    width: 8%;
+    min-width: 90px;
 }
 
-/* Botões de ação */
-.clientes-actions {
+/* Ações na tabela */
+.clientes-lista-container .action-buttons {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     align-items: center;
     justify-content: center;
+    height: 100%;
 }
 
-.clientes-btn-icon {
-    font-size: 16px;
-    padding: 8px;
-    border-radius: 4px;
+/* Ícones Font Awesome */
+.clientes-lista-container .btn-icon {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
     cursor: pointer;
-    transition: all 0.3s ease;
-    color: rgb(255, 255, 255);
-    width: 22px;
-    height: 22px;
+    color: #6c757d;
+    transition: color 0.2s ease;
+    font-size: 1.1rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border: none;
+    line-height: 1;
 }
 
-.clientes-icon-edit {
-    background: #00a65a;
-}
-
-.clientes-icon-delete {
-    background: #dc3545;
-}
-
-.clientes-btn-icon:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-/* Formulário de exclusão */
-.clientes-form-delete {
-    margin: 0;
-    display: inline;
-}
-
-/* Mensagem quando não há clientes */
-.clientes-empty-message {
-    text-align: center;
-    padding: 20px;
-    color: #6c757d;
-    font-style: italic;
-}
-
-/* Container de paginação */
-.clientes-pagination {
+.clientes-lista-container .btn-icon i {
     display: flex;
-    justify-content: center;
-    margin-top: 25px;
-    padding: 10px 0;
-}
-
-.clientes-pagination-list {
-    display: flex;
-    list-style: none;
-    gap: 5px;
-    padding: 0;
-    margin: 0;
-}
-
-.clientes-pagination-item {
-    min-width: 35px;
-    height: 35px;
-}
-
-.clientes-pagination-link {
-    display: flex;
-    justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: #f9f9f9;
-    color: #333;
+    justify-content: center;
+}
+
+.clientes-lista-container .btn-icon:hover {
+    background: none !important;
+    transform: none;
+    box-shadow: none;
+}
+
+.clientes-lista-container .icon-edit:hover {
+    color: #007bff;
+}
+
+.clientes-lista-container .icon-delete:hover {
+    color: #dc3545;
+}
+
+/* Alerta de confirmação */
+.clientes-lista-container .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
     border-radius: 4px;
-    text-decoration: none;
-    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
 }
 
-.clientes-pagination-link:hover {
-    background-color: #e9e9e9;
+/* Mensagem sem clientes */
+.clientes-lista-container .no-clientes {
+    text-align: center;
+    color: #6c757d;
+    padding: 20px;
 }
 
-.clientes-pagination-active .clientes-pagination-link {
-    background-color: #00a65a;
-    color: white;
+/* Para formulários dentro das células da tabela */
+.clientes-lista-container td form {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
 }
 
-.clientes-pagination-disabled .clientes-pagination-link {
-    background-color: #f1f1f1;
-    color: #999;
-    cursor: not-allowed;
+/* Efeito de hover nas linhas da tabela */
+.clientes-lista-container .table tr:hover {
+    background-color: #f5f5f5;
 }
 
-/* Mostra quantos registros estão sendo exibidos */
-.clientes-info {
-    text-align: right;
-    margin-top: 10px;
-    color: #666;
-    font-size: 0.9em;
-}
-
-/* Responsividade */
-@media (max-width: 1200px) {
-    .clientes-container {
-        padding: 20px;
-    }
-    
-    .clientes-th, .clientes-td {
-        padding: 10px 8px;
-    }
-    
-    .clientes-btn-icon {
-        font-size: 14px;
-        width: 20px;
-        height: 20px;
-    }
-
-    .clientes-table {
-        max-height: 500px; /* Altura um pouco menor em telas médias */
+/* Ajustes responsivos para telas grandes */
+@media (min-width: 1200px) {
+    .clientes-lista-container .table td:nth-child(4) { /* Endereço em telas grandes */
+        white-space: normal; /* Permite quebra de texto em endereços longos */
     }
 }
 
+/* Ajuste a fonte e o cabeçalho em resoluções menores */
+@media (max-width: 1366px) {
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        font-size: 0.85em;
+    }
+    .clientes-lista-container h1 {
+        font-size: 22px;
+    }
+}
+
+/* Ajustes responsivos para telas médias */
 @media (max-width: 992px) {
-    .clientes-table {
-        font-size: 14px;
-    }
-    
-    .clientes-th, .clientes-td {
-        padding: 8px 6px;
-    }
-}
-
-@media (max-width: 768px) {
-    .clientes-page {
-        padding: 90px 10px 20px 10px;
-    }
-    
-    .clientes-container {
-        padding: 15px;
-    }
-    
-    .clientes-title {
-        font-size: 20px;
-    }
-    
-    .clientes-title::before {
-        font-size: 24px;
-    }
-
-    .clientes-table {
-        max-height: 400px; /* Altura ainda menor em telas pequenas */
-    }
-}
-
-/* Adicionando responsividade para dispositivos móveis */
-
-/* Estilos base já existentes, mantendo o projeto atual */
-
-/* Responsividade para telas menores */
-@media screen and (max-width: 1200px) {
-    .clientes-container {
+    .clientes-lista-container .container {
         padding: 20px;
-        margin: 0 10px;
     }
     
-    .clientes-th, 
-    .clientes-td {
-        padding: 10px 8px;
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 10px;
+        font-size: 0.9em;
     }
 }
 
-@media screen and (max-width: 992px) {
-    .clientes-table {
-        font-size: 14px;
+/* Ajustes responsivos para tablets */
+@media (max-width: 768px) {
+    .clientes-lista-container .container {
+        padding: 10px;
+        margin: 0 15px 0 15px; /* Margens iguais nos dois lados */
+        max-width: calc(100% - 30px); /* Largura considerando as margens */
     }
     
-    .clientes-th, 
-    .clientes-td {
-        padding: 8px 6px;
+    .clientes-lista-container .table {
+        display: block;
+        min-width: 600px;
     }
     
-    .clientes-btn-icon {
-        font-size: 14px;
-        width: 20px;
-        height: 20px;
-    }
-}
-
-/* Transformação da tabela para dispositivos móveis */
-@media screen and (max-width: 768px) {
-    .clientes-page {
-        margin-left: 0;
-        width: 100%;
-        padding: 90px 10px 20px 10px;
+    .table-lista-clientes {
+        padding: 5px; /* Padding igual em todos os lados */
     }
     
-    /* Quando a sidebar estiver visível em mobile via JavaScript */
-    .sidebar-visible .clientes-page {
-        margin-left: 250px;
-        width: calc(100% - 250px);
+    .clientes-lista-container .main-content {
+        padding-right: 15px; /* Adiciona espaço à direita do conteúdo principal */
     }
     
-    .clientes-container {
-        padding: 15px;
-        margin: 0;
-        border-radius: 8px;
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 8px 10px;
+        font-size: 0.85em;
     }
     
-    .clientes-title {
+    .clientes-lista-container h1 {
         font-size: 20px;
     }
     
-    .clientes-title::before {
+    .clientes-lista-container h1::before {
         font-size: 24px;
     }
     
-    /* Transformar a tabela para visualização em cartões */
-    .clientes-table, 
-    .clientes-thead, 
-    .clientes-tbody, 
-    .clientes-tr, 
-    .clientes-th, 
-    .clientes-td {
-        display: block;
-        width: 100%;
+    .clientes-lista-container .action-buttons {
+        gap: 12px;
     }
     
-    .clientes-thead {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
+    .clientes-lista-container .btn-icon {
+        font-size: 1rem;
     }
-    
-    .clientes-tr {
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
+}
+
+/* Ajustes responsivos para dispositivos móveis */
+@media (max-width: 576px) {
+    .clientes-lista-container .container {
+        padding: 10px 20px 10px 15px; /* Aumentado padding direito */
+        margin: 0 15px 0 10px; /* Aumentado margem direita */
         border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        width: calc(100% - 25px); /* Largura considerando margens */
     }
     
-    .clientes-td {
-        position: relative;
-        padding-left: 40%;
-        text-align: right;
-        border: none;
-        border-bottom: 1px solid #eee;
+    .clientes-lista-container .main-content {
+        padding-right: 10px; /* Adiciona espaço à direita do conteúdo principal */
     }
     
-    .clientes-td:last-child {
-        border-bottom: none;
+    .clientes-lista-container h1 {
+        font-size: 18px;
+        margin-bottom: 15px;
     }
     
-    .clientes-td:before {
-        position: absolute;
-        left: 10px;
-        top: 8px;
-        width: 35%;
-        padding-right: 10px;
-        white-space: nowrap;
-        font-weight: bold;
-        text-align: left;
+    .clientes-lista-container h1::before {
+        font-size: 20px;
     }
     
-    /* Adicionar labels para cada coluna */
-    .clientes-td-id:before { content: "ID:"; }
-    .clientes-td-nome:before { content: "Nome:"; }
-    .clientes-td-documento:before { content: "CNPJ/CPF:"; }
-    .clientes-td-endereco:before { content: "Endereço:"; }
-    .clientes-td-email:before { content: "Email:"; }
-    .clientes-td-telefone:before { content: "Telefone:"; }
-    .clientes-td-acoes:before { content: "Ações:"; }
-    
-    /* Centralizar os botões de ação */
-    .clientes-td-acoes {
-        text-align: center;
-        padding: 15px;
+    .table-lista-clientes {
+        padding: 0 10px 0 0; /* Adiciona padding à direita */
     }
     
-    .clientes-actions {
-        display: flex;
-        justify-content: center;
-        gap: 15px;
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 6px 8px;
+        font-size: 0.8em;
     }
     
-    .clientes-btn-icon {
-        font-size: 16px;
-        width: 36px;
-        height: 36px;
+    .clientes-lista-container .action-buttons {
+        gap: 8px;
     }
 }
 
 /* Ajustes para telas muito pequenas */
-@media screen and (max-width: 480px) {
-    .clientes-container {
-        padding: 10px;
+@media (max-width: 400px) {
+    .clientes-lista-container .container {
+        padding: 8px 15px 8px 12px;
+        margin: 0 12px 0 8px;
+        width: calc(100% - 20px);
     }
     
-    .clientes-title {
-        font-size: 18px;
+    .clientes-lista-container .main-content {
+        padding-right: 8px;
     }
     
-    .clientes-title::before {
-        font-size: 20px;
-    }
-    
-    .clientes-td {
-        padding-left: 35%;
-        font-size: 13px;
-    }
-    
-    .clientes-td:before {
-        width: 30%;
+    /* Aumenta levemente o espaço de rolagem horizontal */
+    .table-lista-clientes:after {
+        content: "";
+        display: block;
+        width: 15px; /* Espaço extra após a tabela */
+        height: 1px;
     }
 }

@@ -63,7 +63,7 @@
             <i class="fas fa-building"></i>
             Listar Empresas
         </a>
-        <a href="#" class="menu-item">
+        <a href="{{ route('home') }}" class="menu-item">
             <i class="fas fa-tasks"></i>
             Ver Todas OS
         </a>
