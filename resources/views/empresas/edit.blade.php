@@ -11,7 +11,8 @@
 </head>
 <body>
     @include('layouts.sidebar')
-    < class="main-content empresa-form-container">
+    
+    <div class="main-content empresa-form-container">
         <div class="form-container">
             <div class="cliente-info">
                 <h2>Dados do Cliente</h2>

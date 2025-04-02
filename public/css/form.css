@@ -37,6 +37,7 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 16px;
+    transition: all 0.3s ease;
 }
 
 .form-control:focus {
@@ -49,6 +50,7 @@
     display: flex;
     gap: 10px;
     margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 .btn {
@@ -58,6 +60,7 @@
     cursor: pointer;
     font-weight: 500;
     transition: all 0.3s ease;
+    text-align: center;
 }
 
 .btn-primary {
@@ -76,7 +79,8 @@
 }
 
 .btn:hover {
-    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .empresa-form {
@@ -204,6 +208,8 @@ h1 {
     font-size: 1em; /* Aumentado de 0.9em */
     min-width: 600px;
     box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .table th,
@@ -226,7 +232,7 @@ h1 {
 /* Ações na tabela */
 .action-buttons {
     display: flex;
-    gap: 15px;
+    gap: 8px;
     align-items: center;
     justify-content: center;
     height: 100%; /* Usa toda a altura disponível */
@@ -246,6 +252,11 @@ h1 {
     align-items: center;
     justify-content: center; /* Centraliza horizontalmente */
     line-height: 1; /* Ajusta a altura da linha para evitar espaçamento extra */
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    background: none;
 }
 
 .btn-icon i {
@@ -254,50 +265,17 @@ h1 {
     justify-content: center;
 }
 
-/* Estilo para células da tabela que contêm ações */
-.table td:last-child {
-    vertical-align: middle; /* Centraliza verticalmente */
-    text-align: center; /* Centraliza horizontalmente */
-    padding: 0 15px; /* Reduz o padding para evitar espaço extra */
+.icon-edit {
+    color: #00a65a;
 }
 
-/* Para formulários dentro dos botões de ação */
-.action-buttons form {
-    margin: 0;
-    padding: 0;
-    display: inline-flex;
-    align-items: center; /* Centraliza verticalmente dentro do form */
+.icon-delete {
+    color: #dc3545;
 }
 
-td button.btn-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* Mensagem sem clientes */
-.no-clientes {
-    text-align: center;
-    color: #6c757d;
-    padding: 20px;
-}
-
-/* Para formulários dentro dos botões de ação */
-.action-buttons form {
-    margin: 0;
-    padding: 0;
-    display: inline;
-}
-
-td form {
-    display: inline-block;
-    margin: 0;
-}
-
-td button.btn-icon {
-    margin: 0;
-    padding: 0;
-    background: none !important;
+.btn-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .btn-icon:focus {
@@ -394,4 +372,55 @@ td button.btn-icon {
 .table th:nth-child(4),
 .table td:nth-child(4) {
     width: 20%;
+}
+
+/* Formulários com layout de duas colunas */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 200px;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 992px) {
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .form-row .form-group {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-container {
+        padding: 12px;
+    }
+    
+    h1 {
+        font-size: 1.5em;
+    }
+    
+    .form-control {
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    .btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    .table th,
+    .table td {
+        padding: 6px 8px;
+        font-size: 0.8em;
+    }
 }

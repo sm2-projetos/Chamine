@@ -1,3 +1,4 @@
+
 /* Estilos específicos para os formulários de empresas */
 .empresa-form-container {
     max-width: 1800px;
@@ -5,6 +6,7 @@
     padding: 0;
     display: flex;
     justify-content: center;
+    width: 100%;
 }
 
 .empresa-form-container .container {
@@ -106,6 +108,7 @@
     display: flex;
     gap: 15px;
     margin-top: 30px;
+    flex-wrap: wrap;
 }
 
 .empresa-form-container .btn {
@@ -119,6 +122,7 @@
     display: inline-block;
     text-align: center;
     font-size: 16px;
+    flex: 1 1 auto;
 }
 
 .empresa-form-container .btn-primary {
@@ -144,38 +148,25 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.empresa-form-container .btn-primary:hover {
-    background: #008d4c;
-}
-
-.empresa-form-container .btn-secondary:hover {
-    background: #5a6268;
-}
-
-.empresa-form-container .btn-danger:hover {
-    background: #c82333;
-}
-
-/* Cliente info section - Agora com o mesmo estilo do formulário principal */
+/* Cliente info section */
 .empresa-form-container .cliente-info {
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 30px;
-    /* Removido o background e bordas para ficar idêntico ao formulário principal */
 }
 
 .empresa-form-container .cliente-info .form-group {
-    margin-bottom: 20px; /* Mesmo valor do formulário principal */
+    margin-bottom: 20px;
 }
 
 .empresa-form-container .cliente-info label {
-    color: #333; /* Mesma cor do formulário principal */
-    font-size: 16px; /* Mesmo tamanho do formulário principal */
+    color: #333;
+    font-size: 16px;
     font-weight: 500;
 }
 
 .empresa-form-container .cliente-info .form-control {
-    font-size: 16px; /* Mesmo tamanho do formulário principal */
+    font-size: 16px;
 }
 
 /* Divisão do formulário em colunas em telas maiores */
@@ -192,10 +183,6 @@
 
 /* Ajustes responsivos para diferentes tamanhos de tela */
 @media (max-width: 992px) {
-    .empresa-form-container .container {
-        padding: 20px 30px;
-    }
-    
     .empresa-form-container h1,
     .empresa-form-container h2 {
         font-size: 22px;
@@ -205,15 +192,13 @@
     .empresa-form-container h2::before {
         font-size: 26px;
     }
+    
+    .empresa-form-container .form-container {
+        padding: 20px;
+    }
 }
 
 @media (max-width: 768px) {
-    .empresa-form-container .container {
-        padding: 15px 25px;
-        margin: 0 15px 0 15px;
-        max-width: calc(100% - 30px);
-    }
-    
     .empresa-form-container h1,
     .empresa-form-container h2 {
         font-size: 20px;
@@ -233,14 +218,18 @@
         padding: 8px 16px;
         font-size: 15px;
     }
+    
+    .empresa-form-container .button-group {
+        flex-direction: column;
+    }
+    
+    .empresa-form-container .form-container {
+        padding: 15px;
+        margin: 0 10px;
+    }
 }
 
 @media (max-width: 576px) {
-    .empresa-form-container .container {
-        padding: 10px 15px;
-        border-radius: 8px;
-    }
-    
     .empresa-form-container h1,
     .empresa-form-container h2 {
         font-size: 18px;
@@ -266,21 +255,7 @@
         font-size: 14px;
     }
     
-    .empresa-form-container .button-group {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .empresa-form-container .btn {
-        width: 100%;
-    }
-    
-    .empresa-form-container .cliente-info {
-        padding: 12px;
-        margin-bottom: 20px;
-    }
-    
-    .empresa-form-container .cliente-info label {
-        font-size: 13px;
+    .empresa-form-container .form-container {
+        padding: 10px;
     }
 }

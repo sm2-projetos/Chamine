@@ -1,20 +1,11 @@
-/* Estilos específicos para os formulários de clientes */
+/* Estilos compartilhados para formulários de cliente */
 .cliente-form-container {
     max-width: 1800px;
     margin: 0 auto;
     padding: 0;
     display: flex;
     justify-content: center;
-}
-
-.cliente-form-container .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0;
-    background: transparent;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: visible;
+    width: 100%;
 }
 
 .form-container {
@@ -26,21 +17,13 @@
     max-width: 1200px;
 }
 
-.cliente-form-container .form-container {
-    padding: 10px 5px;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
 .cliente-form-container h1 {
     color: #2e7d32;
     font-size: 24px;
     margin-bottom: 25px;
-    padding: 15px;
+    padding-bottom: 10px;
     border-bottom: 2px solid #00a65a;
     font-weight: 500;
-    background-color: white;
-    border-radius: 8px 8px 0 0;
     display: flex;
     align-items: center;
     gap: 10px;
@@ -114,6 +97,7 @@
     display: flex;
     gap: 15px;
     margin-top: 30px;
+    flex-wrap: wrap;
 }
 
 .cliente-form-container .btn {
@@ -127,6 +111,7 @@
     display: inline-block;
     text-align: center;
     font-size: 16px;
+    flex: 1 1 auto;
 }
 
 .cliente-form-container .btn-primary {
@@ -152,42 +137,7 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-.cliente-form-container .btn-primary:hover {
-    background: #008d4c;
-}
-
-.cliente-form-container .btn-secondary:hover {
-    background: #5a6268;
-}
-
-.cliente-form-container .btn-danger:hover {
-    background: #c82333;
-}
-
-/* Estilo para separador de empresas */
-.cliente-form-container hr {
-    margin: 20px 0;
-    border: 0;
-    border-top: 1px dashed #ddd;
-}
-
-/* Espaçamento entre botões de ação inline */
-.cliente-form-container .action-buttons {
-    margin: 20px 0;
-    display: flex;
-    gap: 10px;
-}
-
-/* Estilo para cada formulário de empresa */
-.cliente-form-container .empresa-form {
-    background: #f9f9f9;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    border: 1px solid #eee;
-}
-
-/* Divisão do formulário em colunas em telas maiores */
+/* Formulário com layout de duas colunas */
 @media (min-width: 768px) {
     .cliente-form-container .form-row {
         display: flex;
@@ -199,12 +149,8 @@
     }
 }
 
-/* Ajustes responsivos para diferentes tamanhos de tela */
+/* Responsividade */
 @media (max-width: 992px) {
-    .cliente-form-container .container {
-        padding: 20px 30px;
-    }
-    
     .cliente-form-container h1 {
         font-size: 22px;
     }
@@ -220,15 +166,13 @@
     .cliente-form-container h2::before {
         font-size: 24px;
     }
+    
+    .form-container {
+        padding: 20px;
+    }
 }
 
 @media (max-width: 768px) {
-    .cliente-form-container .container {
-        padding: 15px 25px;
-        margin: 0 15px 0 15px;
-        max-width: calc(100% - 30px);
-    }
-    
     .cliente-form-container h1 {
         font-size: 20px;
     }
@@ -254,14 +198,17 @@
         padding: 8px 16px;
         font-size: 15px;
     }
+    
+    .cliente-form-container .button-group {
+        flex-direction: column;
+    }
+    
+    .form-container {
+        padding: 15px;
+    }
 }
 
 @media (max-width: 576px) {
-    .cliente-form-container .container {
-        padding: 10px 15px;
-        border-radius: 8px;
-    }
-    
     .cliente-form-container h1 {
         font-size: 18px;
         margin-bottom: 15px;
@@ -294,16 +241,8 @@
         font-size: 14px;
     }
     
-    .cliente-form-container .button-group {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .cliente-form-container .btn {
-        width: 100%;
-    }
-    
-    .cliente-form-container .empresa-form {
-        padding: 15px;
+    .form-container {
+        padding: 10px;
+        margin: 0 10px;
     }
 }

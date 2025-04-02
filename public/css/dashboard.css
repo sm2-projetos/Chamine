@@ -1,33 +1,35 @@
-/* Estilos gerais do dashboard - mantendo classes mas ajustando valores para o padrão visual */
+/* Estilos gerais do dashboard - otimizando o uso do espaço na página */
 .dashboard-page {
     display: flex;
     flex-direction: column;
     margin-left: 250px; /* Espaço para a sidebar */
-    padding: 0 20px;
-    background-color: transparent; /* Mantido */
+    padding: 0;
+    background-color: transparent;
     min-height: 100vh;
-    padding-top: 90px; /* Compensar pelo header fixo */
+    padding-top: 70px; /* Reduzindo para maximizar espaço vertical */
+    width: calc(100% - 250px); /* Garante que ocupe toda a largura disponível */
+    box-sizing: border-box;
 }
 
-/* Container principal do dashboard - ajustado para seguir padrão visual */
+/* Container principal do dashboard - maximizando espaço */
 .dashboard-container {
-    max-width: 1200px; /* Ajustado para o tamanho do empresa-form */
-    margin: 0 auto; /* Seguindo o padrão do empresa-form */
+    max-width: 1800px; /* Ampliando para telas grandes */
+    margin: 0 auto;
     width: 100%;
     background: transparent;
     border-radius: 0;
     box-shadow: none;
-    padding: 0;
-    overflow: hidden;
+    padding: 0 20px; /* Padding lateral para evitar conteúdo colado nas bordas */
+    overflow: visible; /* Permitir conteúdo expandir quando necessário */
 }
 
-/* Título da página - ajustado para seguir o estilo do h1 do empresa-form */
+/* Título da página - mais compacto */
 .dashboard-title {
-    color: #2e7d32; /* Mantido */
-    font-size: 24px; /* Mantido */
-    margin-bottom: 25px; /* Ajustado */
-    padding: 15px;
-    border-bottom: 2px solid #00a65a; /* Mesmo do empresa-form */
+    color: #2e7d32;
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding: 12px 15px; /* Reduzindo padding vertical */
+    border-bottom: 2px solid #00a65a;
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -35,188 +37,609 @@
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
 }
 
-/* Adicionando ícone ao título como no empresa-form */
+/* Adicionando ícone ao título */
 .dashboard-title::before {
     content: '\f0e4'; /* Ícone de dashboard/painel */
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
-    font-size: 30px;
-    color: #00a65a; /* Mesmo do empresa-form */
+    font-size: 28px;
+    color: #00a65a;
 }
 
-/* Grid de cartões */
+/* Grid de cartões - layout mais eficiente */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Auto-fill em vez de auto-fit para melhor uso do espaço */
+    gap: 15px; /* Reduzindo espaçamento entre cartões */
+    width: 100%;
 }
 
-/* Cartão individual - ajustado para seguir o padrão visual */
+/* Cartão individual - mais compacto */
 .dashboard-card {
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1); /* Mesmo do empresa-form */
-    padding: 20px;
-    transition: all 0.3s ease; /* Mesmo do empresa-form para botões */
-}
-
-.dashboard-card:hover {
-    transform: translateY(-2px); /* Mesmo do empresa-form para botões */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Mesmo do empresa-form para botões */
-}
-
-/* Cabeçalho do cartão */
-.dashboard-card-header {
-    margin-bottom: 15px;
-    border-bottom: 2px solid #00a65a; /* Mesmo do empresa-form */
-    padding-bottom: 10px;
-}
-
-.dashboard-card-title {
-    color: #2e7d32; /* Mesmo do empresa-form */
-    font-size: 18px;
-    font-weight: 500;
-}
-
-/* Conteúdo do cartão */
-.dashboard-card-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-/* Estatísticas */
-.dashboard-stats {
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    padding: 15px; /* Padding interno reduzido */
+    transition: all 0.3s ease;
+    height: 100%; /* Garantir mesma altura */
     display: flex;
     flex-direction: column;
 }
 
+.dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15); /* Sombra mais pronunciada no hover */
+}
+
+/* Cabeçalho do cartão - mais compacto */
+.dashboard-card-header {
+    margin-bottom: 12px;
+    border-bottom: 2px solid #00a65a;
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dashboard-card-title {
+    color: #2e7d32;
+    font-size: 17px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Adicionando ícones aos títulos dos cartões */
+.dashboard-card-title::before {
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 16px;
+    color: #00a65a;
+}
+
+.card-clients .dashboard-card-title::before {
+    content: '\f0c0'; /* Ícone de usuários */
+}
+
+.card-products .dashboard-card-title::before {
+    content: '\f1b2'; /* Ícone de produtos */
+}
+
+.card-orders .dashboard-card-title::before {
+    content: '\f07a'; /* Ícone de compras/pedidos */
+}
+
+.card-revenue .dashboard-card-title::before {
+    content: '\f0d6'; /* Ícone de dinheiro */
+}
+
+/* Conteúdo do cartão - layout melhorado */
+.dashboard-card-content {
+    display: flex;
+    flex-direction: column; /* Alterado para column para melhor organização */
+    justify-content: space-between;
+    margin-bottom: 15px;
+    flex-grow: 1; /* Faz o conteúdo crescer para preencher o espaço */
+}
+
+/* Estatísticas - estilo mais compacto */
+.dashboard-stats {
+    display: flex;
+    flex-direction: row; /* Alterado para row para colocar status ao lado dos números */
+    align-items: center;
+    gap: 8px;
+}
+
 .dashboard-stat-number {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 700;
-    color: #2e7d32; /* Mesmo do empresa-form */
+    color: #2e7d32;
+    line-height: 1.1;
 }
 
 .dashboard-stat-label {
-    font-size: 14px;
+    font-size: 13px;
     color: #666;
-    margin-top: 5px;
+    padding-top: 3px; /* Ajuste para alinhamento vertical */
+    white-space: nowrap; /* Evita quebra de linha nos textos de status */
 }
 
-/* Botões de ação - ajustados para seguir o padrão dos botões */
+/* Estatísticas de tendência */
+.dashboard-trend {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.dashboard-trend-up {
+    color: #00a65a;
+}
+
+.dashboard-trend-down {
+    color: #dc3545;
+}
+
+/* Botões de ação - estilo mais compacto */
 .dashboard-action-button {
-    background-color: #00a65a; /* Mesmo do empresa-form */
+    background-color: #00a65a;
     color: white;
     border: none;
-    padding: 10px 20px; /* Mesmo do empresa-form */
-    border-radius: 4px; /* Mesmo do empresa-form */
+    padding: 8px 15px;
+    border-radius: 4px;
     cursor: pointer;
     font-weight: 500;
-    font-size: 16px; /* Mesmo do empresa-form */
-    transition: all 0.3s ease; /* Mesmo do empresa-form */
-    min-width: 120px; /* Mesmo do empresa-form */
+    font-size: 14px;
+    transition: all 0.3s ease;
+    text-align: center;
+    white-space: nowrap;
+    width: 100%;
+    margin-top: auto; /* Empurra o botão para o final do card */
 }
 
 .dashboard-action-button:hover {
-    background-color: #008d4c; /* Mesmo do empresa-form */
-    transform: translateY(-2px); /* Mesmo do empresa-form */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Mesmo do empresa-form */
+    background-color: #008d4c;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Contêiner do gráfico */
+/* Contêiner do gráfico - melhor aproveitamento de espaço */
 .dashboard-chart-container {
-    height: 180px;
+    height: 160px;
     margin-top: 10px;
-    border-radius: 4px; /* Mesmo do empresa-form para inputs */
+    border-radius: 4px;
     overflow: hidden;
+    width: 100%;
 }
 
-/* Responsividade - ajustada para seguir padrão dos media queries */
-@media (max-width: 1200px) {
+/* Cards de estatísticas que ocupam mais espaço */
+.dashboard-card.full-width {
+    grid-column: 1 / -1; /* Ocupa toda a largura do grid */
+}
+
+.dashboard-card.half-width {
+    grid-column: span 2; /* Ocupa 2 colunas do grid em telas grandes */
+}
+
+/* Tabela de resumo dentro do dashboard */
+.dashboard-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+    padding: 8px 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.dashboard-table th {
+    background-color: #f8f9fa;
+    font-weight: 500;
+    color: #333;
+}
+
+.dashboard-table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Card de notificações */
+.notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notification-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #e3f2fd;
+    color: #2196f3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.notification-content {
+    flex-grow: 1;
+}
+
+.notification-title {
+    font-weight: 500;
+    margin-bottom: 3px;
+    font-size: 14px;
+}
+
+.notification-time {
+    color: #999;
+    font-size: 12px;
+}
+
+/* Seção especial para o resumo na parte superior */
+.dashboard-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    background-color: white;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.summary-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.summary-clients .summary-icon {
+    background-color: rgba(0, 166, 90, 0.1);
+    color: #00a65a;
+}
+
+.summary-products .summary-icon {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: #2196f3;
+}
+
+.summary-revenue .summary-icon {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: #ffc107;
+}
+
+.summary-orders .summary-icon {
+    background-color: rgba(156, 39, 176, 0.1);
+    color: #9c27b0;
+}
+
+.summary-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.summary-label {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.summary-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    line-height: 1;
+}
+
+/* Responsividade - refinada para melhor uso do espaço */
+@media (min-width: 1600px) {
+    .dashboard-container {
+        max-width: 95%; /* Usa 95% da largura disponível em telas muito grandes */
+    }
+    
     .dashboard-grid {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); /* Cartões ligeiramente maiores */
+    }
+    
+    .dashboard-summary {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Itens de resumo maiores */
+    }
+}
+
+@media (max-width: 1400px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    }
+    
+    .dashboard-card.half-width {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 1200px) {
+    .dashboard-container {
+        max-width: 98%;
+        padding: 0 15px;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
+    
+    .dashboard-summary {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+    
+    .dashboard-card.half-width {
+        grid-column: span 2;
     }
 }
 
 @media (max-width: 992px) {
-    .dashboard-container {
-        padding: 20px 30px; /* Mesmo do empresa-form */
-    }
-    
     .dashboard-title {
-        font-size: 22px; /* Mesmo do empresa-form */
+        font-size: 22px;
     }
     
     .dashboard-title::before {
-        font-size: 26px; /* Mesmo do empresa-form */
+        font-size: 26px;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    
+    .dashboard-card.half-width {
+        grid-column: span 1; /* Em telas médias, ocupa apenas 1 coluna */
+    }
+    
+    .dashboard-stat-number {
+        font-size: 24px;
+    }
+    
+    .stats-horizontal {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .stat-item {
+        width: 100%;
+    }
+    
+    .dashboard-stat-number {
+        font-size: 22px;
     }
 }
 
 @media (max-width: 768px) {
     .dashboard-page {
-        margin-left: 0; /* Mantido */
-        padding: 15px;
+        margin-left: 0; /* Quando o menu lateral está fechado/mobile */
+        width: 100%;
+        padding: 70px 10px 20px 10px;
     }
     
     .dashboard-container {
-        padding: 15px 25px; /* Mesmo do empresa-form */
-        margin: 0 15px 0 15px; /* Mesmo do empresa-form */
-        max-width: calc(100% - 30px); /* Mesmo do empresa-form */
-    }
-    
-    .dashboard-grid {
-        grid-template-columns: 1fr;
+        padding: 0 10px;
+        max-width: 100%;
     }
     
     .dashboard-title {
-        font-size: 20px; /* Mesmo do empresa-form */
+        font-size: 20px;
+        padding: 10px 15px;
+        margin-bottom: 15px;
     }
     
     .dashboard-title::before {
-        font-size: 24px; /* Mesmo do empresa-form */
+        font-size: 22px;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 12px;
+    }
+    
+    .dashboard-summary {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+    
+    .summary-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    .summary-value {
+        font-size: 20px;
     }
     
     .dashboard-card {
-        padding: 15px;
-    }
-    
-    .dashboard-stat-number {
-        font-size: 28px;
+        padding: 12px;
     }
     
     .dashboard-action-button {
-        padding: 8px 16px; /* Mesmo do empresa-form */
-        font-size: 15px; /* Mesmo do empresa-form */
-    }
-    
-    .dashboard-chart-container {
-        height: 150px;
+        padding: 6px 12px;
+        font-size: 13px;
     }
 }
 
 @media (max-width: 576px) {
+    .dashboard-page {
+        padding: 70px 8px 15px 8px;
+    }
+    
     .dashboard-container {
-        padding: 10px 15px; /* Mesmo do empresa-form */
-        border-radius: 8px; /* Mesmo do empresa-form */
+        padding: 0 5px;
     }
     
     .dashboard-title {
-        font-size: 18px; /* Mesmo do empresa-form */
-        margin-bottom: 15px; /* Mesmo do empresa-form */
+        font-size: 18px;
+        padding: 10px;
     }
     
     .dashboard-title::before {
-        font-size: 20px; /* Mesmo do empresa-form */
+        font-size: 20px;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+        gap: 10px;
+    }
+    
+    .dashboard-card {
+        padding: 10px;
     }
     
     .dashboard-card-title {
         font-size: 16px;
     }
     
-    .dashboard-action-button {
-        width: 100%; /* Mesmo do empresa-form */
+    .dashboard-stat-number {
+        font-size: 22px;
     }
+    
+    .dashboard-summary {
+        grid-template-columns: 1fr; /* Uma coluna em telas pequenas */
+        gap: 10px;
+    }
+    
+    .summary-card {
+        padding: 12px;
+    }
+    
+    .summary-value {
+        font-size: 18px;
+    }
+    
+    .dashboard-chart-container {
+        height: 140px;
+    }
+    
+    .stat-item {
+        padding: 4px 8px;
+    }
+    
+    .dashboard-stat-number {
+        font-size: 20px;
+    }
+    
+    .dashboard-stat-label {
+        font-size: 11px;
+    }
+    
+    .status-tag {
+        padding: 1px 6px;
+        font-size: 11px;
+        margin-left: 5px;
+    }
+}
+
+/* Status tags para diferentes estados */
+.status-tag {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+.status-processing {
+    background-color: rgba(255, 152, 0, 0.1);
+    color: #ff9800;
+    border: 1px solid rgba(255, 152, 0, 0.3);
+}
+
+.status-completed {
+    background-color: rgba(0, 166, 90, 0.1);
+    color: #00a65a;
+    border: 1px solid rgba(0, 166, 90, 0.3);
+}
+
+.status-waiting {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: #2196f3;
+    border: 1px solid rgba(33, 150, 243, 0.3);
+}
+
+/* Linha de status com indicadores lado a lado */
+.status-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+
+/* Container para o conjunto de estatística + status */
+.stat-with-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Versão horizontal das stats para telas maiores */
+.stats-horizontal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border-left: 3px solid #00a65a;
+}
+
+.stat-item .dashboard-stat-number {
+    font-size: 24px;
+}
+
+.stat-item .dashboard-stat-label {
+    font-size: 12px;
+}
+
+/* Ajuste no título do card para quando houver múltiplos status */
+.dashboard-card-title.with-multiple-stats {
+    margin-bottom: 15px;
+}
+
+/* Variações de cores para diferentes tipos de status */
+.stat-item.processing {
+    border-left-color: #ff9800;
+}
+.stat-item.processing .dashboard-stat-number {
+    color: #ff9800;
+}
+
+.stat-item.completed {
+    border-left-color: #00a65a;
+}
+.stat-item.completed .dashboard-stat-number {
+    color: #00a65a;
+}
+
+.stat-item.waiting {
+    border-left-color: #2196f3;
+}
+.stat-item.waiting .dashboard-stat-number {
+    color: #2196f3;
 }
