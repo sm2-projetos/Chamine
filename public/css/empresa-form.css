@@ -21,10 +21,10 @@
 
 /* Manter fundo branco no formulário */
 .empresa-form-container .form-container {
-    background: white;
+    /* background: white; */
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
     width: 100%;
     max-width: 1200px;
 }

@@ -157,9 +157,9 @@ td, th {
 }
 
 .main-content {
-    margin-left: 250px;
+    margin-left: 150px;
     flex: 1;
-    padding-top: 90px; /* Add this to prevent content from going under header */
+    padding-top: 40px; /* Add this to prevent content from going under header */
 }
 
 .container {

@@ -2,26 +2,26 @@
 .dashboard-page {
     display: flex;
     flex-direction: column;
-    margin-left: 250px; /* Espaço para a sidebar */
+    margin-left: 50px; /* Espaço para a sidebar */
     padding: 0;
     background-color: transparent;
     min-height: 100vh;
-    padding-top: 70px; 
+    padding-top: 50px; 
     width: calc(100% - 250px); /* Garante que ocupe toda a largura disponível */
     box-sizing: border-box;
     align-items: flex-start; /* Alinha à esquerda em vez de centralizar */
 }
 
-/* Container principal do dashboard - ajustado mais para a esquerda */
+/* Container principal do dashboard - removido fundo branco */
 .dashboard-container {
-    max-width: 1600px; /* Tamanho máximo ajustado */
-    margin: 0 auto 0 0; /* Removido margin auto horizontal, adicionado zero à direita */
-    width: 95%; /* Um pouco menor que 100% para dar respiro nas laterais */
-    background: white; /* Fundo branco */
-    border-radius: 12px; /* Bordas arredondadas */
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1); /* Sombra sutil */
-    padding: 25px; /* Espaçamento interno para não colar no conteúdo */
-    overflow: hidden; /* Impede que o conteúdo vaze */
+    max-width: 1600px;
+    margin: 0 auto; /* Centralizado novamente */
+    width: 95%;
+    background: transparent; /* Removido o fundo branco */
+    border-radius: 0; /* Removidas as bordas arredondadas */
+    box-shadow: none; /* Removida a sombra */
+    padding: 15px 25px; /* Mantido um padding lateral para não colar nas bordas */
+    overflow: visible; /* Alterado de hidden para visible */
 }
 
 /* Título da página - ajustado para acompanhar centralização */

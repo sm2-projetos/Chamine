@@ -9,15 +9,16 @@
 }
 
 .form-container {
-    background: white;
+    /* background: white; */
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
     width: 100%;
     max-width: 1200px;
 }
 
-.cliente-form-container h1 {
+.cliente-form-container h1,
+.empresa-form-container h1 {
     color: #2e7d32;
     font-size: 24px;
     margin-bottom: 25px;
@@ -27,9 +28,13 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    background: transparent; /* Remove o fundo branco do título */
+    box-shadow: none; /* Remove a sombra do título */
+    border-radius: 0; /* Remove o border-radius do título */
 }
 
-.cliente-form-container h1::before {
+.cliente-form-container h1::before,
+.empresa-form-container h1::before {
     content: '\f007'; /* Ícone de usuário individual */
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
@@ -93,46 +98,63 @@
     outline: none;
 }
 
-.cliente-form-container .button-group {
+.cliente-form-container .button-group,
+.empresa-form-container .button-group {
     display: flex;
+    flex-wrap: wrap;
     gap: 15px;
     margin-top: 30px;
-    flex-wrap: wrap;
+    justify-content: space-between; /* Distribui os botões de forma equilibrada */
 }
 
-.cliente-form-container .btn {
-    padding: 10px 20px;
+/* Container para botões primários (Salvar e Cancelar) */
+.primary-buttons {
+    display: flex;
+    gap: 15px;
+    flex: 1;
+}
+
+/* Container para botão de excluir */
+.danger-buttons {
+    display: flex;
+    margin-top: 15px; /* Espaçamento entre grupos de botões */
+    width: 100%; /* Ocupa toda a largura disponível */
+}
+
+/* Estilo para os botões regulares */
+.btn {
+    padding: 12px 20px;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 500;
     transition: all 0.3s ease;
     border: none;
-    text-decoration: none;
-    display: inline-block;
     text-align: center;
-    font-size: 16px;
-    flex: 1 1 auto;
+    display: inline-block;
+    min-width: 120px;
+    font-size: 15px;
 }
 
-.cliente-form-container .btn-primary {
+/* Específicos para cada tipo de botão */
+.btn-primary {
     background: #00a65a;
     color: white;
-    min-width: 120px;
+    flex: 1;
 }
 
-.cliente-form-container .btn-secondary {
+.btn-secondary {
     background: #6c757d;
     color: white;
-    min-width: 120px;
+    flex: 1;
 }
 
-.cliente-form-container .btn-danger {
+.btn-danger {
     background: #dc3545;
     color: white;
-    min-width: 120px;
+    width: 100%; /* Botão de excluir ocupa toda a largura do seu container */
 }
 
-.cliente-form-container .btn:hover {
+.btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
@@ -201,6 +223,20 @@
     
     .cliente-form-container .button-group {
         flex-direction: column;
+    }
+    
+    .primary-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+    }
+    
+    .danger-buttons {
+        margin-top: 10px;
     }
     
     .form-container {
