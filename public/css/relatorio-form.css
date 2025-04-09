@@ -1,0 +1,366 @@
+/* Estilos gerais */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 20px;
+    padding: 0;
+    background-color: #f4f6f9;
+    color: #333;
+}
+
+/* Container principal */
+.relatorio-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Título principal */
+h1 {
+    color: #2e7d32;
+    font-size: 24px;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00a65a;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+h1::before {
+    content: '\f15c'; /* Ícone de documento */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 30px;
+    color: #00a65a;
+}
+
+/* Títulos secundários */
+h2, h3 {
+    color: #2e7d32;
+    font-size: 20px;
+    margin: 20px 0 15px 0;
+    padding-bottom: 8px;
+    font-weight: 500;
+}
+
+h3 {
+    font-size: 18px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Seções do formulário */
+.section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Campos editáveis - substitui o estilo inline */
+.editable {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd; /* Mudado de border: 2px dashed red para um estilo mais consistente */
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    font-family: inherit;
+    background-color: #fff;
+    margin: 5px 0;
+}
+
+/* Específico para o campo número do relatório que tinha width: 100px inline */
+#relatorioNum.editable {
+    width: 100px;
+    display: inline-block;
+}
+
+/* Campos de texto com tamanhos específicos */
+textarea.editable[rows="3"] {
+    min-height: 70px;
+}
+
+textarea.editable[rows="4"] {
+    min-height: 90px;
+}
+
+textarea.editable[rows="5"] {
+    min-height: 120px;
+}
+
+.editable:focus {
+    border-color: #00a65a;
+    box-shadow: 0 0 0 3px rgba(0, 166, 90, 0.2);
+    outline: none;
+}
+
+textarea.editable {
+    resize: vertical;
+}
+
+/* Estilização da tabela */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 15px 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #00a65a;
+    color: white;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Upload de imagens - substituindo o estilo inline */
+.image-upload {
+    border: 1px solid #ddd; /* Mudado de 2px solid #666 para consistência */
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 8px;
+    text-align: center;
+    background-color: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.image-upload:hover {
+    border-color: #00a65a;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.image-upload p {
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+input[type="file"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 8px;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Botões - substituindo o estilo inline */
+button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+    margin: 5px;
+    min-width: 120px;
+}
+
+button[type="button"] {
+    background: #00a65a;
+    color: white;
+}
+
+button[onclick="validateForm()"] {
+    background: #2196f3;
+    color: white;
+}
+
+button[onclick="showPreview()"] {
+    background: #ff9800;
+    color: white;
+}
+
+button[onclick="generatePDF()"] {
+    background: #dc3545;
+    color: white;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    background: #008d4c; /* Substituindo o background: #45a049 do hover inline */
+}
+
+button[onclick="removeRow(this)"] {
+    background: #dc3545;
+    color: white;
+    padding: 6px 10px;
+    font-size: 14px;
+    min-width: auto;
+}
+
+button[onclick="addRow()"] {
+    background: #00a65a;
+    margin-bottom: 15px;
+}
+
+/* Área de pré-visualização - substituindo o estilo inline */
+#preview {
+    background: #fff; /* Mudado de #f9f9f9 */
+    padding: 25px;
+    border-radius: 8px; /* Mudado de border: 1px solid #ddd */
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    margin-top: 30px;
+}
+
+#preview h2 {
+    color: #2e7d32;
+    font-size: 22px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #00a65a;
+    padding-bottom: 10px;
+}
+
+#preview p {
+    margin: 10px 0;
+    line-height: 1.6;
+}
+
+#preview h3 {
+    margin: 20px 0 15px 0;
+    color: #2e7d32;
+    font-size: 18px;
+}
+
+#preview table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+}
+
+#preview th {
+    background-color: #00a65a;
+    color: white;
+    padding: 10px;
+}
+
+#preview td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+/* Classes de validação - substituindo os estilos inline */
+.error {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25) !important;
+}
+
+.success {
+    border-color: #00a65a !important;
+    box-shadow: 0 0 0 2px rgba(0, 166, 90, 0.25) !important;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Visualização de imagem - substituindo estilos inline */
+img#previewChamine, 
+img#previewEquipamento {
+    max-width: 300px;
+    margin-top: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsividade */
+@media (max-width: 992px) {
+    .relatorio-container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 22px;
+    }
+    
+    h1::before {
+        font-size: 26px;
+    }
+}
+
+@media (max-width: 768px) {
+    .relatorio-container {
+        padding: 15px;
+        margin: 15px;
+    }
+    
+    h1 {
+        font-size: 20px;
+    }
+    
+    h1::before {
+        font-size: 24px;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .editable {
+        padding: 8px;
+        font-size: 15px;
+    }
+    
+    button {
+        padding: 8px 15px;
+        font-size: 15px;
+        margin: 3px;
+    }
+}
+
+@media (max-width: 576px) {
+    .relatorio-container {
+        padding: 10px;
+    }
+    
+    h1 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    h1::before {
+        font-size: 20px;
+    }
+    
+    h2, h3 {
+        font-size: 16px;
+    }
+    
+    .section {
+        margin-bottom: 20px;
+    }
+    
+    button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}

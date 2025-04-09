@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -219,6 +218,7 @@
                         <label><input type="checkbox" class="relatorio-checkbox" value="ruido" data-perfil-id="${perfilId}"> Ruído</label>
                         <label><input type="checkbox" class="relatorio-checkbox" value="vibracao" data-perfil-id="${perfilId}"> Vibração</label>
                         <label><input type="checkbox" class="relatorio-checkbox" value="qualidade_ar" data-perfil-id="${perfilId}"> Qualidade do Ar</label>
+                        <label><input type="checkbox" class="relatorio-checkbox" value="relatorio_tecnico" data-perfil-id="${perfilId}"> Relatório Técnico</label>
                     </div>
                     <div class="reports-forms-container" id="reports-forms-${perfilId}"></div>
                 `;
@@ -277,6 +277,8 @@
                         return getVibracaoForm(perfilId);
                     case 'qualidade_ar':
                         return getQualidadeArForm(perfilId);
+                    case 'relatorio_tecnico':
+                        return getRelatorioTecnicoForm(perfilId);
                     default:
                         return getDefaultForm(reportValue, perfilId);
                 }
@@ -504,6 +506,152 @@
                             </div>
                         </fieldset>
                     </form>
+                `;
+            }
+
+            // Formulário específico para "Relatório Técnico"
+            function getRelatorioTecnicoForm(perfilId) {
+                return `
+                    <h4>Relatório Técnico</h4>
+                    <form id="relatorioForm-${perfilId}">
+                        <!-- Cabeçalho -->
+                        <fieldset>
+                            <legend>1. Identificação do Relatório</legend>
+                            <div class="form-group">
+                                <label for="relatorioNum-${perfilId}">RELATÓRIO TÉCNICO Nº:</label>
+                                <input type="text" id="relatorioNum-${perfilId}" class="form-control" placeholder="XX/XX">
+                            </div>
+                            <div class="form-group">
+                                <label for="naturezaTrabalho-${perfilId}">NATUREZA DO TRABALHO:</label>
+                                <textarea id="naturezaTrabalho-${perfilId}" class="form-control" rows="2">AVALIAÇÃO DAS EMISSÕES ATMOSFÉRICAS ORIUNDAS DA NOME DO PROCESSO</textarea>
+                            </div>
+                        </fieldset>
+
+                        <!-- Seção Cliente -->
+                        <fieldset>
+                            <legend>2. Informações do Cliente</legend>
+                            <div class="form-group">
+                                <label for="cliente-${perfilId}">CLIENTE:</label>
+                                <textarea id="cliente-${perfilId}" class="form-control" rows="3">NOME, ENDEREÇO, CNPJ</textarea>
+                            </div>
+                        </fieldset>
+
+                        <!-- Seção Autor -->
+                        <fieldset>
+                            <legend>3. Autor do Relatório</legend>
+                            <div class="form-group">
+                                <label for="autor-${perfilId}">AUTOR:</label>
+                                <textarea id="autor-${perfilId}" class="form-control" rows="4">CHAMINÉ SOLUÇÕES EM MONITORAMENTO AMBIENTAL LTDA
+CNPJ: 11.407.678/0001-00
+INSCRIÇÃO MUNICIPAL: 0251105/001-8</textarea>
+                            </div>
+                        </fieldset>
+
+                        <!-- Seção Equipe Técnica -->
+                        <fieldset>
+                            <legend>4. Equipe Técnica</legend>
+                            <div class="form-group">
+                                <label for="equipeTecnica-${perfilId}">EQUIPE TÉCNICA:</label>
+                                <textarea id="equipeTecnica-${perfilId}" class="form-control" rows="3">ARLEY CANTARINO DA SILVA
+TÉCNICO 1
+TÉCNICO 2</textarea>
+                            </div>
+                        </fieldset>
+
+                        <!-- Seção Data -->
+                        <fieldset>
+                            <legend>5. Data da Coleta</legend>
+                            <div class="form-group">
+                                <label for="dataColeta-${perfilId}">DATA:</label>
+                                <input type="date" id="dataColeta-${perfilId}" class="form-control">
+                            </div>
+                        </fieldset>
+
+                        <!-- Seção Imagens -->
+                        <fieldset>
+                            <legend>6. Imagens do Processo</legend>
+                            <div class="form-group">
+                                <label for="imagemChamine-${perfilId}">Imagem da Chaminé:</label>
+                                <input type="file" id="imagemChamine-${perfilId}" class="form-control" accept="image/*">
+                                <div class="image-preview-container" id="previewChamine-container-${perfilId}" style="display: none; margin-top: 10px;">
+                                    <img id="previewChamine-${perfilId}" style="max-width: 100%; border-radius: 4px;">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="imagemEquipamento-${perfilId}">Imagem do Equipamento (CIPA):</label>
+                                <input type="file" id="imagemEquipamento-${perfilId}" class="form-control" accept="image/*">
+                                <div class="image-preview-container" id="previewEquipamento-container-${perfilId}" style="display: none; margin-top: 10px;">
+                                    <img id="previewEquipamento-${perfilId}" style="max-width: 100%; border-radius: 4px;">
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Seção Resultados (Tabela Dinâmica) -->
+                        <fieldset>
+                            <legend>7. Resultados das Amostragens</legend>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-secondary" onclick="addParametroRow(${perfilId})">+ Adicionar Parâmetro</button>
+                                <table class="table" id="tabelaResultados-${perfilId}">
+                                    <thead>
+                                        <tr>
+                                            <th>Parâmetros</th>
+                                            <th>1ª Coleta</th>
+                                            <th>2ª Coleta</th>
+                                            <th>3ª Coleta</th>
+                                            <th>Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="text" class="form-control" value="Material Particulado (mg/Nm³)"></td>
+                                            <td><input type="number" class="form-control" value="37.7"></td>
+                                            <td><input type="number" class="form-control" value="37.3"></td>
+                                            <td><input type="number" class="form-control" value="44.3"></td>
+                                            <td><button type="button" class="btn btn-danger" onclick="removeParametroRow(this)">Remover</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="text" class="form-control" value="Monóxido de Carbono (ppm)"></td>
+                                            <td><input type="number" class="form-control" value="8.8"></td>
+                                            <td><input type="number" class="form-control" value="6.7"></td>
+                                            <td><input type="number" class="form-control" value="5.4"></td>
+                                            <td><button type="button" class="btn btn-danger" onclick="removeParametroRow(this)">Remover</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+
+                        <!-- Seção Conclusão -->
+                        <fieldset>
+                            <legend>8. Conclusão</legend>
+                            <div class="form-group">
+                                <label for="conclusao-${perfilId}">Conclusão da Análise:</label>
+                                <textarea id="conclusao-${perfilId}" class="form-control" rows="5">Os resultados estão abaixo dos limites da Resolução CONAMA 316/2002.</textarea>
+                            </div>
+                        </fieldset>
+
+                        <!-- Seção Anexos -->
+                        <fieldset>
+                            <legend>9. Anexos</legend>
+                            <div class="form-group">
+                                <label for="certificados-${perfilId}">Certificados de Calibração:</label>
+                                <input type="file" id="certificados-${perfilId}" class="form-control" accept=".pdf,image/*">
+                            </div>
+                            <div class="form-group">
+                                <label for="planilhas-${perfilId}">Planilhas de Campo:</label>
+                                <input type="file" id="planilhas-${perfilId}" class="form-control" accept=".pdf,.xlsx,.xls">
+                            </div>
+                        </fieldset>
+                        
+                        <div class="form-group mt-4">
+                            <button type="button" class="btn btn-primary" onclick="visualizarRelatorio(${perfilId})">Pré-visualizar</button>
+                            <button type="button" class="btn btn-success" onclick="gerarPDFRelatorio(${perfilId})">Gerar PDF</button>
+                        </div>
+                    </form>
+
+                    <!-- Área para exibir a pré-visualização -->
+                    <div id="previewRelatorio-${perfilId}" class="preview-container" style="display: none; margin-top: 20px; padding: 15px; background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 4px;"></div>
                 `;
             }
 

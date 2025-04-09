@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Editor de Relatório Técnico - Com Geração de PDF</title>
+    <link rel="stylesheet" href="/public/css/relatorio-form.css">
+    <link rel="stylesheet" href="/public/css/home.css">
+    <!-- Biblioteca jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <h1>Editor de Relatório Técnico</h1>
+    <form id="relatorioForm">
+
+        <!-- Cabeçalho -->
+        <div class="section">
+            <h2>RELATÓRIO TÉCNICO Nº <textarea id="relatorioNum" class="editable" style="width: 100px;">XX/XX</textarea></h2>
+            <table>
+                <tr>
+                    <td><strong>NATUREZA DO TRABALHO:</strong></td>
+                    <td><textarea id="naturezaTrabalho" class="editable">AVALIAÇÃO DAS EMISSÕES ATMOSFÉRICAS ORIUNDAS DA NOME DO PROCESSO</textarea></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Seção Cliente -->
+        <div class="section">
+            <table>
+                <tr>
+                    <td><strong>CLIENTE:</strong></td>
+                    <td><textarea id="cliente" class="editable" rows="3">NOME, ENDEREÇO, CNPJ</textarea></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Seção Autor -->
+        <div class="section">
+            <table>
+                <tr>
+                    <td><strong>AUTOR:</strong></td>
+                    <td>
+                        <textarea id="autor" class="editable" rows="4">CHAMINÉ SOLUÇÕES EM MONITORAMENTO AMBIENTAL LTDA
+CNPJ: 11.407.678/0001-00
+INSCRIÇÃO MUNICIPAL: 0251105/001-8</textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Seção Equipe Técnica -->
+        <div class="section">
+            <table>
+                <tr>
+                    <td><strong>EQUIPE TÉCNICA:</strong></td>
+                    <td><textarea id="equipeTecnica" class="editable">ARLEY CANTARINO DA SILVA
+TÉCNICO 1
+TÉCNICO 2</textarea></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Seção Data -->
+        <div class="section">
+            <table>
+                <tr>
+                    <td><strong>DATA:</strong></td>
+                    <td><input type="date" id="dataColeta" class="editable"></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Seção Imagens -->
+        <div class="section">
+            <h3>Imagens do Processo</h3>
+            <div class="image-upload">
+                <p>Imagem da Chaminé:</p>
+                <input type="file" id="imagemChamine" accept="image/*">
+                <img id="previewChamine" class="hidden" style="max-width: 300px; margin-top: 10px;">
+            </div>
+            <div class="image-upload">
+                <p>Imagem do Equipamento (CIPA):</p>
+                <input type="file" id="imagemEquipamento" accept="image/*">
+                <img id="previewEquipamento" class="hidden" style="max-width: 300px; margin-top: 10px;">
+            </div>
+        </div>
+
+        <!-- Seção Resultados (Tabela Dinâmica) -->
+        <div class="section">
+            <h3>Resultados das Amostragens</h3>
+            <button type="button" onclick="addRow()">+ Adicionar Parâmetro</button>
+            <table id="tabelaResultados">
+                <thead>
+                    <tr>
+                        <th>Parâmetros</th>
+                        <th>1ª Coleta</th>
+                        <th>2ª Coleta</th>
+                        <th>3ª Coleta</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="editable" value="Material Particulado (mg/Nm³)"></td>
+                        <td><input type="number" class="editable" value="37.7"></td>
+                        <td><input type="number" class="editable" value="37.3"></td>
+                        <td><input type="number" class="editable" value="44.3"></td>
+                        <td><button type="button" onclick="removeRow(this)">Remover</button></td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class="editable" value="Monóxido de Carbono (ppm)"></td>
+                        <td><input type="number" class="editable" value="8.8"></td>
+                        <td><input type="number" class="editable" value="6.7"></td>
+                        <td><input type="number" class="editable" value="5.4"></td>
+                        <td><button type="button" onclick="removeRow(this)">Remover</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Seção Conclusão -->
+        <div class="section">
+            <h3>Conclusão</h3>
+            <textarea id="conclusao" class="editable" rows="5">Os resultados estão abaixo dos limites da Resolução CONAMA 316/2002.</textarea>
+        </div>
+
+        <!-- Seção Anexos -->
+        <div class="section">
+            <h3>Anexos</h3>
+            <div class="image-upload">
+                <p>Certificados de Calibração (PDF/Imagem):</p>
+                <input type="file" id="certificados" accept=".pdf,image/*">
+            </div>
+            <div class="image-upload">
+                <p>Planilhas de Campo (PDF/Excel):</p>
+                <input type="file" id="planilhas" accept=".pdf,.xlsx,.xls">
+            </div>
+        </div>
+
+        <!-- Botões de Ação -->
+        <button type="button" onclick="validateForm()">Validar Dados</button>
+        <button type="button" onclick="showPreview()">Pré-visualizar</button>
+        <button type="button" onclick="generatePDF()">Gerar PDF</button>
+    </form>
+
+    <!-- Área de Pré-visualização -->
+    <div id="preview" class="hidden"></div>
+
+    <script>
+        // Pré-visualização de Imagens
+        document.getElementById('imagemChamine').addEventListener('change', function(e) {
+            const preview = document.getElementById('previewChamine');
+            const file = e.target.files[0];
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.classList.remove('hidden');
+            }
+        });
+
+        document.getElementById('imagemEquipamento').addEventListener('change', function(e) {
+            const preview = document.getElementById('previewEquipamento');
+            const file = e.target.files[0];
+            if (file) {
+                preview.src = URL.createObjectURL(file);
+                preview.classList.remove('hidden');
+            }
+        });
+
+        // Adicionar Linha na Tabela
+        function addRow() {
+            const table = document.getElementById('tabelaResultados').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            newRow.innerHTML = `
+                <td><input type="text" class="editable" placeholder="Nome do Parâmetro"></td>
+                <td><input type="number" class="editable" placeholder="Valor"></td>
+                <td><input type="number" class="editable" placeholder="Valor"></td>
+                <td><input type="number" class="editable" placeholder="Valor"></td>
+                <td><button type="button" onclick="removeRow(this)">Remover</button></td>
+            `;
+        }
+
+        // Remover Linha da Tabela
+        function removeRow(button) {
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        // Validação de Dados
+        function validateForm() {
+            let isValid = true;
+            const inputs = document.querySelectorAll('.editable');
+            
+            inputs.forEach(input => {
+                if (!input.value) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.remove('error');
+                    input.classList.add('success');
+                }
+            });
+
+            if (isValid) {
+                alert('Todos os campos estão válidos!');
+            } else {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+            }
+        }
+
+        // Pré-visualização do Relatório
+        function showPreview() {
+            const preview = document.getElementById('preview');
+            preview.innerHTML = `
+                <h2>Pré-visualização do Relatório</h2>
+                <p><strong>Número do Relatório:</strong> ${document.getElementById('relatorioNum').value}</p>
+                <p><strong>Cliente:</strong> ${document.getElementById('cliente').value}</p>
+                <p><strong>Data:</strong> ${document.getElementById('dataColeta').value}</p>
+                <h3>Resultados:</h3>
+                ${generateTablePreview()}
+                <h3>Conclusão:</h3>
+                <p>${document.getElementById('conclusao').value}</p>
+            `;
+            preview.classList.remove('hidden');
+        }
+
+        // Gerar Pré-visualização da Tabela
+        function generateTablePreview() {
+            const rows = document.querySelectorAll('#tabelaResultados tbody tr');
+            let html = '<table border="1"><tr><th>Parâmetro</th><th>1ª Coleta</th><th>2ª Coleta</th><th>3ª Coleta</th></tr>';
+            
+            rows.forEach(row => {
+                const cells = row.querySelectorAll('td input');
+                html += `
+                    <tr>
+                        <td>${cells[0].value}</td>
+                        <td>${cells[1].value}</td>
+                        <td>${cells[2].value}</td>
+                        <td>${cells[3].value}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</table>';
+            return html;
+        }
+
+        // Gerar PDF com jsPDF
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Configurações do PDF
+            doc.setFont("helvetica");
+            doc.setFontSize(12);
+
+            // Título do Relatório
+            doc.setFontSize(16);
+            doc.text(`RELATÓRIO TÉCNICO Nº ${document.getElementById('relatorioNum').value}`, 105, 15, { align: 'center' });
+            doc.setFontSize(12);
+
+            // Informações do Cliente
+            doc.text(`Cliente: ${document.getElementById('cliente').value}`, 14, 30);
+            doc.text(`Data: ${document.getElementById('dataColeta').value}`, 14, 40);
+
+            // Tabela de Resultados
+            const rows = [];
+            document.querySelectorAll('#tabelaResultados tbody tr').forEach(row => {
+                const cells = row.querySelectorAll('td input');
+                rows.push([
+                    cells[0].value,
+                    cells[1].value,
+                    cells[2].value,
+                    cells[3].value
+                ]);
+            });
+
+            doc.autoTable({
+                head: [['Parâmetro', '1ª Coleta', '2ª Coleta', '3ª Coleta']],
+                body: rows,
+                startY: 50,
+                theme: 'grid',
+                headStyles: { fillColor: [22, 160, 133] }
+            });
+
+            // Conclusão
+            doc.text('Conclusão:', 14, doc.autoTable.previous.finalY + 15);
+            doc.text(`${document.getElementById('conclusao').value}`, 14, doc.autoTable.previous.finalY + 25, { maxWidth: 180 });
+
+            // Rodapé
+            doc.setFontSize(10);
+            doc.text(`Gerado por: ${document.getElementById('autor').value.split('\n')[0]}`, 14, 280);
+            doc.text(`Data de geração: ${new Date().toLocaleDateString()}`, 160, 280);
+
+            // Salvar PDF
+            doc.save(`Relatorio_${document.getElementById('relatorioNum').value}.pdf`);
+        }
+    </script>
+</body>
+</html>
