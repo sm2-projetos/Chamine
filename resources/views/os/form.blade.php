@@ -323,131 +323,12 @@
             }
 
             // Formulário específico para "Ruído"
-            function getRuidoForm(perfilId) {
-                return `
-                    <h4>Formulário de Ruído</h4>
-                    <form>
-                        <fieldset>
-                            <legend>1. Informações Gerais</legend>
-                            <div class="form-group">
-                                <label for="data-relatorio-${perfilId}">Data do Relatório:</label>
-                                <input type="date" id="data-relatorio-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="local-coleta-${perfilId}">Local da Coleta:</label>
-                                <input type="text" id="local-coleta-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="responsavel-tecnico-${perfilId}">Responsável Técnico:</label>
-                                <input type="text" id="responsavel-tecnico-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="empresa-responsavel-${perfilId}">Empresa Responsável:</label>
-                                <input type="text" id="empresa-responsavel-${perfilId}" class="form-control">
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>2. Condições Climáticas no Momento da Coleta</legend>
-                            <div class="form-group">
-                                <label for="temperatura-${perfilId}">Temperatura (°C):</label>
-                                <input type="number" id="temperatura-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="umidade-${perfilId}">Umidade Relativa (%):</label>
-                                <input type="number" id="umidade-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="vento-${perfilId}">Velocidade do Vento (m/s):</label>
-                                <input type="number" id="vento-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="pressao-${perfilId}">Pressão Atmosférica (hPa):</label>
-                                <input type="number" id="pressao-${perfilId}" class="form-control">
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>3. Parâmetros Analisados</legend>
-                            <div class="form-group">
-                                <label for="mp-${perfilId}">Material Particulado (MP10, MP2.5):</label>
-                                <input type="number" id="mp-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="so2-${perfilId}">Dióxido de Enxofre (SO₂):</label>
-                                <input type="number" id="so2-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="co-${perfilId}">Monóxido de Carbono (CO):</label>
-                                <input type="number" id="co-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="o3-${perfilId}">Ozônio (O₃):</label>
-                                <input type="number" id="o3-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="no2-${perfilId}">Dióxido de Nitrogênio (NO₂):</label>
-                                <input type="number" id="no2-${perfilId}" class="form-control">
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>4. Metodologia e Equipamentos</legend>
-                            <div class="form-group">
-                                <label for="equipamentos-${perfilId}">Equipamentos Utilizados:</label>
-                                <input type="text" id="equipamentos-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="normas-${perfilId}">Normas Técnicas Aplicadas:</label>
-                                <input type="text" id="normas-${perfilId}" class="form-control">
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>5. Resultados e Comparações</legend>
-                            <div class="form-group">
-                                <label for="resultados-${perfilId}">Valores Medidos:</label>
-                                <textarea id="resultados-${perfilId}" class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="comparacao-${perfilId}">Comparação com Padrões:</label>
-                                <select id="comparacao-${perfilId}" class="form-control">
-                                    <option value="">Selecione uma referência normativa</option>
-                                    <option value="norma1">Norma 1</option>
-                                    <option value="norma2">Norma 2</option>
-                                </select>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>6. Conclusão e Recomendações</legend>
-                            <div class="form-group">
-                                <label for="analise-${perfilId}">Análise Crítica dos Dados:</label>
-                                <textarea id="analise-${perfilId}" class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="acoes-${perfilId}">Ações Sugeridas:</label>
-                                <textarea id="acoes-${perfilId}" class="form-control" rows="3"></textarea>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>7. Anexos e Evidências</legend>
-                            <div class="form-group">
-                                <label for="anexos-${perfilId}">Anexar Arquivos:</label>
-                                <input type="file" id="anexos-${perfilId}" class="form-control" multiple>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>8. Assinaturas</legend>
-                            <div class="form-group">
-                                <label for="assinatura-${perfilId}">Assinatura Digital do Responsável Técnico:</label>
-                                <input type="text" id="assinatura-${perfilId}" class="form-control" placeholder="Assinatura Digital">
-                            </div>
-                        </fieldset>
-                    </form>
-                `;
-            }
-
+            
             // Formulário específico para "Vibração"
             function getVibracaoForm(perfilId) {
                 return `
-                    <h4>Formulário de Vibração</h4>
-                    <form>
+                <h4>Formulário de Vibração</h4>
+                <form>
                         <fieldset>
                             <legend>1. Informações Gerais</legend>
                             <div class="form-group">
@@ -556,7 +437,7 @@ INSCRIÇÃO MUNICIPAL: 0251105/001-8</textarea>
 TÉCNICO 1
 TÉCNICO 2</textarea>
                             </div>
-                        </fieldset>
+                            </fieldset>
 
                         <!-- Seção Data -->
                         <fieldset>
@@ -566,7 +447,7 @@ TÉCNICO 2</textarea>
                                 <input type="date" id="dataColeta-${perfilId}" class="form-control">
                             </div>
                         </fieldset>
-
+                        
                         <!-- Seção Imagens -->
                         <fieldset>
                             <legend>6. Imagens do Processo</legend>
@@ -575,7 +456,7 @@ TÉCNICO 2</textarea>
                                 <input type="file" id="imagemChamine-${perfilId}" class="form-control" accept="image/*">
                                 <div class="image-preview-container" id="previewChamine-container-${perfilId}" style="display: none; margin-top: 10px;">
                                     <img id="previewChamine-${perfilId}" style="max-width: 100%; border-radius: 4px;">
-                                </div>
+                                    </div>
                             </div>
                             
                             <div class="form-group">
@@ -583,7 +464,7 @@ TÉCNICO 2</textarea>
                                 <input type="file" id="imagemEquipamento-${perfilId}" class="form-control" accept="image/*">
                                 <div class="image-preview-container" id="previewEquipamento-container-${perfilId}" style="display: none; margin-top: 10px;">
                                     <img id="previewEquipamento-${perfilId}" style="max-width: 100%; border-radius: 4px;">
-                                </div>
+                                    </div>
                             </div>
                         </fieldset>
 
@@ -629,9 +510,9 @@ TÉCNICO 2</textarea>
                                 <label for="conclusao-${perfilId}">Conclusão da Análise:</label>
                                 <textarea id="conclusao-${perfilId}" class="form-control" rows="5">Os resultados estão abaixo dos limites da Resolução CONAMA 316/2002.</textarea>
                             </div>
-                        </fieldset>
-
-                        <!-- Seção Anexos -->
+                            </fieldset>
+                            
+                            <!-- Seção Anexos -->
                         <fieldset>
                             <legend>9. Anexos</legend>
                             <div class="form-group">
@@ -652,6 +533,126 @@ TÉCNICO 2</textarea>
 
                     <!-- Área para exibir a pré-visualização -->
                     <div id="previewRelatorio-${perfilId}" class="preview-container" style="display: none; margin-top: 20px; padding: 15px; background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 4px;"></div>
+                `;
+            }
+            
+
+            // Formulário específico para "Relatório de Ruído"
+            function getRuidoForm(perfilId) {
+                return `
+                    <h4>Relatório de Ruído</h4>
+                    <form id="relatorioRuidoForm-${perfilId}">
+                    <!-- Cabeçalho -->
+                    <fieldset>
+                    <legend>1. Identificação do Relatório</legend>
+                    <div class="form-group">
+                                <label for="relatorioNum-${perfilId}">RELATÓRIO TÉCNICO Nº:</label>
+                                <input type="text" id="relatorioNum-${perfilId}" class="form-control" placeholder="XX/XX">
+                            </div>
+                            <div class="form-group">
+                                <label for="naturezaTrabalho-${perfilId}">NATUREZA DO TRABALHO:</label>
+                                <textarea id="naturezaTrabalho-${perfilId}" class="form-control" rows="2">AVALIAÇÃO DOS NÍVEIS DE PRESSÃO SONORA NOS LIMITES REAIS DA PROPRIEDADE</textarea>
+                                </div>
+                                </fieldset>
+
+                                <!-- Seção Cliente -->
+                        <fieldset>
+                            <legend>2. Informações do Cliente</legend>
+                            <div class="form-group">
+                                <label for="cliente-${perfilId}">CLIENTE:</label>
+                                <textarea id="cliente-${perfilId}" class="form-control" rows="4">NOME DO CLIENTE
+ENDEREÇO
+CNPJ
+ETC</textarea>
+                            </div>
+                        </fieldset>
+
+                        <!-- Seção Equipe Técnica -->
+                        <fieldset>
+                            <legend>3. Equipe Técnica</legend>
+                            <div class="form-group">
+                                <label for="equipeTecnica-${perfilId}">EQUIPE TÉCNICA:</label>
+                                <textarea id="equipeTecnica-${perfilId}" class="form-control" rows="3">ARLEY CANTARINO DA SILVA
+TÉCNICO 1
+TÉCNICO 2</textarea>
+                            </div>
+                        </fieldset>
+
+                        <!-- Seção Data -->
+                        <fieldset>
+                            <legend>4. Data do Relatório</legend>
+                            <div class="form-group">
+                                <label for="dataRelatorio-${perfilId}">DATA:</label>
+                                <input type="month" id="dataRelatorio-${perfilId}" class="form-control">
+                            </div>
+                        </fieldset>
+
+                        <!-- Seção Resultados (Tabela de Medições) -->
+                        <fieldset>
+                            <legend>5. Resultados das Medições</legend>
+                            <div class="form-group">
+                                <button type="button" class="btn btn-secondary" onclick="addMedicaoRow(${perfilId})">+ Adicionar Ponto</button>
+                                <table class="table" id="tabelaMedicoes-${perfilId}">
+                                    <thead>
+                                        <tr>
+                                            <th>Ponto</th>
+                                            <th>Som Total (dB)</th>
+                                            <th>Som Residual (dB)</th>
+                                            <th>Som Específico (dB)</th>
+                                            <th>Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="text" class="form-control" value="Ponto 01"></td>
+                                            <td><input type="number" class="form-control" value="54.1" step="0.1"></td>
+                                            <td><input type="number" class="form-control" value="49.8" step="0.1"></td>
+                                            <td><input type="number" class="form-control" value="52.0" step="0.1"></td>
+                                            <td><button type="button" class="btn btn-danger" onclick="removeMedicaoRow(this)">Remover</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+
+                        <!-- Upload de Gráficos -->
+                        <fieldset>
+                            <legend>6. Gráficos Comparativos</legend>
+                            <div class="form-group">
+                                <label for="grafico-${perfilId}">Upload do Gráfico:</label>
+                                <input type="file" id="grafico-${perfilId}" class="form-control" accept="image/*">
+                                <div class="image-preview-container" id="previewGrafico-container-${perfilId}" style="display: none; margin-top: 10px;">
+                                    <img id="previewGrafico-${perfilId}" style="max-width: 100%; border-radius: 4px;">
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <!-- Conclusão -->
+                        <fieldset>
+                            <legend>7. Conclusão</legend>
+                            <div class="form-group">
+                                <label for="conclusao-${perfilId}">Análise dos Resultados:</label>
+                                <textarea id="conclusao-${perfilId}" class="form-control" rows="5">Os resultados estão conforme a Lei Municipal 7.256/2023...</textarea>
+                            </div>
+                        </fieldset>
+
+                        <!-- Anexos -->
+                        <fieldset>
+                            <legend>8. Anexos</legend>
+                            <div class="form-group">
+                                <label for="certificados-${perfilId}">Certificados de Calibração:</label>
+                                <input type="file" id="certificados-${perfilId}" class="form-control" accept=".pdf,image/*" multiple>
+                            </div>
+                        </fieldset>
+                        
+                        <div class="form-group mt-4">
+                            <button type="button" class="btn btn-primary" onclick="visualizarRelatorioRuido(${perfilId})">Pré-visualizar</button>
+                            <button type="button" class="btn btn-success" onclick="gerarPDFRelatorioRuido(${perfilId})">Gerar PDF</button>
+                        </div>
+                    </form>
+
+                    <!-- Área para exibir a pré-visualização -->
+                    <div id="previewRelatorioRuido-${perfilId}" class="preview-container" style="display: none; margin-top: 20px; padding: 15px; background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 4px;"></div>
                 `;
             }
 
