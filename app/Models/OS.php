@@ -35,3 +35,4 @@ class OS extends Model
         return $this->belongsTo(Perfil::class);
     }
 }
+

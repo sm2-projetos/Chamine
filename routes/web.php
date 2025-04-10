@@ -8,6 +8,14 @@ use App\Http\Controllers\PropostasController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\OSController; // Adicione esta linha
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\DocumentoController;
+
+Route::get('/formulario', function () {
+    return view('formulario');
+});
+
+Route::post('/gerar-documento', [DocumentoController::class, 'gerar']);
+
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 
