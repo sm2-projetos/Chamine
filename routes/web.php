@@ -8,12 +8,23 @@ use App\Http\Controllers\PropostasController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\OSController; // Adicione esta linha
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\DocumentoController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+
+Route::get('/formulario', function () {
+    return view('formulario');
+})->name('formulario');
+
+Route::post('/gerar-documento', [DocumentoController::class, 'gerar'])->name('gerar.documento');
+
+
 
 // Agrupar rotas protegidas
 Route::middleware(['auth'])->group(function () {
@@ -59,5 +70,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/os/{perfilId}/generatePDF', [PDFController::class, 'generatePDF'])->name('os.generatePDF');
 
     Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
+
+    
 
 });
