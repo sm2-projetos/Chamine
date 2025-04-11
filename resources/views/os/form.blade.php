@@ -134,8 +134,68 @@
             flex-direction: column;
             gap: 20px;
         }
-    </style>
 
+        /* Ajuste responsivo para o container principal */
+        .container.form-container {
+            margin-left: 260px; /* Espaço fixo para a sidebar */
+            width: calc(100% - 280px); /* Largura ajustada para considerar a margem */
+            max-width: none; /* Remove limitação máxima para se ajustar melhor */
+            padding: 20px;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        /* Media queries para diferentes tamanhos de tela */
+        @media (max-width: 1200px) {
+            .container.form-container {
+                width: calc(100% - 280px);
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container.form-container {
+                width: calc(100% - 270px);
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container.form-container {
+                margin-left: 0;
+                width: 100%;
+                padding: 15px;
+            }
+        }
+
+        /* Ajuste para conteúdo interno do formulário em telas menores */
+        @media (max-width: 576px) {
+            .form-group {
+                margin-bottom: 10px;
+            }
+            
+            .form-control {
+                padding: 6px;
+                font-size: 14px;
+            }
+            
+            .report-block {
+                padding: 10px;
+            }
+            
+            .report-block fieldset {
+                padding: 10px;
+            }
+            
+            .checkbox-group {
+                max-height: 150px;
+            }
+            
+            .btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 
 <body>
