@@ -376,13 +376,9 @@
                             </div>
                         </fieldset>
                     </form>
-
                     <div>
-                    <p>Olá Mundo </p>
                 `;
             }
-
-            // Formulário específico para "Ruído"
             
             // Formulário específico para "Vibração"
             function getVibracaoForm(perfilId) {
