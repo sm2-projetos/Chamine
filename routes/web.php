@@ -9,6 +9,7 @@ use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\OSController; // Adicione esta linha
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\EmpresaController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 
@@ -47,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/empresas/{id}/edit', [EmpresasController::class, 'edit'])->name('empresas.edit');
     Route::put('/empresas/{id}', [EmpresasController::class, 'update'])->name('empresas.update');
     Route::delete('/empresas/{id}', [EmpresasController::class, 'destroy'])->name('empresas.destroy');
+    Route::resource('empresas', EmpresaController::class);
 
     // Rotas para propostas comerciais
     Route::get('/propostas/create', [PropostasController::class, 'create'])->name('propostas.create');

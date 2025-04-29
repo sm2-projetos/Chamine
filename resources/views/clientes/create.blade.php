@@ -46,21 +46,21 @@
                             <input type="text" id="telefone" name="telefone" class="form-control" placeholder="Digite o telefone do cliente" required>
                         </div>
                     </div>
-                </div>
-
-                <div id="empresa-forms" class="empresa-section">
-                    <h2>Cadastrar Empresa</h2>
-                    <!-- Formulário de empresa inicial vazio -->
-                </div>
-
-                <div class="action-buttons">
-                    <button type="button" id="add-empresa" class="btn btn-secondary">Adicionar Empresa</button>
-                    <button type="button" id="remove-empresa" class="btn btn-danger" style="display: none;">Remover Empresa</button>
-                </div>
-
-                <div class="button-group">
-                    <button type="submit" class="btn btn-primary">Cadastrar</button>
-                    <a href="{{ route('clientes.index') }}" class="btn btn-secondary">Cancelar</a>
+                    
+                    <div class="form-group">
+                        <label for="empresa_id">Empresa Vinculada</label>
+                        <select id="empresa_id" name="empresa_id" class="form-control">
+                            <option value="">Selecione uma empresa...</option>
+                            @foreach($empresas as $empresa)
+                                <option value="{{ $empresa->id }}">{{ $empresa->nome }} ({{ $empresa->cnpj }})</option>
+                            @endforeach
+                        </select>
+                        <div class="mt-2">
+                            <small class="text-muted">Não encontrou a empresa? 
+                                <a href="{{ route('empresas.create') }}" target="_blank">Cadastre uma nova empresa</a>
+                            </small>
+                        </div>
+                    </div>
                 </div>
             </form>
         </div>

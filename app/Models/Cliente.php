@@ -19,6 +19,7 @@ class Cliente extends Model
         'endereco',
         'email',
         'telefone',
+        'empresa_id',
         'lixeira',
     ];
 
