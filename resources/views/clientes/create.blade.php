@@ -61,6 +61,14 @@
                             </small>
                         </div>
                     </div>
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Cadastrar
+                        </button>
+                        <a href="{{ route('clientes.index') }}" class="btn btn-secondary">
+                            <i class="fas fa-times"></i> Cancelar
+                        </a>
+                    </div>
                 </div>
             </form>
         </div>
