@@ -21,7 +21,7 @@
         }
 
         .form-container {
-            background: white;
+            /* background: white; */
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 3px 10px rgba(0,0,0,0.1);
