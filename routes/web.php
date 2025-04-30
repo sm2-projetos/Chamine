@@ -10,6 +10,7 @@ use App\Http\Controllers\OSController; // Adicione esta linha
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\DocumentController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 
@@ -73,6 +74,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
 
-    
+    Route::post('/generate-document', [DocumentController::class, 'generateDocument'])->name('generate.document');
+
+    // Rotas para geração de documentos
+    Route::get('/documents/form', [DocumentController::class, 'showForm'])->name('documents.form');
+    Route::post('/get-placeholders', [DocumentController::class, 'getPlaceholders'])->name('get.placeholders');
+    Route::post('/generate-document', [DocumentController::class, 'generateDocument'])->name('generate.document');
 
 });

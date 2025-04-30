@@ -195,6 +195,55 @@
                 font-size: 14px;
             }
         }
+
+        .template-buttons {
+            margin-bottom: 20px;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .template-btn {
+            padding: 10px 20px;
+            border: 2px solid #007bff;
+            background-color: white;
+            color: #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .template-btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .template-btn.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .form-section {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+        }
+        .form-section legend {
+            font-weight: bold;
+            padding: 0 10px;
+            color: #333;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .image-preview-container {
+            border: 1px solid #ddd;
+            padding: 5px;
+            border-radius: 4px;
+        }
     </style>
 </head>
 
@@ -204,529 +253,258 @@
     <div class="container form-container">
         <h1>Formulário OS - ID: {{ $os->id }}</h1>
 
-        <form action="{{ route('os.update', $os->id) }}" method="POST">
+        <!-- Botões de seleção de template -->
+        <div class="template-buttons mb-4">
+            <h3>Selecione o tipo de relatório:</h3>
+            <div class="button-group">
+                @foreach($templates as $template)
+                    <button type="button" 
+                            class="btn btn-outline-primary template-btn" 
+                            data-template="{{ $template }}"
+                            onclick="selectTemplate(this)">
+                        {{ str_replace('_', ' ', ucfirst($template)) }}
+                    </button>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Formulário (inicialmente oculto) -->
+        <form id="documentForm" action="{{ route('generate.document') }}" method="POST" enctype="multipart/form-data" style="display: none;">
             @csrf
-            @method('PUT')
-
-            <!-- Campo Descrição -->
-            <div class="form-group">
-                <label for="descricao">Descrição:</label>
-                <input type="text" name="descricao" id="descricao" class="form-control" value="{{ $os->descricao }}">
-            </div>
-
-            <!-- Checkboxes de Perfil -->
-            <div class="form-group">
-                <label>Selecione o(s) Perfil(is):</label>
-                <div class="checkbox-group">
-                    @foreach($perfis as $perfil)
-                        <div class="checkbox-item">
-                            <input 
-                                type="checkbox" 
-                                class="perfil-checkbox" 
-                                id="perfil_{{ $perfil->id_perfil }}" 
-                                value="{{ $perfil->id_perfil }}"
-                                data-perfil-id="{{ $perfil->id_perfil }}"
-                            >
-                            <label for="perfil_{{ $perfil->id_perfil }}">
-                                Perfil {{ $perfil->id_perfil }} - {{ $perfil->empresa_nome }}
-                            </label>
-                        </div>
-                    @endforeach
+            <input type="hidden" name="template_name" id="selectedTemplate">
+            
+            <!-- Informações do Cliente -->
+            <fieldset class="form-section">
+                <legend>Informações do Cliente</legend>
+                <div class="form-group">
+                    <label for="nomeCliente">Nome do Cliente:</label>
+                    <input type="text" name="data[nomeCliente]" id="nomeCliente" class="form-control" value="{{ $dadosAuto['nomeCliente'] ?? '' }}">
                 </div>
-            </div>
 
-            <!-- Container onde surgirão os blocos de relatórios + formulários -->
-            <div id="profiles-reports-container"></div>
+                <div class="form-group">
+                    <label for="nRelatorio">Número do Relatório:</label>
+                    <input type="text" name="data[nRelatorio]" id="nRelatorio" class="form-control" value="{{ $dadosAuto['nRelatorio'] ?? '' }}">
+                </div>
 
-            <button type="submit" class="btn btn-primary">Salvar</button>
+                <div class="form-group">
+                    <label for="nomeDoProcesso">Nome do Processo:</label>
+                    <input type="text" name="data[nomeDoProcesso]" id="nomeDoProcesso" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="empresaCliente">Empresa do Cliente:</label>
+                    <input type="text" name="data[empresaCliente]" id="empresaCliente" class="form-control" value="{{ $dadosAuto['empresaCliente'] ?? '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="cepEmpresa">CEP da Empresa:</label>
+                    <input type="text" name="data[cepEmpresa]" id="cepEmpresa" class="form-control" value="{{ $dadosAuto['cepEmpresa'] ?? '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="cnpjEmpresa">CNPJ da Empresa:</label>
+                    <input type="text" name="data[cnpjEmpresa]" id="cnpjEmpresa" class="form-control" value="{{ $dadosAuto['cnpjEmpresa'] ?? '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="cidadeCliente">Cidade do Cliente:</label>
+                    <input type="text" name="data[cidadeCliente]" id="cidadeCliente" class="form-control" value="{{ $dadosAuto['cidadeCliente'] ?? '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="dataColeta">Data da Coleta:</label>
+                    <input type="date" name="data[dataColeta]" id="dataColeta" class="form-control">
+                </div>
+            </fieldset>
+
+            <!-- Informações Técnicas -->
+            <fieldset class="form-section">
+                <legend>Informações Técnicas</legend>
+                <div class="form-group">
+                    <label for="tecnicos">Técnicos Responsáveis:</label>
+                    <input type="text" name="data[tecnicos]" id="tecnicos" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="textDeObjetivoEspecifico">Objetivo Específico:</label>
+                    <textarea name="data[textDeObjetivoEspecifico]" id="textDeObjetivoEspecifico" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="listaMetodologiasEmpregadas">Metodologias Empregadas:</label>
+                    <textarea name="data[listaMetodologiasEmpregadas]" id="listaMetodologiasEmpregadas" class="form-control" rows="3"></textarea>
+                </div>
+            </fieldset>
+
+            <!-- Informações do Processo -->
+            <fieldset class="form-section">
+                <legend>Informações do Processo</legend>
+                <div class="form-group">
+                    <label for="tituloTabelaProcessoIndustrial">Título da Tabela do Processo Industrial:</label>
+                    <input type="text" name="data[tituloTabelaProcessoIndustrial]" id="tituloTabelaProcessoIndustrial" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="textoLegislacaoEmVigor1">Legislação em Vigor (Parte 1):</label>
+                    <textarea name="data[textoLegislacaoEmVigor1]" id="textoLegislacaoEmVigor1" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="textoLegislacaoEmVigor2">Legislação em Vigor (Parte 2):</label>
+                    <textarea name="data[textoLegislacaoEmVigor2]" id="textoLegislacaoEmVigor2" class="form-control" rows="3"></textarea>
+                </div>
+            </fieldset>
+
+            <!-- Imagens -->
+            <fieldset class="form-section">
+                <legend>Imagens do Processo Industrial</legend>
+                <div class="image-grid">
+                    @for($i = 1; $i <= 3; $i++)
+                        <div class="form-group">
+                            <label for="imagem{{ $i }}">Imagem {{ $i }} (Processo Industrial):</label>
+                            <input type="file" name="imagens[imagem{{ $i }}]" id="imagem{{ $i }}" class="form-control" accept="image/*">
+                            <div class="image-preview-container" id="preview{{ $i }}-container" style="display: none; margin-top: 10px;">
+                                <img id="preview{{ $i }}" style="max-width: 100%; border-radius: 4px;">
+                            </div>
+                        </div>
+                    @endfor
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Imagens dos Equipamentos Utilizados</legend>
+                <div class="image-grid">
+                    @for($i = 4; $i <= 5; $i++)
+                        <div class="form-group">
+                            <label for="imagem{{ $i }}">Imagem {{ $i }} (Equipamentos Utilizados):</label>
+                            <input type="file" name="imagens[imagem{{ $i }}]" id="imagem{{ $i }}" class="form-control" accept="image/*">
+                            <div class="image-preview-container" id="preview{{ $i }}-container" style="display: none; margin-top: 10px;">
+                                <img id="preview{{ $i }}" style="max-width: 100%; border-radius: 4px;">
+                            </div>
+                        </div>
+                    @endfor
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Planilhas de Campo</legend>
+                <div class="image-grid">
+                    @for($i = 6; $i <= 10; $i++)
+                        <div class="form-group">
+                            <label for="imagem{{ $i }}">Imagem {{ $i }} (Planilha de Campo):</label>
+                            <input type="file" name="imagens[imagem{{ $i }}]" id="imagem{{ $i }}" class="form-control" accept="image/*">
+                            <div class="image-preview-container" id="preview{{ $i }}-container" style="display: none; margin-top: 10px;">
+                                <img id="preview{{ $i }}" style="max-width: 100%; border-radius: 4px;">
+                            </div>
+                        </div>
+                    @endfor
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Certificados de Calibração</legend>
+                <div class="image-grid">
+                    @for($i = 11; $i <= 23; $i++)
+                        <div class="form-group">
+                            <label for="imagem{{ $i }}">Imagem {{ $i }} (Certificado de Calibração):</label>
+                            <input type="file" name="imagens[imagem{{ $i }}]" id="imagem{{ $i }}" class="form-control" accept="image/*">
+                            <div class="image-preview-container" id="preview{{ $i }}-container" style="display: none; margin-top: 10px;">
+                                <img id="preview{{ $i }}" style="max-width: 100%; border-radius: 4px;">
+                            </div>
+                        </div>
+                    @endfor
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Relatório de Análise</legend>
+                <div class="image-grid">
+                    @for($i = 24; $i <= 25; $i++)
+                        <div class="form-group">
+                            <label for="imagem{{ $i }}">Imagem {{ $i }} (Relatório de Análise):</label>
+                            <input type="file" name="imagens[imagem{{ $i }}]" id="imagem{{ $i }}" class="form-control" accept="image/*">
+                            <div class="image-preview-container" id="preview{{ $i }}-container" style="display: none; margin-top: 10px;">
+                                <img id="preview{{ $i }}" style="max-width: 100%; border-radius: 4px;">
+                            </div>
+                        </div>
+                    @endfor
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Termo de Responsabilidade</legend>
+                <div class="image-grid">
+                    <div class="form-group">
+                        <label for="imagem26">Imagem 26 (Termo de Responsabilidade):</label>
+                        <input type="file" name="imagens[imagem26]" id="imagem26" class="form-control" accept="image/*">
+                        <div class="image-preview-container" id="preview26-container" style="display: none; margin-top: 10px;">
+                            <img id="preview26" style="max-width: 100%; border-radius: 4px;">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Resultados e Conclusões -->
+            <fieldset class="form-section">
+                <legend>Resultados e Conclusões</legend>
+                <div class="form-group">
+                    <label for="tituloTabelaResultados">Título da Tabela de Resultados:</label>
+                    <input type="text" name="data[tituloTabelaResultados]" id="tituloTabelaResultados" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="textoObsConclusaoMaterialParticulado">Observações e Conclusão - Material Particulado:</label>
+                    <textarea name="data[textoObsConclusaoMaterialParticulado]" id="textoObsConclusaoMaterialParticulado" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="textoObsConclusaoMonoxidoCarbono">Observações e Conclusão - Monóxido de Carbono:</label>
+                    <textarea name="data[textoObsConclusaoMonoxidoCarbono]" id="textoObsConclusaoMonoxidoCarbono" class="form-control" rows="3"></textarea>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary">Gerar Documento</button>
         </form>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const perfilCheckboxes = document.querySelectorAll('.perfil-checkbox');
-            const profilesReportsContainer = document.getElementById('profiles-reports-container');
-
-            perfilCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const perfilId = this.getAttribute('data-perfil-id');
-                    if (this.checked) {
-                        // Criar bloco de relatórios para este perfil
-                        createReportsBlock(perfilId);
-                    } else {
-                        // Se desmarcar, remover bloco inteiro do perfil
-                        removeReportsBlock(perfilId);
-                    }
-                });
+        function selectTemplate(button) {
+            // Remove a classe active de todos os botões
+            document.querySelectorAll('.template-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
-
-            // Cria um bloco com as 4 opções de relatório para o perfil
-            function createReportsBlock(perfilId) {
-                // Se já existe, não duplicar
-                if (document.getElementById('reports-block-' + perfilId)) {
-                    return;
-                }
-
-                const block = document.createElement('div');
-                block.classList.add('perfil-reports-block');
-                block.id = 'reports-block-' + perfilId;
-
-                block.innerHTML = `
-                    <h3>Perfil ${perfilId}: Selecione os relatórios</h3>
-                    <div class="report-check-group">
-                        <label><input type="checkbox" class="relatorio-checkbox" value="analise" data-perfil-id="${perfilId}"> Análise e Amostragem</label>
-                        <label><input type="checkbox" class="relatorio-checkbox" value="ruido" data-perfil-id="${perfilId}"> Ruído</label>
-                        <label><input type="checkbox" class="relatorio-checkbox" value="vibracao" data-perfil-id="${perfilId}"> Vibração</label>
-                        <label><input type="checkbox" class="relatorio-checkbox" value="qualidade_ar" data-perfil-id="${perfilId}"> Qualidade do Ar</label>
-                        <label><input type="checkbox" class="relatorio-checkbox" value="relatorio_tecnico" data-perfil-id="${perfilId}"> Relatório Técnico</label>
-                    </div>
-                    <div class="reports-forms-container" id="reports-forms-${perfilId}"></div>
-                `;
-                profilesReportsContainer.appendChild(block);
-
-                // Capturar os checkboxes recém-criados e adicionar evento
-                const relatorioCheckboxes = block.querySelectorAll('.relatorio-checkbox');
-                relatorioCheckboxes.forEach(rcb => {
-                    rcb.addEventListener('change', updateReportForm);
-                });
-            }
-
-            // Remove o bloco de relatórios de um perfil
-            function removeReportsBlock(perfilId) {
-                const block = document.getElementById('reports-block-' + perfilId);
-                if (block) {
-                    profilesReportsContainer.removeChild(block);
-                }
-            }
-
-            // Exibe ou remove o formulário do relatório correspondente
-            function updateReportForm() {
-                const perfilId = this.getAttribute('data-perfil-id');
-                const reportValue = this.value; // "analise", "ruido", "vibracao", "qualidade_ar", etc.
-
-                const formsContainer = document.getElementById('reports-forms-' + perfilId);
-                if (!formsContainer) return;
-
-                if (this.checked) {
-                    // Criar o form do relatório se não existir
-                    const existingForm = document.getElementById(`report-block-${perfilId}-${reportValue}`);
-                    if (!existingForm) {
-                        const reportBlock = document.createElement('div');
-                        reportBlock.classList.add('report-block');
-                        reportBlock.id = `report-block-${perfilId}-${reportValue}`;
-                        reportBlock.innerHTML = getReportForm(reportValue, perfilId);
-                        formsContainer.appendChild(reportBlock);
-                    }
-                } else {
-                    // Se desmarca, remover o formulário
-                    const formToRemove = document.getElementById(`report-block-${perfilId}-${reportValue}`);
-                    if (formToRemove) {
-                        formsContainer.removeChild(formToRemove);
-                    }
-                }
-            }
-
-            // Função para retornar o formulário específico com base no tipo de relatório
-            function getReportForm(reportValue, perfilId) {
-                switch (reportValue) {
-                    case 'analise':
-                        return getAnaliseForm(perfilId);
-                    case 'ruido':
-                        return getRuidoForm(perfilId);
-                    case 'vibracao':
-                        return getVibracaoForm(perfilId);
-                    case 'qualidade_ar':
-                        return getQualidadeArForm(perfilId);
-                    case 'relatorio_tecnico':
-                        return getRelatorioTecnicoForm(perfilId);
-                    default:
-                        return getDefaultForm(reportValue, perfilId);
-                }
-            }
-
-            // Formulário específico para "Análise e Amostragem"
-            function getAnaliseForm(perfilId) {
-                return `
-                    <h4>Formulário de Análise e Amostragem</h4>
-                    <form>
-                        <fieldset>
-                            <legend>1. Informações da Amostragem</legend>
-                            <div class="form-group">
-                                <label for="data-amostragem-${perfilId}">Data da Amostragem:</label>
-                                <input type="date" id="data-amostragem-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="local-amostragem-${perfilId}">Local da Amostragem:</label>
-                                <input type="text" id="local-amostragem-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="tipo-amostra-${perfilId}">Tipo de Amostra:</label>
-                                <input type="text" id="tipo-amostra-${perfilId}" class="form-control">
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>2. Resultados da Análise</legend>
-                            <div class="form-group">
-                                <label for="parametros-analise-${perfilId}">Parâmetros Analisados:</label>
-                                <textarea id="parametros-analise-${perfilId}" class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="resultados-analise-${perfilId}">Resultados Obtidos:</label>
-                                <textarea id="resultados-analise-${perfilId}" class="form-control" rows="3"></textarea>
-                            </div>
-                        </fieldset>
-                    </form>
-                    <div>
-                `;
-            }
             
-            // Formulário específico para "Vibração"
-            function getVibracaoForm(perfilId) {
-                return `
-                <h4>Formulário de Vibração</h4>
-                <form>
-                        <fieldset>
-                            <legend>1. Informações Gerais</legend>
-                            <div class="form-group">
-                                <label for="data-vibracao-${perfilId}">Data da Medição:</label>
-                                <input type="date" id="data-vibracao-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="local-vibracao-${perfilId}">Local da Medição:</label>
-                                <input type="text" id="local-vibracao-${perfilId}" class="form-control">
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>2. Parâmetros Medidos</legend>
-                            <div class="form-group">
-                                <label for="frequencia-${perfilId}">Frequência (Hz):</label>
-                                <input type="number" id="frequencia-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="amplitude-${perfilId}">Amplitude (mm):</label>
-                                <input type="number" id="amplitude-${perfilId}" class="form-control">
-                            </div>
-                        </fieldset>
-                    </form>
-                `;
-            }
-
-            // Formulário específico para "Qualidade do Ar"
-            function getQualidadeArForm(perfilId) {
-                return `
-                    <h4>Formulário de Qualidade do Ar</h4>
-                    <form>
-                        <fieldset>
-                            <legend>1. Informações Gerais</legend>
-                            <div class="form-group">
-                                <label for="data-ar-${perfilId}">Data da Medição:</label>
-                                <input type="date" id="data-ar-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="local-ar-${perfilId}">Local da Medição:</label>
-                                <input type="text" id="local-ar-${perfilId}" class="form-control">
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend>2. Parâmetros Medidos</legend>
-                            <div class="form-group">
-                                <label for="co2-${perfilId}">Dióxido de Carbono (CO₂):</label>
-                                <input type="number" id="co2-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="pm25-${perfilId}">Material Particulado (PM2.5):</label>
-                                <input type="number" id="pm25-${perfilId}" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="pm10-${perfilId}">Material Particulado (PM10):</label>
-                                <input type="number" id="pm10-${perfilId}" class="form-control">
-                            </div>
-                        </fieldset>
-                    </form>
-                `;
-            }
-
-            // Formulário específico para "Relatório Técnico"
-            function getRelatorioTecnicoForm(perfilId) {
-                return `
-                    <h4>Relatório Técnico</h4>
-                    <form id="relatorioForm-${perfilId}">
-                        <!-- Cabeçalho -->
-                        <fieldset>
-                            <legend>1. Identificação do Relatório</legend>
-                            <div class="form-group">
-                                <label for="relatorioNum-${perfilId}">RELATÓRIO TÉCNICO Nº:</label>
-                                <input type="text" id="relatorioNum-${perfilId}" class="form-control" placeholder="XX/XX">
-                            </div>
-                            <div class="form-group">
-                                <label for="naturezaTrabalho-${perfilId}">NATUREZA DO TRABALHO:</label>
-                                <textarea id="naturezaTrabalho-${perfilId}" class="form-control" rows="2">AVALIAÇÃO DAS EMISSÕES ATMOSFÉRICAS ORIUNDAS DA NOME DO PROCESSO</textarea>
-                            </div>
-                        </fieldset>
-
-                        <!-- Seção Cliente -->
-                        <fieldset>
-                            <legend>2. Informações do Cliente</legend>
-                            <div class="form-group">
-                                <label for="cliente-${perfilId}">CLIENTE:</label>
-                                <textarea id="cliente-${perfilId}" class="form-control" rows="3">NOME, ENDEREÇO, CNPJ</textarea>
-                            </div>
-                        </fieldset>
-
-                        <!-- Seção Autor -->
-                        <fieldset>
-                            <legend>3. Autor do Relatório</legend>
-                            <div class="form-group">
-                                <label for="autor-${perfilId}">AUTOR:</label>
-                                <textarea id="autor-${perfilId}" class="form-control" rows="4">CHAMINÉ SOLUÇÕES EM MONITORAMENTO AMBIENTAL LTDA
-CNPJ: 11.407.678/0001-00
-INSCRIÇÃO MUNICIPAL: 0251105/001-8</textarea>
-                            </div>
-                        </fieldset>
-
-                        <!-- Seção Equipe Técnica -->
-                        <fieldset>
-                            <legend>4. Equipe Técnica</legend>
-                            <div class="form-group">
-                                <label for="equipeTecnica-${perfilId}">EQUIPE TÉCNICA:</label>
-                                <textarea id="equipeTecnica-${perfilId}" class="form-control" rows="3">ARLEY CANTARINO DA SILVA
-TÉCNICO 1
-TÉCNICO 2</textarea>
-                            </div>
-                            </fieldset>
-
-                        <!-- Seção Data -->
-                        <fieldset>
-                            <legend>5. Data da Coleta</legend>
-                            <div class="form-group">
-                                <label for="dataColeta-${perfilId}">DATA:</label>
-                                <input type="date" id="dataColeta-${perfilId}" class="form-control">
-                            </div>
-                        </fieldset>
-                        
-                        <!-- Seção Imagens -->
-                        <fieldset>
-                            <legend>6. Imagens do Processo</legend>
-                            <div class="form-group">
-                                <label for="imagemChamine-${perfilId}">Imagem da Chaminé:</label>
-                                <input type="file" id="imagemChamine-${perfilId}" class="form-control" accept="image/*">
-                                <div class="image-preview-container" id="previewChamine-container-${perfilId}" style="display: none; margin-top: 10px;">
-                                    <img id="previewChamine-${perfilId}" style="max-width: 100%; border-radius: 4px;">
-                                    </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="imagemEquipamento-${perfilId}">Imagem do Equipamento (CIPA):</label>
-                                <input type="file" id="imagemEquipamento-${perfilId}" class="form-control" accept="image/*">
-                                <div class="image-preview-container" id="previewEquipamento-container-${perfilId}" style="display: none; margin-top: 10px;">
-                                    <img id="previewEquipamento-${perfilId}" style="max-width: 100%; border-radius: 4px;">
-                                    </div>
-                            </div>
-                        </fieldset>
-
-                        <!-- Seção Resultados (Tabela Dinâmica) -->
-                        <fieldset>
-                            <legend>7. Resultados das Amostragens</legend>
-                            <div class="form-group">
-                                <button type="button" class="btn btn-secondary" onclick="addParametroRow(${perfilId})">+ Adicionar Parâmetro</button>
-                                <table class="table" id="tabelaResultados-${perfilId}">
-                                    <thead>
-                                        <tr>
-                                            <th>Parâmetros</th>
-                                            <th>1ª Coleta</th>
-                                            <th>2ª Coleta</th>
-                                            <th>3ª Coleta</th>
-                                            <th>Ação</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" class="form-control" value="Material Particulado (mg/Nm³)"></td>
-                                            <td><input type="number" class="form-control" value="37.7"></td>
-                                            <td><input type="number" class="form-control" value="37.3"></td>
-                                            <td><input type="number" class="form-control" value="44.3"></td>
-                                            <td><button type="button" class="btn btn-danger" onclick="removeParametroRow(this)">Remover</button></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="text" class="form-control" value="Monóxido de Carbono (ppm)"></td>
-                                            <td><input type="number" class="form-control" value="8.8"></td>
-                                            <td><input type="number" class="form-control" value="6.7"></td>
-                                            <td><input type="number" class="form-control" value="5.4"></td>
-                                            <td><button type="button" class="btn btn-danger" onclick="removeParametroRow(this)">Remover</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </fieldset>
-
-                        <!-- Seção Conclusão -->
-                        <fieldset>
-                            <legend>8. Conclusão</legend>
-                            <div class="form-group">
-                                <label for="conclusao-${perfilId}">Conclusão da Análise:</label>
-                                <textarea id="conclusao-${perfilId}" class="form-control" rows="5">Os resultados estão abaixo dos limites da Resolução CONAMA 316/2002.</textarea>
-                            </div>
-                            </fieldset>
-                            
-                            <!-- Seção Anexos -->
-                        <fieldset>
-                            <legend>9. Anexos</legend>
-                            <div class="form-group">
-                                <label for="certificados-${perfilId}">Certificados de Calibração:</label>
-                                <input type="file" id="certificados-${perfilId}" class="form-control" accept=".pdf,image/*">
-                            </div>
-                            <div class="form-group">
-                                <label for="planilhas-${perfilId}">Planilhas de Campo:</label>
-                                <input type="file" id="planilhas-${perfilId}" class="form-control" accept=".pdf,.xlsx,.xls">
-                            </div>
-                        </fieldset>
-                        
-                        <div class="form-group mt-4">
-                            <button type="button" class="btn btn-primary" onclick="visualizarRelatorio(${perfilId})">Pré-visualizar</button>
-                            <button type="button" class="btn btn-success" onclick="gerarPDFRelatorio(${perfilId})">Gerar PDF</button>
-                        </div>
-                    </form>
-
-                    <!-- Área para exibir a pré-visualização -->
-                    <div id="previewRelatorio-${perfilId}" class="preview-container" style="display: none; margin-top: 20px; padding: 15px; background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 4px;"></div>
-                `;
-            }
+            // Adiciona a classe active ao botão clicado
+            button.classList.add('active');
             
+            // Define o template selecionado
+            document.getElementById('selectedTemplate').value = button.dataset.template;
+            
+            // Mostra o formulário
+            document.getElementById('documentForm').style.display = 'block';
+        }
 
-            // Formulário específico para "Relatório de Ruído"
-            function getRuidoForm(perfilId) {
-                return `
-                    <h4>Relatório de Ruído</h4>
-                    <form id="relatorioRuidoForm-${perfilId}">
-                    <!-- Cabeçalho -->
-                    <fieldset>
-                    <legend>1. Identificação do Relatório</legend>
-                    <div class="form-group">
-                                <label for="relatorioNum-${perfilId}">RELATÓRIO TÉCNICO Nº:</label>
-                                <input type="text" id="relatorioNum-${perfilId}" class="form-control" placeholder="XX/XX">
-                            </div>
-                            <div class="form-group">
-                                <label for="naturezaTrabalho-${perfilId}">NATUREZA DO TRABALHO:</label>
-                                <textarea id="naturezaTrabalho-${perfilId}" class="form-control" rows="2">AVALIAÇÃO DOS NÍVEIS DE PRESSÃO SONORA NOS LIMITES REAIS DA PROPRIEDADE</textarea>
-                                </div>
-                                </fieldset>
-
-                                <!-- Seção Cliente -->
-                        <fieldset>
-                            <legend>2. Informações do Cliente</legend>
-                            <div class="form-group">
-                                <label for="cliente-${perfilId}">CLIENTE:</label>
-                                <textarea id="cliente-${perfilId}" class="form-control" rows="4">NOME DO CLIENTE
-ENDEREÇO
-CNPJ
-ETC</textarea>
-                            </div>
-                        </fieldset>
-
-                        <!-- Seção Equipe Técnica -->
-                        <fieldset>
-                            <legend>3. Equipe Técnica</legend>
-                            <div class="form-group">
-                                <label for="equipeTecnica-${perfilId}">EQUIPE TÉCNICA:</label>
-                                <textarea id="equipeTecnica-${perfilId}" class="form-control" rows="3">ARLEY CANTARINO DA SILVA
-TÉCNICO 1
-TÉCNICO 2</textarea>
-                            </div>
-                        </fieldset>
-
-                        <!-- Seção Data -->
-                        <fieldset>
-                            <legend>4. Data do Relatório</legend>
-                            <div class="form-group">
-                                <label for="dataRelatorio-${perfilId}">DATA:</label>
-                                <input type="month" id="dataRelatorio-${perfilId}" class="form-control">
-                            </div>
-                        </fieldset>
-
-                        <!-- Seção Resultados (Tabela de Medições) -->
-                        <fieldset>
-                            <legend>5. Resultados das Medições</legend>
-                            <div class="form-group">
-                                <button type="button" class="btn btn-secondary" onclick="addMedicaoRow(${perfilId})">+ Adicionar Ponto</button>
-                                <table class="table" id="tabelaMedicoes-${perfilId}">
-                                    <thead>
-                                        <tr>
-                                            <th>Ponto</th>
-                                            <th>Som Total (dB)</th>
-                                            <th>Som Residual (dB)</th>
-                                            <th>Som Específico (dB)</th>
-                                            <th>Ação</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" class="form-control" value="Ponto 01"></td>
-                                            <td><input type="number" class="form-control" value="54.1" step="0.1"></td>
-                                            <td><input type="number" class="form-control" value="49.8" step="0.1"></td>
-                                            <td><input type="number" class="form-control" value="52.0" step="0.1"></td>
-                                            <td><button type="button" class="btn btn-danger" onclick="removeMedicaoRow(this)">Remover</button></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </fieldset>
-
-                        <!-- Upload de Gráficos -->
-                        <fieldset>
-                            <legend>6. Gráficos Comparativos</legend>
-                            <div class="form-group">
-                                <label for="grafico-${perfilId}">Upload do Gráfico:</label>
-                                <input type="file" id="grafico-${perfilId}" class="form-control" accept="image/*">
-                                <div class="image-preview-container" id="previewGrafico-container-${perfilId}" style="display: none; margin-top: 10px;">
-                                    <img id="previewGrafico-${perfilId}" style="max-width: 100%; border-radius: 4px;">
-                                </div>
-                            </div>
-                        </fieldset>
-
-                        <!-- Conclusão -->
-                        <fieldset>
-                            <legend>7. Conclusão</legend>
-                            <div class="form-group">
-                                <label for="conclusao-${perfilId}">Análise dos Resultados:</label>
-                                <textarea id="conclusao-${perfilId}" class="form-control" rows="5">Os resultados estão conforme a Lei Municipal 7.256/2023...</textarea>
-                            </div>
-                        </fieldset>
-
-                        <!-- Anexos -->
-                        <fieldset>
-                            <legend>8. Anexos</legend>
-                            <div class="form-group">
-                                <label for="certificados-${perfilId}">Certificados de Calibração:</label>
-                                <input type="file" id="certificados-${perfilId}" class="form-control" accept=".pdf,image/*" multiple>
-                            </div>
-                        </fieldset>
-                        
-                        <div class="form-group mt-4">
-                            <button type="button" class="btn btn-primary" onclick="visualizarRelatorioRuido(${perfilId})">Pré-visualizar</button>
-                            <button type="button" class="btn btn-success" onclick="gerarPDFRelatorioRuido(${perfilId})">Gerar PDF</button>
-                        </div>
-                    </form>
-
-                    <!-- Área para exibir a pré-visualização -->
-                    <div id="previewRelatorioRuido-${perfilId}" class="preview-container" style="display: none; margin-top: 20px; padding: 15px; background-color: #f8f9fa; border: 1px solid #ddd; border-radius: 4px;"></div>
-                `;
-            }
-
-            // Formulário genérico para outros relatórios
-            function getDefaultForm(reportValue, perfilId) {
-                return `
-                    <h4>Formulário para ${reportValue}</h4>
-                    <form>
-                        <div class="form-group">
-                            <label for="${reportValue}-input-${perfilId}">Campo para ${reportValue}:</label>
-                            <input type="text" id="${reportValue}-input-${perfilId}" class="form-control" placeholder="Digite algo...">
-                        </div>
-                    </form>
-                `;
-            }
+        // Adiciona preview de imagem para todos os campos de imagem
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    const previewId = this.id.replace('imagem', 'preview');
+                    const containerId = previewId + '-container';
+                    
+                    reader.onload = function(e) {
+                        const preview = document.getElementById(previewId);
+                        const container = document.getElementById(containerId);
+                        preview.src = e.target.result;
+                        container.style.display = 'block';
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
         });
     </script>
-
 </body>
 
 </html>
