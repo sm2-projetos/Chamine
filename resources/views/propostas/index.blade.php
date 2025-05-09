@@ -76,9 +76,13 @@
                             </td>
                             <td class="action-cell">
                                 @if($proposta->status == 'Aprovado')
-                                <a href="{{ route('os.form', $proposta->os->id) }}" class="btn btn-info">
-                                    <i class="fas fa-eye"></i> Ver OS
-                                </a>
+                                @if($proposta->os)
+                                    <a href="{{ route('os.form', $proposta->os->id) }}" class="btn btn-info">
+                                        <i class="fas fa-eye"></i> Ver OS
+                                    </a>
+                                @else
+                                    <span class="text-danger">OS não disponível</span>
+                                @endif
                                 <a href="{{ route('propostas.edit', $proposta->id) }}" class="btn btn-warning">
                                     <i class="fas fa-edit"></i> Editar
                                 </a>

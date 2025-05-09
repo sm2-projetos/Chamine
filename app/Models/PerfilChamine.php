@@ -11,5 +11,7 @@ class PerfilChamine extends Model
 
     protected $table = 'tabela_perfil';
 
+    protected $primaryKey = 'id_perfil'; // Define a chave primária como id_perfil
+
     protected $fillable = ['empresa_nome', 'projeto'];
 }

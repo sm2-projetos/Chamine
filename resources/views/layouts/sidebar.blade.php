@@ -55,6 +55,11 @@
             <i class="fas fa-user-plus"></i>
             Cadastrar Cliente
         </a>
+        
+        <a href="{{ route('empresas.create') }}" class="menu-item">
+            <i class="fas fa-building"></i>
+            Cadastrar Empresa
+        </a>
         <a href="{{ route('clientes.index') }}" class="menu-item">
             <i class="fas fa-list"></i>
             Listar Clientes

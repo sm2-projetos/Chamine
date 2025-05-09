@@ -48,8 +48,8 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="empresa_id">Empresa Vinculada</label>
-                        <select id="empresa_id" name="empresa_id" class="form-control">
+                        <label for="id_empresa">Empresa Vinculada</label>
+                        <select id="id_empresa" name="id_empresa" class="form-control">
                             <option value="">Selecione uma empresa...</option>
                             @foreach($empresas as $empresa)
                                 <option value="{{ $empresa->id }}">{{ $empresa->nome }} ({{ $empresa->cnpj }})</option>

@@ -41,32 +41,17 @@ class EmpresaController extends Controller
             'nome' => 'required|string|max:255',
             'cnpj' => 'required|string|max:20',
             'endereco' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
             'telefone' => 'required|string|max:20',
-            'cliente_id' => 'nullable|exists:clientes,id_cliente',
+            'email' => 'nullable|email|max:255',
         ]);
 
-        $empresa = Empresa::create($request->all());
-
-        // Se um cliente foi selecionado, criar a relação
-        if ($request->has('cliente_id') && !empty($request->input('cliente_id'))) {
-            $empresa->clientes()->attach($request->input('cliente_id'));
-        }
-
-        // Processar contatos se houver
-        if ($request->has('contato_nome')) {
-            for ($i = 0; $i < count($request->contato_nome); $i++) {
-                if (!empty($request->contato_nome[$i]) && !empty($request->contato_telefone[$i])) {
-                    Contato::create([
-                        'empresa_id' => $empresa->id,
-                        'nome' => $request->contato_nome[$i],
-                        'cargo' => $request->contato_cargo[$i] ?? null,
-                        'email' => $request->contato_email[$i] ?? null,
-                        'telefone' => $request->contato_telefone[$i],
-                    ]);
-                }
-            }
-        }
+        Empresa::create([
+            'nome' => $request->nome,
+            'cnpj' => $request->cnpj,
+            'endereco' => $request->endereco,
+            'contato' => $request->telefone,
+            'email' => $request->email,
+        ]);
 
         return redirect()->route('empresas.index')
             ->with('success', 'Empresa cadastrada com sucesso!');
@@ -99,9 +84,8 @@ class EmpresaController extends Controller
             'nome' => 'required|string|max:255',
             'cnpj' => 'required|string|max:20',
             'endereco' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
             'telefone' => 'required|string|max:20',
-            'cliente_id' => 'nullable|exists:clientes,id_cliente',
+            'email' => 'nullable|email|max:255',
         ]);
 
         $empresa = Empresa::findOrFail($id);
@@ -109,51 +93,11 @@ class EmpresaController extends Controller
             'nome' => $request->nome,
             'cnpj' => $request->cnpj,
             'endereco' => $request->endereco,
+            'contato' => $request->telefone,
             'email' => $request->email,
-            'telefone' => $request->telefone,
         ]);
 
-        // Atualizar relação com cliente se informado
-        if ($request->has('cliente_id')) {
-            $empresa->clientes()->sync([$request->cliente_id]);
-        }
-
-        // Processar contatos
-        if ($request->has('contato_nome')) {
-            // Arrays de dados
-            $contatoIds = $request->contato_id;
-            $contatoNomes = $request->contato_nome;
-            $contatoCargos = $request->contato_cargo;
-            $contatoEmails = $request->contato_email;
-            $contatoTelefones = $request->contato_telefone;
-
-            for ($i = 0; $i < count($contatoNomes); $i++) {
-                if (!empty($contatoNomes[$i]) && !empty($contatoTelefones[$i])) {
-                    // Se tem ID, atualiza o contato existente
-                    if (!empty($contatoIds[$i])) {
-                        Contato::where('id', $contatoIds[$i])->update([
-                            'nome' => $contatoNomes[$i],
-                            'cargo' => $contatoCargos[$i] ?? null,
-                            'email' => $contatoEmails[$i] ?? null,
-                            'telefone' => $contatoTelefones[$i],
-                        ]);
-                    } 
-                    // Se não tem ID, cria um novo contato
-                    else {
-                        Contato::create([
-                            'empresa_id' => $empresa->id,
-                            'nome' => $contatoNomes[$i],
-                            'cargo' => $contatoCargos[$i] ?? null,
-                            'email' => $contatoEmails[$i] ?? null,
-                            'telefone' => $contatoTelefones[$i],
-                        ]);
-                    }
-                }
-            }
-        }
-
-        return redirect()->route('empresas.index')
-            ->with('success', 'Empresa atualizada com sucesso!');
+        return redirect()->route('empresas.index')->with('success', 'Empresa atualizada com sucesso!');
     }
 
     /**

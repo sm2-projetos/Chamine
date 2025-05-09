@@ -12,7 +12,7 @@
 <body>
     @include('layouts.sidebar')
 
-    <div class="main-content empresa-form-container">
+    <div class="main-content cliente-form-container">
         <div class="form-container">
             <h1>Cadastrar Empresa</h1>
             
@@ -32,15 +32,30 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="endereco">Endereço</label>
-                        <input type="text" id="endereco" name="endereco" class="form-control" placeholder="Digite o endereço da empresa" required>
-                    </div>
-
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="email">E-mail</label>
-                            <input type="email" id="email" name="email" class="form-control" value="{{ $empresa->email ?? '' }}" placeholder="Digite o e-mail da empresa">
+                            <label for="endereco">Endereço</label>
+                            <input type="text" id="endereco" name="endereco" class="form-control" placeholder="Digite o endereço da empresa" required>
                         </div>
+                        <div class="form-group">
+                            <label for="telefone">Contato</label>
+                            <input type="text" id="telefone" name="telefone" class="form-control" placeholder="Digite o telefone ou nome do contato" required>
+                        </div>
+                    </div>
 
-                        <div class="form-group
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" class="form-control" value="{{ $empresa->email ?? '' }}" placeholder="Digite o e-mail da empresa">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Salvar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
