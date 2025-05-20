@@ -64,13 +64,21 @@
             <i class="fas fa-list"></i>
             Listar Clientes
         </a>
-        <a href="{{ route('empresas.index') }}" class="menu-item">
+        <a href="{{route('empresas.create') }}" class="menu-item">
             <i class="fas fa-building"></i>
+            Cadastrar Empresa
+        </a>
+        <a href="{{ route('empresas.index') }}" class="menu-item">
+            <i class="fas fa-list"></i>
             Listar Empresas
         </a>
         <a href="{{ route('home') }}" class="menu-item">
             <i class="fas fa-tasks"></i>
             Ver Todas OS
+        </a>
+        <a href="{{ route('propostas.store') }}" class="menu-item">
+            <i class="fas fa-tasks"></i>
+            Listar Propostas
         </a>
         <a href="#" class="menu-item">
             <i class="fas fa-cog"></i>

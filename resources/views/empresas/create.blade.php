@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/cliente-cadastro.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
 </head>
 <body>
     @include('layouts.sidebar')
@@ -57,5 +59,11 @@
             </form>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            $('.cnpj-mask').mask('00.000.000/0000-00', {reverse: true});
+        });
+    </script>
 </body>
 </html>
