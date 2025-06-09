@@ -14,6 +14,34 @@ class EmpresasController extends Controller
         return view('empresas.index', compact('empresas'));
     }
 
+    public function create()
+    {
+        return view('empresas.create');
+    }
+    public function store(Request $request)
+    {
+        $empresaNome = $request->input('empresa_nome');
+        $empresaCnpj = $request->input('empresa_cnpj');
+        $empresaEndereco = $request->input('empresa_endereco');
+        $empresaContato = $request->input('empresa_contato');
+
+        $request->validate([
+            'empresa_nome' => 'nullable|string|max:255',
+            'empresa_cnpj' => 'nullable|string|max:20',
+            'empresa_endereco' => 'nullable|string|max:255',
+            'empresa_contato' => 'nullable|string|max:100',
+        ]);
+
+        $empresa = Empresa::create([
+            'nome' => $empresaNome,
+            'cnpj' => $empresaCnpj ?? null,
+            'endereco' => $empresaEndereco ?? null,
+            'contato' => $empresaContato ?? null,
+        ]);
+
+        return redirect()->route('empresas.index')->with('success', 'Empresa cadastrada com sucesso!');
+    }
+
     public function edit($id)
     {
         $empresa = Empresa::findOrFail($id);

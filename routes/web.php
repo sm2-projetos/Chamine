@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Rotas para empresas
     Route::get('/empresas', [EmpresasController::class, 'index'])->name('empresas.index');
+    Route::get('/empresas/create', [EmpresasController::class, 'create'])->name('empresas.create');
+    Route::post('/empresas', [EmpresasController::class, 'store'])->name('empresas.store');
     Route::get('/empresas/{id}/edit', [EmpresasController::class, 'edit'])->name('empresas.edit');
     Route::put('/empresas/{id}', [EmpresasController::class, 'update'])->name('empresas.update');
     Route::delete('/empresas/{id}', [EmpresasController::class, 'destroy'])->name('empresas.destroy');
