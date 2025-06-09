@@ -35,3 +35,4 @@ class OS extends Model
         return $this->belongsTo(PerfilChamine::class, 'perfil_id', 'id_perfil'); // Relaciona perfil_id com id_perfil na tabela tabela_perfil
     }
 }
+

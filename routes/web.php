@@ -12,6 +12,13 @@ use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\DocumentController;
 
+Route::get('/formulario', function () {
+    return view('formulario');
+});
+
+Route::post('/gerar-documento', [DocumentoController::class, 'gerar']);
+
+
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
