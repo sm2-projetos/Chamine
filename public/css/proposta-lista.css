@@ -1,0 +1,483 @@
+/* Estilos para a página de listagem de propostas */
+.proposta-lista-container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Título da página de propostas */
+.proposta-lista-container h1 {
+    color: #2e7d32;
+    font-size: 28px;
+    margin: 10px auto 30px auto;
+    padding: 15px 25px;
+    border-bottom: 3px solid #00a65a;
+    position: relative;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 95%;
+    text-align: center;
+    /* text-shadow: 1px 1px 2px rgba(0,0,0,0.1); */
+    letter-spacing: 0.5px;
+    /* background: linear-gradient(to right, rgba(255,255,255,0), rgba(0,166,90,0.1), rgba(255,255,255,0)); */
+}
+
+.proposta-lista-container h1::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background-color: #00a65a;
+    border-radius: 2px;
+    /* box-shadow: 0 2px 4px rgba(0,166,90,0.3); */
+}
+
+/* Ícone do título */
+.proposta-lista-container h1::before {
+    content: '\f0a1'; /* Ícone de proposta/documento */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 30px;
+    color: #00a65a;
+}
+
+/* Container da tabela */
+.table-lista-propostas {
+    width: 100%;
+    overflow-x: auto;
+    margin: 0 auto;
+    max-width: 95%;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    background-color: white;
+}
+
+/* Estilos para a tabela */
+.proposta-lista-container .table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+}
+
+.proposta-lista-container .table th,
+.proposta-lista-container .table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.proposta-lista-container .table th {
+    background-color: #00a65a;
+    color: white;
+    white-space: nowrap;
+    font-weight: 500;
+}
+
+.proposta-lista-container .table td {
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* Efeitos na tabela */
+.proposta-lista-container .table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.proposta-lista-container .table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Estilo para o filtro */
+.proposta-filters {
+    width: 95%;
+    margin: 0 auto 20px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 166, 90, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    border: 1px solid rgba(0, 166, 90, 0.2);
+    position: relative;
+}
+
+.proposta-filters::before {
+    content: '\f0b0';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: -10px;
+    top: -10px;
+    background: #00a65a;
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.proposta-filters label {
+    font-weight: 500;
+    color: #2e7d32;
+}
+
+.proposta-filters select,
+.proposta-filters input {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    transition: all 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+.proposta-filters select:focus,
+.proposta-filters input:focus {
+    outline: none;
+    border-color: #00a65a;
+    box-shadow: 0 0 0 2px rgba(0, 166, 90, 0.2);
+}
+
+/* Badges de status */
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 500;
+    text-align: center;
+    display: inline-block;
+    min-width: 100px;
+}
+
+.status-aprovado {
+    background-color: rgba(0, 166, 90, 0.1);
+    color: #00a65a;
+    border: 1px solid rgba(0, 166, 90, 0.3);
+}
+
+.status-analise {
+    background-color: rgba(33, 150, 243, 0.1);
+    color: #2196f3;
+    border: 1px solid rgba(33, 150, 243, 0.3);
+}
+
+.status-cancelado {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+    border: 1px solid rgba(220, 53, 69, 0.3);
+}
+
+/* Lista de serviços dentro da célula */
+.proposta-lista-container .table td ul {
+    margin: 0;
+    padding-left: 18px;
+    list-style-type: circle;
+}
+
+.proposta-lista-container .table td li {
+    margin-bottom: 3px;
+    font-size: 0.9em;
+}
+
+/* Valor total destacado */
+.proposta-valor {
+    font-weight: bold;
+    color: #2e7d32;
+}
+
+/* Botões de ação */
+.proposta-lista-container .action-cell {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+}
+
+/* Estilos para os botões */
+.btn {
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    text-align: center;
+    display: inline-block;
+    font-size: 14px;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn i {
+    font-size: 14px;
+}
+
+.btn-success {
+    background: linear-gradient(to bottom, #2fd86f, #28a745);
+    color: white;
+    border: 1px solid #218838;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 4px rgba(40,167,69,0.3);
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+
+.btn-warning {
+    background: #00a65a;
+    color: #ffffff;
+    border: 1px solid #218838;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 4px rgba(255,193,7,0.3);
+    font-weight: 600;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+    border: 1px solid #c82333;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 4px rgba(220,53,69,0.3);
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+
+.btn-info {
+    background: #05355d;
+    color: white;
+    border: 1px solid #138496;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 2px 4px rgba(23,162,184,0.3);
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Botão para adicionar nova proposta - posicionado à direita */
+.btn-add-proposta {
+    background-color: #00a65a;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Modificações para posicionar à direita */
+    margin-left: auto; /* Isso empurra o botão para a direita */
+    margin-right: 2.5%; /* Margem consistente com outros elementos */
+    width: auto; /* Em vez de uma largura fixa */
+    max-width: none; /* Removendo limite de largura */
+    justify-content: center; /* Centraliza o conteúdo do botão */
+}
+
+/* Adicionar um container para o botão para melhor alinhamento */
+.btn-container {
+    width: 95%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end; /* Alinhamento à direita */
+}
+
+/* Responsividade */
+@media (min-width: 1600px) {
+    .table-lista-propostas {
+        max-width: 1500px;
+    }
+    
+    .proposta-lista-container h1,
+    .proposta-filters {
+        max-width: 1500px;
+    }
+
+    .btn-container {
+        max-width: 1500px;
+    }
+}
+
+@media (max-width: 1599px) and (min-width: 1200px) {
+    .table-lista-propostas {
+        max-width: 90%;
+    }
+    
+    .proposta-lista-container h1,
+    .proposta-filters {
+        max-width: 90%;
+    }
+
+    .btn-container {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .table-lista-propostas {
+        max-width: 95%;
+    }
+    
+    .proposta-lista-container h1,
+    .proposta-filters {
+        max-width: 95%;
+    }
+    
+    .proposta-lista-container .table th,
+    .proposta-lista-container .table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    .btn-container {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {    
+    .proposta-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .table-lista-propostas {
+        max-width: 98%;
+    }
+    
+    .proposta-lista-container h1,
+    .proposta-filters {
+        max-width: 98%;
+        font-size: 20px;
+    }
+    
+    .proposta-lista-container h1::before {
+        font-size: 24px;
+    }
+    
+    .proposta-lista-container .table {
+        display: block;
+        min-width: 700px;
+    }
+    
+    .proposta-lista-container .table th,
+    .proposta-lista-container .table td {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+    
+    .btn {
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .btn-container {
+        max-width: 98%;
+    }
+}
+
+@media (max-width: 767px) {
+    .table-lista-propostas {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    
+    .proposta-lista-container h1,
+    .proposta-filters {
+        max-width: 100%;
+    }
+    
+    .proposta-lista-container h1 {
+        padding: 10px;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .proposta-lista-container h1::before {
+        font-size: 20px;
+    }
+    
+    .proposta-lista-container .table {
+        margin: 10px auto;
+        display: block;
+        min-width: 700px;
+    }
+    
+    .btn {
+        padding: 6px 8px;
+        font-size: 12px;
+        min-width: auto;
+    }
+
+    .btn-container {
+        max-width: 100%;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .proposta-lista-container {
+        padding: 0 5px;
+    }
+
+    .table-lista-propostas {
+        padding: 0 5px;
+    }
+    
+    .proposta-lista-container h1 {
+        font-size: 18px;
+        padding: 10px;
+    }
+    
+    .proposta-lista-container h1::before {
+        font-size: 22px;
+    }
+    
+    .proposta-lista-container .table th,
+    .proposta-lista-container .table td {
+        padding: 6px 8px;
+        font-size: 0.8em;
+    }
+    
+    .status-badge {
+        font-size: 0.7em;
+        padding: 3px 6px;
+        min-width: 70px;
+    }
+
+    .btn-add-proposta {
+        font-size: 14px;
+    }
+    
+    .btn-add-proposta i {
+        font-size: 14px;
+    }
+    
+    .btn-container {
+        padding-right: 5px;
+    }
+}

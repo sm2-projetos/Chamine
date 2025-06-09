@@ -1,0 +1,637 @@
+/* Estilos específicos para a página de listagem de clientes */
+.clientes-lista-container {
+    width: 100%; /* Ocupa toda a largura disponível */
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza horizontalmente */
+}
+
+/* Estilo para o contêiner interno da tabela, usando o modelo de grid responsivo */
+.table-lista-clientes {
+    width: 100%;
+    overflow-x: auto; /* Permite rolagem horizontal quando necessário */
+    margin: 0 auto; /* Centraliza o container */
+    max-width: 95%; /* Impede que a tabela toque nas bordas da tela */
+    border-radius: 8px;
+    display: grid; /* Usando grid layout como no propostaComercial.css */
+    grid-template-columns: 1fr; /* Uma única coluna que contém a tabela */
+}
+
+/* Ajuste para a tabela seguir o estilo arredondado */
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: white;
+}
+
+.clientes-lista-container h1 {
+    color: #2e7d32;
+    font-size: 24px;
+    margin: 0 auto 20px auto; /* Centraliza o título */
+    padding: 15px;
+    border-bottom: 2px solid #00a65a;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Centraliza o conteúdo do título */
+    gap: 10px;
+    background-color: transparent; /* Removendo o fundo branco */
+    border-radius: 0; /* Removendo bordas arredondadas */
+    box-shadow: none; /* Removendo sombra */
+    width: 95%; /* Mesma largura do container da tabela */
+    text-align: center;
+}
+
+.clientes-lista-container h1::before {
+    content: '\f007';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 30px;
+    color: #00a65a;
+}
+
+/* Estilos melhorados para as células da tabela, semelhantes ao propostaComercial */
+.clientes-lista-container .table th,
+.clientes-lista-container .table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    vertical-align: middle; /* Alinhamento vertical melhor */
+    transition: background-color 0.3s ease; /* Transição suave no hover */
+}
+
+.clientes-lista-container .table th {
+    background-color: #00a65a;
+    color: white;
+    font-weight: 500;
+    white-space: nowrap; /* Evita quebra de texto em telas pequenas */
+    position: sticky; /* Manter cabeçalhos visíveis durante a rolagem */
+    top: 0;
+    z-index: 10;
+}
+
+.clientes-lista-container .table td {
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* Ações na tabela com estilo semelhante ao propostaComercial */
+.clientes-lista-container .action-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Ícones Font Awesome com efeitos semelhantes ao propostaComercial */
+.clientes-lista-container .btn-icon {
+    background: none;
+    border: none;
+    padding: 8px;
+    margin: 0;
+    cursor: pointer;
+    color: #6c757d;
+    transition: all 0.3s ease; /* Transição semelhante ao propostaComercial */
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border-radius: 4px;
+}
+
+.clientes-lista-container .btn-icon i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clientes-lista-container .btn-icon:hover {
+    transform: translateY(-2px); /* Efeito de elevação como no propostaComercial */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.clientes-lista-container .icon-edit {
+    color: #008d4c; /* Cor semelhante ao btn-edit do propostaComercial */
+}
+
+.clientes-lista-container .icon-edit:hover {
+    background-color: rgba(23, 162, 184, 0.1);
+    color: #008d4c;
+}
+
+.clientes-lista-container .icon-delete {
+    color: #dc3545;
+}
+
+.clientes-lista-container .icon-delete:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: #dc3545;
+}
+
+/* Alerta de confirmação com estilo semelhante ao propostaComercial */
+.clientes-lista-container .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 0 auto 20px auto; /* Centraliza o alerta */
+    border: 1px solid #c3e6cb;
+    max-width: 90%; /* Limita a largura do alerta */
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra como no propostaComercial */
+}
+
+/* Mensagem sem clientes com estilo propostaComercial */
+.clientes-lista-container .no-clientes {
+    text-align: center;
+    color: #6c757d;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px; /* Largura máxima para a mensagem */
+    margin: 20px auto; /* Centraliza a mensagem */
+    transition: all 0.3s ease; /* Transição suave como no propostaComercial */
+}
+
+.clientes-lista-container .no-clientes:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Para formulários dentro das células da tabela */
+.clientes-lista-container td form {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Efeito de hover nas linhas da tabela - melhorado como no propostaComercial */
+.clientes-lista-container .table tr:hover {
+    background-color: #f5f5f5;
+}
+
+.clientes-lista-container .table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Listras alternadas como no propostaComercial */
+}
+
+/* Efeito nas células ao passar o mouse */
+.clientes-lista-container .table td:hover {
+    background-color: #f0f0f0;
+}
+
+/* Sistema de grid para layouts responsivos como no propostaComercial */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/* Botões com estilo do propostaComercial */
+.btn {
+    padding: 12px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    text-align: center;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #00a65a;
+    color: white;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Tamanhos responsivos da tabela baseados no tamanho da tela */
+@media (min-width: 1600px) {
+    .table-lista-clientes {
+        max-width: 1500px; /* Tabela mais larga em telas grandes */
+    }
+    
+    .clientes-lista-container h1 {
+        max-width: 1500px;
+    }
+    
+    /* Layout de grid para tabelas mais largas em telas grandes */
+    .dashboard-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1599px) and (min-width: 1200px) {
+    .table-lista-clientes {
+        max-width: 90%; /* Tabela média em telas médias-grandes */
+    }
+    
+    .clientes-lista-container h1 {
+        max-width: 90%;
+    }
+    
+    /* Layout de grid para tabelas em telas médias */
+    .dashboard-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .table-lista-clientes {
+        max-width: 95%; /* Tabela um pouco menor em telas médias */
+    }
+    
+    .clientes-lista-container h1 {
+        max-width: 95%;
+    }
+    
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+    
+    /* Layout de grid para tabelas em telas médias */
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+    .table-lista-clientes {
+        max-width: 98%; /* Tabela mais estreita em tablets */
+    }
+    
+    .clientes-lista-container h1 {
+        max-width: 98%;
+        font-size: 20px;
+    }
+    
+    .clientes-lista-container h1::before {
+        font-size: 24px;
+    }
+    
+    .clientes-lista-container .table {
+        display: block;
+        min-width: 700px;
+    }
+    
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+    
+    /* Layout de grid para tabelas em tablets */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 767px) {
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .table-lista-clientes {
+        max-width: 100%; /* Tabela ocupa toda a largura em mobile */
+        padding: 0 10px; /* Pequeno padding nas laterais */
+        overflow-x: auto; /* Permitir rolagem horizontal em dispositivos móveis */
+        -webkit-overflow-scrolling: touch; /* Rolagem suave em iOS */
+    }
+    
+    .clientes-lista-container h1 {
+        max-width: 100%;
+        padding: 10px;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .clientes-lista-container h1::before {
+        font-size: 20px;
+    }
+    
+    .clientes-lista-container .table {
+        margin: 10px auto;
+        display: block;
+        min-width: 600px; /* Garante que a tabela tenha uma largura mínima para evitar compressão excessiva */
+        font-size: 0.9em;
+    }
+    
+    /* Ajuste de layout para dispositivos móveis */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+    
+    /* Botões menores em dispositivos móveis */
+    .btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}
+
+/* Ajustes para melhorar a exibição em dispositivos móveis */
+@media (max-width: 576px) {
+    .clientes-lista-container {
+        padding: 0 5px;
+    }
+
+    .table-lista-clientes {
+        padding: 0 5px;
+        margin: 0;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    
+    .clientes-lista-container h1 {
+        font-size: 18px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    
+    .clientes-lista-container h1::before {
+        font-size: 22px;
+    }
+    
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 6px 8px;
+        font-size: 0.8em;
+    }
+    
+    .clientes-lista-container .action-buttons {
+        gap: 8px;
+    }
+    
+    .clientes-lista-container .btn-icon {
+        padding: 6px;
+        font-size: 1rem;
+    }
+    
+    /* Botões ainda menores em dispositivos muito pequenos */
+    .btn {
+        padding: 8px 15px;
+        font-size: 13px;
+    }
+}
+
+/* Manter os outros estilos existentes... */
+
+.clientes-lista-container .table th:nth-child(1), /* ID */
+.clientes-lista-container .table td:nth-child(1) {
+    width: 6%;
+    min-width: 60px;
+}
+
+.clientes-lista-container .table th:nth-child(2), /* Nome */
+.clientes-lista-container .table td:nth-child(2) {
+    width: 22%;
+    min-width: 180px;
+}
+
+.clientes-lista-container .table th:nth-child(3), /* CNPJ/CPF */
+.clientes-lista-container .table td:nth-child(3) {
+    width: 14%;
+    min-width: 130px;
+}
+
+.clientes-lista-container .table th:nth-child(4), /* Endereço */
+.clientes-lista-container .table td:nth-child(4) {
+    width: 20%;
+    min-width: 160px;
+}
+
+.clientes-lista-container .table th:nth-child(5), /* Email */
+.clientes-lista-container .table td:nth-child(5) {
+    width: 18%;
+    min-width: 150px;
+}
+
+.clientes-lista-container .table th:nth-child(6), /* Telefone */
+.clientes-lista-container .table td:nth-child(6) {
+    width: 12%;
+    min-width: 120px;
+}
+
+.clientes-lista-container .table th:nth-child(7), /* Ações */
+.clientes-lista-container .table td:nth-child(7) {
+    width: 8%;
+    min-width: 90px;
+}
+
+/* Ajustes específicos para rolagem horizontal suave da tabela */
+.table-lista-clientes {
+    scrollbar-width: thin;
+    scrollbar-color: #00a65a #f1f1f1;
+}
+
+/* Estilo para barras de rolagem */
+.table-lista-clientes::-webkit-scrollbar {
+    height: 6px;
+}
+
+.table-lista-clientes::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.table-lista-clientes::-webkit-scrollbar-thumb {
+    background: #00a65a;
+    border-radius: 10px;
+}
+
+.table-lista-clientes::-webkit-scrollbar-thumb:hover {
+    background: #008d4c;
+}
+
+/* Indicador de rolagem horizontal - semelhante ao propostaComercial */
+.table-lista-clientes::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, transparent 70%, rgba(0, 166, 90, 0.3) 100%);
+    pointer-events: none;
+    opacity: 0.7;
+    border-radius: 0 0 8px 0;
+    z-index: 5;
+}
+
+/* Quando não houver rolagem horizontal necessária, ocultar o indicador */
+.table-lista-clientes.no-scroll::after {
+    display: none;
+}
+
+/* Script para adicionar a classe no-scroll quando não houver rolagem horizontal necessária */
+@media (min-width: 992px) {
+    .table-lista-clientes::after {
+        display: none; /* Ocultar o indicador em telas grandes onde geralmente não há rolagem */
+    }
+}
+
+/* Ajustes responsivos para telas grandes */
+@media (min-width: 1200px) {
+    .clientes-lista-container .table td:nth-child(4) { /* Endereço em telas grandes */
+        white-space: normal; /* Permite quebra de texto em endereços longos */
+    }
+}
+
+/* Ajuste a fonte e o cabeçalho em resoluções menores */
+@media (max-width: 1366px) {
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        font-size: 0.85em;
+    }
+    .clientes-lista-container h1 {
+        font-size: 22px;
+    }
+}
+
+/* Ajustes responsivos para telas médias */
+@media (max-width: 992px) {
+    .clientes-lista-container .container {
+        padding: 20px;
+    }
+    
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+/* Ajustes responsivos para tablets */
+@media (max-width: 768px) {
+    .clientes-lista-container .container {
+        padding: 10px;
+        margin: 0 15px 0 15px; /* Margens iguais nos dois lados */
+        max-width: calc(100% - 30px); /* Largura considerando as margens */
+    }
+    
+    .clientes-lista-container .table {
+        display: block;
+        min-width: 600px;
+    }
+    
+    .table-lista-clientes {
+        padding: 5px; /* Padding igual em todos os lados */
+    }
+    
+    .clientes-lista-container .main-content {
+        padding-right: 15px; /* Adiciona espaço à direita do conteúdo principal */
+    }
+    
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+    
+    .clientes-lista-container h1 {
+        font-size: 20px;
+    }
+    
+    .clientes-lista-container h1::before {
+        font-size: 24px;
+    }
+    
+    .clientes-lista-container .action-buttons {
+        gap: 12px;
+    }
+    
+    .clientes-lista-container .btn-icon {
+        font-size: 1rem;
+    }
+}
+
+/* Ajustes responsivos para dispositivos móveis */
+@media (max-width: 576px) {
+    .clientes-lista-container .container {
+        padding: 10px 20px 10px 15px; /* Aumentado padding direito */
+        margin: 0 15px 0 10px; /* Aumentado margem direita */
+        border-radius: 8px;
+        width: calc(100% - 25px); /* Largura considerando margens */
+    }
+    
+    .clientes-lista-container .main-content {
+        padding-right: 10px; /* Adiciona espaço à direita do conteúdo principal */
+    }
+    
+    .clientes-lista-container h1 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .clientes-lista-container h1::before {
+        font-size: 20px;
+    }
+    
+    .table-lista-clientes {
+        padding: 0 10px 0 0; /* Adiciona padding à direita */
+    }
+    
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 6px 8px;
+        font-size: 0.8em;
+    }
+    
+    .clientes-lista-container .action-buttons {
+        gap: 8px;
+    }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 400px) {
+    .clientes-lista-container .container {
+        padding: 8px 15px 8px 12px;
+        margin: 0 12px 0 8px;
+        width: calc(100% - 20px);
+    }
+    
+    .clientes-lista-container .main-content {
+        padding-right: 8px;
+    }
+    
+    /* Aumenta levemente o espaço de rolagem horizontal */
+    .table-lista-clientes:after {
+        content: "";
+        display: block;
+        width: 15px; /* Espaço extra após a tabela */
+        height: 1px;
+    }
+}

@@ -18,7 +18,8 @@ class ClientesController extends Controller
 
     public function create()
     {
-        return view('clientes.create');
+        $empresas = \App\Models\Empresa::orderBy('nome')->get();
+        return view('clientes.create', compact('empresas'));
     }
 
     public function store(Request $request)
@@ -30,6 +31,8 @@ class ClientesController extends Controller
             'endereco' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'telefone' => 'required|string|max:20',
+            'empresa_id' => 'nullable|exists:empresas,id', // Validação para o novo campo
+            // Mantém os outros campos para compatibilidade com formulários existentes
             'empresa_nome.*' => 'nullable|string|max:255',
             'empresa_cnpj.*' => 'nullable|string|max:20',
             'empresa_endereco.*' => 'nullable|string|max:255',
@@ -45,26 +48,35 @@ class ClientesController extends Controller
             'telefone' => $request->input('telefone'),
         ]);
 
-        // Criação das empresas associadas ao cliente
-        $empresaNomes = $request->input('empresa_nome');
-        $empresaCnpjs = $request->input('empresa_cnpj');
-        $empresaEnderecos = $request->input('empresa_endereco');
-        $empresaContatos = $request->input('empresa_contato');
+        // Verifica se foi selecionada uma empresa existente
+        if ($request->has('empresa_id') && !empty($request->input('empresa_id'))) {
+            ClienteEmpresa::create([
+                'cliente_id' => $cliente->id_cliente, // Use o campo correto conforme seu modelo
+                'empresa_id' => $request->input('empresa_id'),
+            ]);
+        }
+        // Caso contrário, processa criação de novas empresas se houver
+        else {
+            $empresaNomes = $request->input('empresa_nome');
+            $empresaCnpjs = $request->input('empresa_cnpj');
+            $empresaEnderecos = $request->input('empresa_endereco');
+            $empresaContatos = $request->input('empresa_contato');
 
-        if ($empresaNomes && is_array($empresaNomes)) {
-            foreach ($empresaNomes as $index => $empresaNome) {
-                if (!empty($empresaNome)) {
-                    $empresa = Empresa::create([
-                        'nome' => $empresaNome,
-                        'cnpj' => $empresaCnpjs[$index] ?? null,
-                        'endereco' => $empresaEnderecos[$index] ?? null,
-                        'contato' => $empresaContatos[$index] ?? null,
-                    ]);
+            if ($empresaNomes && is_array($empresaNomes)) {
+                foreach ($empresaNomes as $index => $empresaNome) {
+                    if (!empty($empresaNome)) {
+                        $empresa = Empresa::create([
+                            'nome' => $empresaNome,
+                            'cnpj' => $empresaCnpjs[$index] ?? null,
+                            'endereco' => $empresaEnderecos[$index] ?? null,
+                            'contato' => $empresaContatos[$index] ?? null,
+                        ]);
 
-                    ClienteEmpresa::create([
-                        'cliente_id' => $cliente->id_cliente,
-                        'empresa_id' => $empresa->id,
-                    ]);
+                        ClienteEmpresa::create([
+                            'cliente_id' => $cliente->id_cliente,
+                            'empresa_id' => $empresa->id,
+                        ]);
+                    }
                 }
             }
         }

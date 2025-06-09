@@ -1,0 +1,436 @@
+/* Estilos específicos para a página de listagem de empresas */
+.empresas-lista-container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Estilo para o contêiner interno da tabela */
+.table-lista-empresas {
+    width: 100%;
+    overflow-x: auto;
+    margin: 0 auto;
+    max-width: 95%;
+    border-radius: 8px;
+}
+
+/* Ajuste para a tabela seguir o estilo arredondado */
+.empresas-lista-container .table {
+    width: 100%;
+    border-collapse: separate; /* Importante para funcionar com border-radius */
+    border-spacing: 0;
+    margin: 0;
+    border-radius: 8px;
+    overflow: hidden; /* Para garantir que a tabela respeite o border-radius */
+    background-color: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+}
+
+.empresas-lista-container h1 {
+    color: #2e7d32;
+    font-size: 24px;
+    margin: 0 auto 20px auto;
+    padding: 15px;
+    border-bottom: 2px solid #00a65a;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: transparent; /* Removendo o fundo branco */
+    border-radius: 0; /* Removendo bordas arredondadas */
+    box-shadow: none; /* Removendo sombra */
+    width: 95%;
+    text-align: center;
+}
+
+.empresas-lista-container h1::before {
+    content: '\f0c0';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 30px;
+    color: #00a65a;
+}
+
+.empresas-lista-container .table th,
+.empresas-lista-container .table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.empresas-lista-container .table th {
+    background-color: #00a65a;
+    color: white;
+    white-space: nowrap;
+}
+
+.empresas-lista-container .table td {
+    white-space: normal;
+    word-break: break-word;
+}
+
+/* Ações na tabela */
+.empresas-lista-container .action-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+/* Ícones Font Awesome - estilo base comum para botões de ação */
+.empresas-lista-container .btn-icon {
+    background: none;
+    border: none;
+    padding: 5px;
+    margin: 0;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border-radius: 4px;
+}
+
+.empresas-lista-container .btn-icon i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Removendo efeitos de hover no fundo */
+.empresas-lista-container .btn-icon:hover {
+    background: none !important;
+    box-shadow: none;
+    transform: scale(1.15);
+}
+
+/* Estilo específico para o ícone de edição - cor verde */
+.empresas-lista-container .icon-edit {
+    color: #00a65a; /* Verde */
+}
+
+.empresas-lista-container .icon-edit:hover {
+    color: #008d4c; /* Verde escuro ao passar o mouse */
+}
+
+/* Estilo específico para o ícone de exclusão - cor vermelha */
+.empresas-lista-container .icon-delete {
+    color: #dc3545; /* Vermelho */
+}
+
+.empresas-lista-container .icon-delete:hover {
+    color: #c82333; /* Vermelho escuro ao passar o mouse */
+}
+
+/* Estilo específico para o ícone de visualização - cor azul */
+.empresas-lista-container .icon-view {
+    color: #1976d2; /* Azul */
+}
+
+.empresas-lista-container .icon-view:hover {
+    color: #0d5aa7; /* Azul escuro ao passar o mouse */
+}
+
+/* Estilos para botões com tamanho uniforme */
+.empresas-lista-container .btn {
+    padding: 6px 10px; /* Reduzido para equilibrar */
+    min-width: 70px; /* Largura mínima para todos os botões */
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    color: white;
+    display: inline-block;
+    margin-right: 5px;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.empresas-lista-container .btn-primary {
+    background: #00a65a;
+}
+
+.empresas-lista-container .btn-danger {
+    background: #dc3545; /* Atualizado para o vermelho padrão do Bootstrap */
+}
+
+.empresas-lista-container .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Para formulários dentro das células da tabela */
+.empresas-lista-container td form {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+/* Alerta de confirmação */
+.empresas-lista-container .alert-success,
+.empresas-lista-container .alert {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 4px;
+    margin: 0 auto 20px auto;
+    border: 1px solid #c3e6cb;
+    max-width: 90%;
+    text-align: center;
+}
+
+/* Ajustes responsivos para telas grandes */
+@media (min-width: 1200px) {
+    .clientes-lista-container .table td:nth-child(4) { /* Endereço em telas grandes */
+        white-space: normal; /* Permite quebra de texto em endereços longos */
+    }
+}
+
+/* Ajustes responsivos para telas médias */
+@media (max-width: 992px) {
+    .clientes-lista-container .container {
+        padding: 20px;
+    }
+    
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+/* Ajustes responsivos para tablets */
+@media (max-width: 768px) {
+    .clientes-lista-container .container {
+        padding: 15px 25px 15px 25px; /* Padding igual nos dois lados */
+        margin: 0 15px 0 15px; /* Margens iguais nos dois lados */
+        max-width: calc(100% - 30px); /* Largura considerando as margens */
+    }
+    
+    .clientes-lista-container .table {
+        min-width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .table-lista-clientes {
+        padding: 5px; /* Padding igual em todos os lados */
+    }
+    
+    .clientes-lista-container .main-content {
+        padding-right: 15px; /* Adiciona espaço à direita do conteúdo principal */
+    }
+    
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+    
+    .clientes-lista-container h1 {
+        font-size: 20px;
+    }
+    
+    .clientes-lista-container h1::before {
+        font-size: 24px;
+    }
+    
+    .clientes-lista-container .action-buttons {
+        gap: 12px;
+    }
+    
+    .clientes-lista-container .btn-icon {
+        font-size: 1rem;
+    }
+}
+
+/* Ajustes responsivos para dispositivos móveis */
+@media (max-width: 576px) {
+    .clientes-lista-container .container {
+        padding: 10px 20px 10px 15px; /* Aumentado padding direito */
+        margin: 0 15px 0 10px; /* Aumentado margem direita */
+        border-radius: 8px;
+        width: calc(100% - 25px); /* Largura considerando margens */
+    }
+    
+    .clientes-lista-container .main-content {
+        padding-right: 10px; /* Adiciona espaço à direita do conteúdo principal */
+    }
+    
+    .clientes-lista-container h1 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .clientes-lista-container h1::before {
+        font-size: 20px;
+    }
+    
+    .table-lista-clientes {
+        padding: 0 10px 0 0; /* Adiciona padding à direita */
+    }
+    
+    .clientes-lista-container .table th,
+    .clientes-lista-container .table td {
+        padding: 6px 8px;
+        font-size: 0.8em;
+    }
+    
+    .clientes-lista-container .action-buttons {
+        gap: 8px;
+    }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 400px) {
+    .clientes-lista-container .container {
+        padding: 8px 15px 8px 12px;
+        margin: 0 12px 0 8px;
+        width: calc(100% - 20px);
+    }
+    
+    .clientes-lista-container .main-content {
+        padding-right: 8px;
+    }
+    
+    /* Aumenta levemente o espaço de rolagem horizontal */
+    .table-lista-clientes:after {
+        content: "";
+        display: block;
+        width: 15px; /* Espaço extra após a tabela */
+        height: 1px;
+    }
+}
+
+/* Efeito de hover nas linhas da tabela */
+.empresas-lista-container .table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Tamanhos responsivos da tabela baseados no tamanho da tela */
+@media (min-width: 1600px) {
+    .table-lista-empresas {
+        max-width: 1500px;
+    }
+    
+    .empresas-lista-container h1 {
+        max-width: 1500px;
+    }
+}
+
+@media (max-width: 1599px) and (min-width: 1200px) {
+    .table-lista-empresas {
+        max-width: 90%;
+    }
+    
+    .empresas-lista-container h1 {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+    .table-lista-empresas {
+        max-width: 95%;
+    }
+    
+    .empresas-lista-container h1 {
+        max-width: 95%;
+    }
+    
+    .empresas-lista-container .table th,
+    .empresas-lista-container .table td {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 991px) and (min-width: 768px) {
+    .table-lista-empresas {
+        max-width: 98%;
+    }
+    
+    .empresas-lista-container h1 {
+        max-width: 98%;
+        font-size: 20px;
+    }
+    
+    .empresas-lista-container h1::before {
+        font-size: 24px;
+    }
+    
+    .empresas-lista-container .table {
+        display: block;
+        min-width: 700px;
+    }
+    
+    .empresas-lista-container .table th,
+    .empresas-lista-container .table td {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 767px) {
+    .table-lista-empresas {
+        max-width: 100%;
+        padding: 0 10px;
+    }
+    
+    .empresas-lista-container h1 {
+        max-width: 100%;
+        padding: 10px;
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .empresas-lista-container h1::before {
+        font-size: 20px;
+    }
+    
+    .empresas-lista-container .table {
+        margin: 10px auto;
+        display: block;
+        min-width: 600px;
+    }
+}
+
+@media (max-width: 576px) {
+    .empresas-lista-container {
+        padding: 0 5px;
+    }
+
+    .table-lista-empresas {
+        padding: 0 5px;
+    }
+    
+    .empresas-lista-container h1 {
+        font-size: 18px;
+        padding: 10px;
+    }
+    
+    .empresas-lista-container h1::before {
+        font-size: 22px;
+    }
+    
+    .empresas-lista-container .table th,
+    .empresas-lista-container .table td {
+        padding: 6px 8px;
+        font-size: 0.8em;
+    }
+}

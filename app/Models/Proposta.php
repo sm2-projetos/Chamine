@@ -35,4 +35,9 @@ class Proposta extends Model
     {
         return $this->belongsTo(Empresa::class, 'id_empresa');
     }
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class, 'id_cliente');
+    }
 }

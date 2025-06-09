@@ -51,21 +51,26 @@
 
     <div class="menu-section">
         <div class="menu-section-title">Cadastros</div>
-        <a href="{{ route('empresas.create') }}" class="menu-item">
+        <a href="{{ route('clientes.create') }}" class="menu-item">
             <i class="fas fa-user-plus"></i>
             Cadastrar Empresas
         </a>
+
         {{-- <a href="{{ route('clientes.index') }}" class="menu-item">
             <i class="fas fa-list"></i>
             Listar Clientes
         </a> --}}
         <a href="{{ route('empresas.index') }}" class="menu-item">
-            <i class="fas fa-building"></i>
+            <i class="fas fa-list"></i>
             Listar Empresas
         </a>
-        <a href="#" class="menu-item">
+        <a href="{{ route('home') }}" class="menu-item">
             <i class="fas fa-tasks"></i>
             Ver Todas OS
+        </a>
+        <a href="{{ route('propostas.store') }}" class="menu-item">
+            <i class="fas fa-tasks"></i>
+            Listar Propostas
         </a>
         <a href="#" class="menu-item">
             <i class="fas fa-cog"></i>

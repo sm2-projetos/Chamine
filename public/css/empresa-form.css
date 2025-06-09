@@ -1,0 +1,261 @@
+
+/* Estilos específicos para os formulários de empresas */
+.empresa-form-container {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.empresa-form-container .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+    background: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: visible;
+}
+
+/* Manter fundo branco no formulário */
+.empresa-form-container .form-container {
+    /* background: white; */
+    padding: 30px;
+    border-radius: 8px;
+    /* box-shadow: 0 2px 5px rgba(0,0,0,0.1); */
+    width: 100%;
+    max-width: 1200px;
+}
+
+.empresa-form-container h1 {
+    color: #2e7d32;
+    font-size: 24px;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00a65a;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.empresa-form-container h1::before {
+    content: '\f0c0'; /* Ícone de grupo de usuários/empresa */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 30px;
+    color: #00a65a;
+}
+
+/* Estilização igual para ambos os cabeçalhos */
+.empresa-form-container h2 {
+    color: #2e7d32;
+    font-size: 24px;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00a65a;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.empresa-form-container h2::before {
+    content: '\f007'; /* Ícone de usuário individual */
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    font-size: 30px;
+    color: #00a65a;
+}
+
+.empresa-form-container .form-group {
+    margin-bottom: 20px;
+}
+
+.empresa-form-container label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #333;
+}
+
+.empresa-form-container .form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.empresa-form-container .form-control:focus {
+    border-color: #00a65a;
+    box-shadow: 0 0 0 3px rgba(0, 166, 90, 0.2);
+    outline: none;
+}
+
+/* Mesma estilização para os campos readonly, mas com fundo diferente */
+.empresa-form-container .form-control[readonly] {
+    background-color: #f8f9fa;
+    cursor: not-allowed;
+    border-color: #ddd;
+    color: #333;
+}
+
+.empresa-form-container .button-group {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.empresa-form-container .btn {
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: none;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    font-size: 16px;
+    flex: 1 1 auto;
+}
+
+.empresa-form-container .btn-primary {
+    background: #00a65a;
+    color: white;
+    min-width: 120px;
+}
+
+.empresa-form-container .btn-secondary {
+    background: #6c757d;
+    color: white;
+    min-width: 120px;
+}
+
+.empresa-form-container .btn-danger {
+    background: #dc3545;
+    color: white;
+    min-width: 120px;
+}
+
+.empresa-form-container .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Cliente info section */
+.empresa-form-container .cliente-info {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 30px;
+}
+
+.empresa-form-container .cliente-info .form-group {
+    margin-bottom: 20px;
+}
+
+.empresa-form-container .cliente-info label {
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.empresa-form-container .cliente-info .form-control {
+    font-size: 16px;
+}
+
+/* Divisão do formulário em colunas em telas maiores */
+@media (min-width: 768px) {
+    .empresa-form-container .form-row {
+        display: flex;
+        gap: 20px;
+    }
+
+    .empresa-form-container .form-row .form-group {
+        flex: 1;
+    }
+}
+
+/* Ajustes responsivos para diferentes tamanhos de tela */
+@media (max-width: 992px) {
+    .empresa-form-container h1,
+    .empresa-form-container h2 {
+        font-size: 22px;
+    }
+    
+    .empresa-form-container h1::before,
+    .empresa-form-container h2::before {
+        font-size: 26px;
+    }
+    
+    .empresa-form-container .form-container {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .empresa-form-container h1,
+    .empresa-form-container h2 {
+        font-size: 20px;
+    }
+    
+    .empresa-form-container h1::before,
+    .empresa-form-container h2::before {
+        font-size: 24px;
+    }
+    
+    .empresa-form-container .form-control {
+        padding: 8px 10px;
+        font-size: 15px;
+    }
+    
+    .empresa-form-container .btn {
+        padding: 8px 16px;
+        font-size: 15px;
+    }
+    
+    .empresa-form-container .button-group {
+        flex-direction: column;
+    }
+    
+    .empresa-form-container .form-container {
+        padding: 15px;
+        margin: 0 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    .empresa-form-container h1,
+    .empresa-form-container h2 {
+        font-size: 18px;
+        margin-bottom: 15px;
+    }
+    
+    .empresa-form-container h1::before,
+    .empresa-form-container h2::before {
+        font-size: 20px;
+    }
+    
+    .empresa-form-container .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .empresa-form-container label {
+        margin-bottom: 5px;
+        font-size: 14px;
+    }
+    
+    .empresa-form-container .form-control {
+        padding: 7px;
+        font-size: 14px;
+    }
+    
+    .empresa-form-container .form-container {
+        padding: 10px;
+    }
+}

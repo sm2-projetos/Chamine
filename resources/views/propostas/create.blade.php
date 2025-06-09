@@ -7,6 +7,68 @@
     <title>Criar Proposta Comercial</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/propostaComercial.css') }}">
+    <style>
+        /* Ajuste responsivo para o container principal */
+        .form-section, .form-container, .obs-container {
+            margin-left: 260px; /* Espaço fixo para a sidebar */
+            width: calc(100% - 280px); /* Largura ajustada para considerar a margem */
+            max-width: none; /* Remove limitação máxima para se ajustar melhor */
+            padding: 20px;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        /* Media queries para diferentes tamanhos de tela */
+        @media (max-width: 1200px) {
+            .form-section, .form-container {
+                width: calc(100% - 280px);
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .form-section, .form-container {
+                width: calc(100% - 270px);
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-section, .form-container {
+                margin-left: 0;
+                width: 100%;
+                padding: 15px;
+            }
+        }
+
+        /* Ajuste para conteúdo interno do formulário em telas menores */
+        @media (max-width: 576px) {
+            .form-group {
+                margin-bottom: 10px;
+            }
+            
+            .form-control {
+                padding: 6px;
+                font-size: 14px;
+            }
+            
+            .report-block {
+                padding: 10px;
+            }
+            
+            .report-block fieldset {
+                padding: 10px;
+            }
+            
+            .checkbox-group {
+                max-height: 150px;
+            }
+            
+            .btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 
 
@@ -24,9 +86,7 @@
         <input type="hidden" id="id_cliente" name="id_cliente" value="">
         <input type="hidden" id="id_empresa" name="id_empresa" value="">
         <input type="hidden" id="status" name="status" value="Em Análise"> <!-- Campo oculto para o status -->
-        <!-- <input type="text" name="fonte_emissao" value="Chaminé da caldeira a lenha">
-        <input type="text" name="numero_fontes" value="1">
-        <input type="text" name="parametros" value="MP/CO/NOX"> -->
+        <input type="hidden" id="perfil_id" name="perfil_id" value=""> <!-- Campo hidden para armazenar o ID do perfil selecionado -->
 
         <div class="form-section">
             <h2>Dados do Cliente</h2>
@@ -48,11 +108,12 @@
                     cliente.</p>
             </div>
             <div class="form-group" id="perfil-group" style="display: none;">
-                <label>Perfis Disponíveis</label>
-                <select class="form-control" id="availableProfiles">
+                <label for="perfil_id">Perfis Disponíveis</label>
+                <select class="form-control" id="availableProfiles" name="perfil_id">
                     <option value="">Selecione um perfil</option>
                 </select>
             </div>
+            
         </div>
 
         <br>
@@ -211,9 +272,11 @@
 
         <br>
         <br>
-
-        <h3>Observações:</h3>
-        <textarea class="form-control" name="observacoes" placeholder="Digite suas observações aqui..."></textarea>
+        
+        <div class="obs-container">
+            <h3>Observações:</h3>
+            <textarea class="form-control" name="observacoes" placeholder="Digite suas observações aqui..."></textarea>
+        </div>
 
         <div class="button-group">
             <button class="btn btn-secondary" type="submit" onclick="setStatus('Cancelado')">Cancelar</button>
@@ -282,7 +345,7 @@
                                         data.empresas.forEach(function (empresa) {
                                             const option = document.createElement('option');
                                             option.value = empresa.id;
-                                            option.textContent = empresa.nome;
+                                            option.textContent = empresa.nome; // Exibe apenas o nome da empresa
                                             empresaSelect.appendChild(option);
                                         });
                                         empresaSelect.style.display = 'block';
@@ -316,8 +379,8 @@
                                                     if (response.perfis.length > 0) {
                                                         response.perfis.forEach(function (perfil) {
                                                             const option = document.createElement("option");
-                                                            option.value = perfil.id;
-                                                            option.textContent = `${perfil.projeto} / ${perfil.empresa}`;
+                                                            option.value = perfil.id_perfil; // Usar id_perfil como valor
+                                                            option.textContent = `${perfil.projeto} / ${perfil.empresa_nome || ''}`; // Exibir projeto e empresa_nome (se disponível)
                                                             perfilSelect.appendChild(option);
                                                         });
                                                         document.getElementById("perfil-group").style.display = "block";
@@ -443,6 +506,29 @@
     <script>
         function setStatus(status) {
             document.getElementById('status').value = status;
+        }
+    </script>
+    <script>
+        document.getElementById('availableProfiles').addEventListener('change', function () {
+            const selectedPerfilId = this.value; // Obtém o ID do perfil selecionado
+            document.getElementById('perfil_id').value = selectedPerfilId; // Atualiza o campo hidden
+        });
+
+        function atualizarPerfis(perfis) {
+            const perfilSelect = document.getElementById('availableProfiles');
+            perfilSelect.innerHTML = '<option value="">Selecione um perfil</option>';
+
+            perfis.forEach(function (perfil) {
+                const option = document.createElement('option');
+                option.value = perfil.id_perfil; // Usar id_perfil como valor
+                option.textContent = `${perfil.projeto} / ${perfil.empresa_nome || ''}`; // Exibir projeto e empresa_nome (se disponível)
+                perfilSelect.appendChild(option);
+            });
+
+            perfilSelect.addEventListener('change', function () {
+                const selectedPerfilId = this.value;
+                document.getElementById('perfil_id').value = selectedPerfilId; // Atualiza o campo hidden
+            });
         }
     </script>
 </body>

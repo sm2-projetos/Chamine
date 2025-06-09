@@ -8,12 +8,25 @@ use App\Http\Controllers\PropostasController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\OSController; // Adicione esta linha
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\DocumentoController;
+use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\DocumentController;
 
 Route::get('/', [AuthController::class, 'showLoginForm'])->name('login');
 
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+
+
+Route::get('/formulario', function () {
+    return view('formulario');
+})->name('formulario');
+
+Route::post('/gerar-documento', [DocumentoController::class, 'gerar'])->name('gerar.documento');
+
+
 
 // Agrupar rotas protegidas
 Route::middleware(['auth'])->group(function () {
@@ -38,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/empresas/{id}/edit', [EmpresasController::class, 'edit'])->name('empresas.edit');
     Route::put('/empresas/{id}', [EmpresasController::class, 'update'])->name('empresas.update');
     Route::delete('/empresas/{id}', [EmpresasController::class, 'destroy'])->name('empresas.destroy');
+    Route::resource('empresas', EmpresaController::class);
 
     // Rotas para propostas comerciais
     Route::get('/propostas/create', [PropostasController::class, 'create'])->name('propostas.create');
@@ -52,6 +66,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/os', [OSController::class, 'store'])->name('os.store'); // Adicione esta linha
     Route::resource('os', OSController::class);
     Route::get('/os/{id}/form', [OSController::class, 'showForm'])->name('os.form');
+    Route::get('/os', 'OsController@index')->name('os.index'); 
 
     Route::get('/os', function(){
         return view('os/create');
@@ -60,5 +75,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/os/{perfilId}/generatePDF', [PDFController::class, 'generatePDF'])->name('os.generatePDF');
 
     Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
+
+    Route::post('/generate-document', [DocumentController::class, 'generateDocument'])->name('generate.document');
+
+    // Rotas para geração de documentos
+    Route::get('/documents/form', [DocumentController::class, 'showForm'])->name('documents.form');
+    Route::post('/get-placeholders', [DocumentController::class, 'getPlaceholders'])->name('get.placeholders');
+    Route::post('/generate-document', [DocumentController::class, 'generateDocument'])->name('generate.document');
 
 });

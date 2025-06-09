@@ -45,9 +45,7 @@
 
         .checkbox-group {
             max-height: 200px;
-            /* Altura máxima da lista com rolagem */
             overflow-y: auto;
-            /* Adiciona rolagem vertical */
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -64,14 +62,6 @@
 
         .checkbox-item:last-child {
             border-bottom: none;
-        }
-
-        .checkbox-item input[type="checkbox"] {
-            margin-right: 5px;
-        }
-
-        .checkbox-item label {
-            margin: 0;
         }
 
         .btn {
@@ -91,16 +81,170 @@
             background-color: #0056b3;
         }
 
-        .inline-group {
-            display: flex;
-            gap: 10px;
+        .perfil-reports-block {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            border-radius: 8px;
         }
 
-        .inline-group .form-group {
-            flex: 1;
+        .report-check-group label {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .report-block {
+            padding: 15px;
+            border: 1px solid #ccc;
+            margin: 10px 0;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .report-block h4 {
+            margin-bottom: 15px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .report-block form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .report-block fieldset {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #f8f8f8;
+        }
+
+        .report-block legend {
+            font-weight: bold;
+            font-size: 16px;
+            color: #555;
+            padding: 0 10px;
+        }
+
+        .reports-forms-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Ajuste responsivo para o container principal */
+        .container.form-container {
+            margin-left: 260px; /* Espaço fixo para a sidebar */
+            width: calc(100% - 280px); /* Largura ajustada para considerar a margem */
+            max-width: none; /* Remove limitação máxima para se ajustar melhor */
+            padding: 20px;
+            transition: margin-left 0.3s ease, width 0.3s ease;
+        }
+
+        /* Media queries para diferentes tamanhos de tela */
+        @media (max-width: 1200px) {
+            .container.form-container {
+                width: calc(100% - 280px);
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .container.form-container {
+                width: calc(100% - 270px);
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container.form-container {
+                margin-left: 0;
+                width: 100%;
+                padding: 15px;
+            }
+        }
+
+        /* Ajuste para conteúdo interno do formulário em telas menores */
+        @media (max-width: 576px) {
+            .form-group {
+                margin-bottom: 10px;
+            }
+            
+            .form-control {
+                padding: 6px;
+                font-size: 14px;
+            }
+            
+            .report-block {
+                padding: 10px;
+            }
+            
+            .report-block fieldset {
+                padding: 10px;
+            }
+            
+            .checkbox-group {
+                max-height: 150px;
+            }
+            
+            .btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
+        }
+
+        .template-buttons {
+            margin-bottom: 20px;
+        }
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .template-btn {
+            padding: 10px 20px;
+            border: 2px solid #007bff;
+            background-color: white;
+            color: #007bff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .template-btn:hover {
+            background-color: #007bff;
+            color: white;
+        }
+        .template-btn.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .form-section {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #f8f9fa;
+        }
+        .form-section legend {
+            font-weight: bold;
+            padding: 0 10px;
+            color: #333;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        .image-preview-container {
+            border: 1px solid #ddd;
+            padding: 5px;
+            border-radius: 4px;
         }
     </style>
-
 </head>
 
 <body>
@@ -109,174 +253,258 @@
     <div class="container form-container">
         <h1>Formulário OS - ID: {{ $os->id }}</h1>
 
-        <form action="{{ route('os.update', $os->id) }}" method="POST">
+        <!-- Botões de seleção de template -->
+        <div class="template-buttons mb-4">
+            <h3>Selecione o tipo de relatório:</h3>
+            <div class="button-group">
+                @foreach($templates as $template)
+                    <button type="button" 
+                            class="btn btn-outline-primary template-btn" 
+                            data-template="{{ $template }}"
+                            onclick="selectTemplate(this)">
+                        {{ str_replace('_', ' ', ucfirst($template)) }}
+                    </button>
+                @endforeach
+            </div>
+        </div>
+
+        <!-- Formulário (inicialmente oculto) -->
+        <form id="documentForm" action="{{ route('generate.document') }}" method="POST" enctype="multipart/form-data" style="display: none;">
             @csrf
-            @method('PUT')
-
-            <!-- Campo Descrição -->
-            <div class="form-group">
-                <label for="descricao">Descrição:</label>
-                <input type="text" name="descricao" id="descricao" class="form-control" value="{{ $os->descricao }}">
-            </div>
-
-            <!-- Alternativa com Checkboxes (Descomente esta parte para usar checkboxes) -->
-            <div class="form-group">
-                <label>Perfil:</label>
-                <div class="checkbox-group">
-                    @foreach($perfis as $perfil)
-                        <div class="checkbox-item">
-                            <input type="checkbox" name="perfil[]" id="perfil_{{ $perfil->id_perfil }}"
-                                value="{{ $perfil->id_perfil }}" class="perfil-checkbox" data-projeto="{{ $perfil->projeto }}" data-equipe="{{ $perfil->equipe }}" data-parametros="{{ $perfil->parametros_medidos }}">
-                            <label for="perfil_{{ $perfil->id_perfil }}">{{ $perfil->id_perfil }} -
-                                {{ $perfil->empresa_nome }} - {{ $perfil->projeto }}</label>
-                        </div>
-                    @endforeach
+            <input type="hidden" name="template_name" id="selectedTemplate">
+            
+            <!-- Informações do Cliente -->
+            <fieldset class="form-section">
+                <legend>Informações do Cliente</legend>
+                <div class="form-group">
+                    <label for="nomeCliente">Nome do Cliente:</label>
+                    <input type="text" name="data[nomeCliente]" id="nomeCliente" class="form-control" value="{{ $dadosAuto['nomeCliente'] ?? '' }}">
                 </div>
-            </div>
 
-            <div id="dynamic-forms"></div>
+                <div class="form-group">
+                    <label for="nRelatorio">Número do Relatório:</label>
+                    <input type="text" name="data[nRelatorio]" id="nRelatorio" class="form-control" value="{{ $dadosAuto['nRelatorio'] ?? '' }}">
+                </div>
 
-            <button type="submit" class="btn btn-primary">Salvar</button>
+                <div class="form-group">
+                    <label for="nomeDoProcesso">Nome do Processo:</label>
+                    <input type="text" name="data[nomeDoProcesso]" id="nomeDoProcesso" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="empresaCliente">Empresa do Cliente:</label>
+                    <input type="text" name="data[empresaCliente]" id="empresaCliente" class="form-control" value="{{ $dadosAuto['empresaCliente'] ?? '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="cepEmpresa">CEP da Empresa:</label>
+                    <input type="text" name="data[cepEmpresa]" id="cepEmpresa" class="form-control" value="{{ $dadosAuto['cepEmpresa'] ?? '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="cnpjEmpresa">CNPJ da Empresa:</label>
+                    <input type="text" name="data[cnpjEmpresa]" id="cnpjEmpresa" class="form-control" value="{{ $dadosAuto['cnpjEmpresa'] ?? '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="cidadeCliente">Cidade do Cliente:</label>
+                    <input type="text" name="data[cidadeCliente]" id="cidadeCliente" class="form-control" value="{{ $dadosAuto['cidadeCliente'] ?? '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="dataColeta">Data da Coleta:</label>
+                    <input type="date" name="data[dataColeta]" id="dataColeta" class="form-control">
+                </div>
+            </fieldset>
+
+            <!-- Informações Técnicas -->
+            <fieldset class="form-section">
+                <legend>Informações Técnicas</legend>
+                <div class="form-group">
+                    <label for="tecnicos">Técnicos Responsáveis:</label>
+                    <input type="text" name="data[tecnicos]" id="tecnicos" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="textDeObjetivoEspecifico">Objetivo Específico:</label>
+                    <textarea name="data[textDeObjetivoEspecifico]" id="textDeObjetivoEspecifico" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="listaMetodologiasEmpregadas">Metodologias Empregadas:</label>
+                    <textarea name="data[listaMetodologiasEmpregadas]" id="listaMetodologiasEmpregadas" class="form-control" rows="3"></textarea>
+                </div>
+            </fieldset>
+
+            <!-- Informações do Processo -->
+            <fieldset class="form-section">
+                <legend>Informações do Processo</legend>
+                <div class="form-group">
+                    <label for="tituloTabelaProcessoIndustrial">Título da Tabela do Processo Industrial:</label>
+                    <input type="text" name="data[tituloTabelaProcessoIndustrial]" id="tituloTabelaProcessoIndustrial" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="textoLegislacaoEmVigor1">Legislação em Vigor (Parte 1):</label>
+                    <textarea name="data[textoLegislacaoEmVigor1]" id="textoLegislacaoEmVigor1" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="textoLegislacaoEmVigor2">Legislação em Vigor (Parte 2):</label>
+                    <textarea name="data[textoLegislacaoEmVigor2]" id="textoLegislacaoEmVigor2" class="form-control" rows="3"></textarea>
+                </div>
+            </fieldset>
+
+            <!-- Imagens -->
+            <fieldset class="form-section">
+                <legend>Imagens do Processo Industrial</legend>
+                <div class="image-grid">
+                    @for($i = 1; $i <= 3; $i++)
+                        <div class="form-group">
+                            <label for="imagem{{ $i }}">Imagem {{ $i }} (Processo Industrial):</label>
+                            <input type="file" name="imagens[imagem{{ $i }}]" id="imagem{{ $i }}" class="form-control" accept="image/*">
+                            <div class="image-preview-container" id="preview{{ $i }}-container" style="display: none; margin-top: 10px;">
+                                <img id="preview{{ $i }}" style="max-width: 100%; border-radius: 4px;">
+                            </div>
+                        </div>
+                    @endfor
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Imagens dos Equipamentos Utilizados</legend>
+                <div class="image-grid">
+                    @for($i = 4; $i <= 5; $i++)
+                        <div class="form-group">
+                            <label for="imagem{{ $i }}">Imagem {{ $i }} (Equipamentos Utilizados):</label>
+                            <input type="file" name="imagens[imagem{{ $i }}]" id="imagem{{ $i }}" class="form-control" accept="image/*">
+                            <div class="image-preview-container" id="preview{{ $i }}-container" style="display: none; margin-top: 10px;">
+                                <img id="preview{{ $i }}" style="max-width: 100%; border-radius: 4px;">
+                            </div>
+                        </div>
+                    @endfor
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Planilhas de Campo</legend>
+                <div class="image-grid">
+                    @for($i = 6; $i <= 10; $i++)
+                        <div class="form-group">
+                            <label for="imagem{{ $i }}">Imagem {{ $i }} (Planilha de Campo):</label>
+                            <input type="file" name="imagens[imagem{{ $i }}]" id="imagem{{ $i }}" class="form-control" accept="image/*">
+                            <div class="image-preview-container" id="preview{{ $i }}-container" style="display: none; margin-top: 10px;">
+                                <img id="preview{{ $i }}" style="max-width: 100%; border-radius: 4px;">
+                            </div>
+                        </div>
+                    @endfor
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Certificados de Calibração</legend>
+                <div class="image-grid">
+                    @for($i = 11; $i <= 23; $i++)
+                        <div class="form-group">
+                            <label for="imagem{{ $i }}">Imagem {{ $i }} (Certificado de Calibração):</label>
+                            <input type="file" name="imagens[imagem{{ $i }}]" id="imagem{{ $i }}" class="form-control" accept="image/*">
+                            <div class="image-preview-container" id="preview{{ $i }}-container" style="display: none; margin-top: 10px;">
+                                <img id="preview{{ $i }}" style="max-width: 100%; border-radius: 4px;">
+                            </div>
+                        </div>
+                    @endfor
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Relatório de Análise</legend>
+                <div class="image-grid">
+                    @for($i = 24; $i <= 25; $i++)
+                        <div class="form-group">
+                            <label for="imagem{{ $i }}">Imagem {{ $i }} (Relatório de Análise):</label>
+                            <input type="file" name="imagens[imagem{{ $i }}]" id="imagem{{ $i }}" class="form-control" accept="image/*">
+                            <div class="image-preview-container" id="preview{{ $i }}-container" style="display: none; margin-top: 10px;">
+                                <img id="preview{{ $i }}" style="max-width: 100%; border-radius: 4px;">
+                            </div>
+                        </div>
+                    @endfor
+                </div>
+            </fieldset>
+
+            <fieldset class="form-section">
+                <legend>Termo de Responsabilidade</legend>
+                <div class="image-grid">
+                    <div class="form-group">
+                        <label for="imagem26">Imagem 26 (Termo de Responsabilidade):</label>
+                        <input type="file" name="imagens[imagem26]" id="imagem26" class="form-control" accept="image/*">
+                        <div class="image-preview-container" id="preview26-container" style="display: none; margin-top: 10px;">
+                            <img id="preview26" style="max-width: 100%; border-radius: 4px;">
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Resultados e Conclusões -->
+            <fieldset class="form-section">
+                <legend>Resultados e Conclusões</legend>
+                <div class="form-group">
+                    <label for="tituloTabelaResultados">Título da Tabela de Resultados:</label>
+                    <input type="text" name="data[tituloTabelaResultados]" id="tituloTabelaResultados" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label for="textoObsConclusaoMaterialParticulado">Observações e Conclusão - Material Particulado:</label>
+                    <textarea name="data[textoObsConclusaoMaterialParticulado]" id="textoObsConclusaoMaterialParticulado" class="form-control" rows="3"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="textoObsConclusaoMonoxidoCarbono">Observações e Conclusão - Monóxido de Carbono:</label>
+                    <textarea name="data[textoObsConclusaoMonoxidoCarbono]" id="textoObsConclusaoMonoxidoCarbono" class="form-control" rows="3"></textarea>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="btn btn-primary">Gerar Documento</button>
         </form>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const checkboxes = document.querySelectorAll('.perfil-checkbox');
-            const dynamicFormsContainer = document.getElementById('dynamic-forms');
-
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function () {
-                    const checkedCheckboxes = document.querySelectorAll('.perfil-checkbox:checked');
-                    if (checkedCheckboxes.length > 2) {
-                        this.checked = false;
-                        alert('Só podemos vincular 2 relatórios');
-                    } else {
-                        updateDynamicForms(checkedCheckboxes);
-                    }
-                });
+        function selectTemplate(button) {
+            // Remove a classe active de todos os botões
+            document.querySelectorAll('.template-btn').forEach(btn => {
+                btn.classList.remove('active');
             });
+            
+            // Adiciona a classe active ao botão clicado
+            button.classList.add('active');
+            
+            // Define o template selecionado
+            document.getElementById('selectedTemplate').value = button.dataset.template;
+            
+            // Mostra o formulário
+            document.getElementById('documentForm').style.display = 'block';
+        }
 
-            function updateDynamicForms(checkedCheckboxes) {
-                dynamicFormsContainer.innerHTML = '';
-                checkedCheckboxes.forEach(checkbox => {
-                    const perfilId = checkbox.value;
-                    const projeto = checkbox.getAttribute('data-projeto');
-                    const equipe = checkbox.getAttribute('data-equipe');
-                    const parametros = checkbox.getAttribute('data-parametros');
+        // Adiciona preview de imagem para todos os campos de imagem
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    const previewId = this.id.replace('imagem', 'preview');
+                    const containerId = previewId + '-container';
                     
-                    const formHtml = `
-                    <div class="form-container">
-                        <div class="dynamic-form">
-                            <div class="inline-group">
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_projeto_numero">Projeto N°:</label>
-                                    <input type="text" name="form_${perfilId}_projeto_numero" id="form_${perfilId}_projeto_numero" class="form-control" value="${projeto}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_relatorio_analise_numero">Relatório de análise N°:</label>
-                                    <input type="text" name="form_${perfilId}_relatorio_analise_numero" id="form_${perfilId}_relatorio_analise_numero" class="form-control">
-                                </div>
-                            </div>
-                            <div class="inline-group">
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_proposta">Proposta:</label>
-                                    <input type="text" name="form_${perfilId}_proposta" id="form_${perfilId}_proposta" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_plano_amostragem_numero">Plano de Amostragem N°:</label>
-                                    <input type="text" name="form_${perfilId}_plano_amostragem_numero" id="form_${perfilId}_plano_amostragem_numero" class="form-control">
-                                </div>
-                            </div>
-                            <div class="inline-group">
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_servico">Serviço:</label>
-                                    <input type="text" name="form_${perfilId}_servico" id="form_${perfilId}_servico" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_objetivos">Objetivos:</label>
-                                    <input type="text" name="form_${perfilId}_objetivos" id="form_${perfilId}_objetivos" class="form-control">
-                                </div>
-                            </div>
-                            <div class="inline-group">
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_equipe">Equipe:</label>
-                                    <input type="text" name="form_${perfilId}_equipe" id="form_${perfilId}_equipe" class="form-control" value="${equipe}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_empresa">Empresa:</label>
-                                    <input type="text" name="form_${perfilId}_empresa" id="form_${perfilId}_empresa" class="form-control">
-                                </div>
-                            </div>
-                            <div class="inline-group">
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_endereco">Endereço:</label>
-                                    <input type="text" name="form_${perfilId}_endereco" id="form_${perfilId}_endereco" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_contato">Contato:</label>
-                                    <input type="text" name="form_${perfilId}_contato" id="form_${perfilId}_contato" class="form-control">
-                                </div>
-                            </div>
-                            <div class="inline-group">
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_data_amostragem">Data da amostragem:</label>
-                                    <input type="date" name="form_${perfilId}_data_amostragem" id="form_${perfilId}_data_amostragem" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_fonte_emissao">Fonte de emissão:</label>
-                                    <input type="text" name="form_${perfilId}_fonte_emissao" id="form_${perfilId}_fonte_emissao" class="form-control">
-                                </div>
-                            </div>
-                            <div class="inline-group">
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_numero_fontes">Número de Fontes:</label>
-                                    <input type="number" name="form_${perfilId}_numero_fontes" id="form_${perfilId}_numero_fontes" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label for="form_${perfilId}_numero_coletas">Número de Coletas:</label>
-                                    <input type="number" name="form_${perfilId}_numero_coletas" id="form_${perfilId}_numero_coletas" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="form_${perfilId}_parametros">Parâmetros:</label>
-                                <input type="text" name="form_${perfilId}_parametros" id="form_${perfilId}_parametros" class="form-control" value="${parametros}">
-                            </div>
-                            <div class="form-group">
-                                <label for="form_${perfilId}_metodologia_documentos">Metodologia e Documentos Necessários:</label>
-                                <textarea name="form_${perfilId}_metodologia_documentos" id="form_${perfilId}_metodologia_documentos" class="form-control"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="form_${perfilId}_equipamentos_necessarios">Equipamentos Necessários para realização das atividades:</label>
-                                <textarea name="form_${perfilId}_equipamentos_necessarios" id="form_${perfilId}_equipamentos_necessarios" class="form-control"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="form_${perfilId}_observacoes">Observações:</label>
-                                <textarea name="form_${perfilId}_observacoes" id="form_${perfilId}_observacoes" class="form-control"></textarea>
-                            </div>
-                            <button type="button" class="btn btn-secondary" onclick="generatePDF(${perfilId})">Gerar Relatório</button>
-                        </div>
-                    </div>
-                <br>
-                <hr>
-                <br>
-                    `;
-                    dynamicFormsContainer.insertAdjacentHTML('beforeend', formHtml);
-                });
-            }
-
-            window.generatePDF = function(perfilId) {
-                console.log('generatePDF called with perfilId:', perfilId); // Adicionando console.log
-                const form = document.querySelector('form');
-                console.log('Form action before setting:', form.action); // Adicionando console.log
-                form.action = `/os/${perfilId}/generatePDF`;
-                console.log('Form action after setting:', form.action); // Adicionando console.log
-                form.method = "POST";
-                form.submit();
-            }
+                    reader.onload = function(e) {
+                        const preview = document.getElementById(previewId);
+                        const container = document.getElementById(containerId);
+                        preview.src = e.target.result;
+                        container.style.display = 'block';
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
         });
     </script>
-
 </body>
 
 </html>

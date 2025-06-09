@@ -5,6 +5,7 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     max-width: 800px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .form-section {
@@ -32,35 +33,34 @@
 
 .form-control {
     width: 100%;
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 14px;
+    font-size: 16px;
     transition: all 0.3s ease;
 }
 
 .form-control:focus {
     border-color: #00a65a;
-    box-shadow: 0 0 0 2px rgba(0,166,90,0.1);
+    box-shadow: 0 0 0 2px rgba(0, 166, 90, 0.25);
     outline: none;
 }
 
 .button-group {
     display: flex;
-    gap: 15px;
-    justify-content: flex-end;
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 1px solid #eee;
+    gap: 10px;
+    margin-top: 20px;
+    flex-wrap: wrap;
 }
 
 .btn {
-    padding: 12px 25px;
+    padding: 10px 20px;
+    border: none;
     border-radius: 4px;
     cursor: pointer;
     font-weight: 500;
     transition: all 0.3s ease;
-    border: none;
+    text-align: center;
 }
 
 .btn-primary {
@@ -70,6 +70,11 @@
 
 .btn-secondary {
     background: #6c757d;
+    color: white;
+}
+
+.btn-danger {
+    background: #dc3545;
     color: white;
 }
 
@@ -86,4 +91,336 @@
 
 .empresa-form .form-group {
     flex: 1 1 calc(50% - 20px);
+}
+
+/* Estilo para o título principal dos formulários */
+h1 {
+    color: #333;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+/* Estilo para botões de perigo (como excluir) */
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+}
+
+/* Remover container branco que envolve o conteúdo */
+.container {
+    width: 100%;
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 0;
+    background: transparent;
+    box-shadow: none;
+}
+
+/* Ajusta a margem principal do conteúdo para dar mais espaço */
+.main-content {
+    margin-left: 230px; /* Reduzido de 250px */
+    padding-left: 0; /* Remove qualquer padding à esquerda */
+}
+
+/* Alertas de sucesso/erro */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Formulários inline */
+.inline-form {
+    display: inline-block;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 15px;
+        margin: 0 10px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+    }
+    
+    .empresa-form .form-group {
+        flex: 1 1 100%;
+    }
+    
+    .table {
+        min-width: auto;
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .table th,
+    .table td {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+    
+    .action-buttons {
+        gap: 12px;
+    }
+    
+    .btn-icon {
+        font-size: 1rem;
+    }
+
+    .main-content {
+        padding-top: 70px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+
+/* Estilos da Tabela */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 1em; /* Aumentado de 0.9em */
+    min-width: 600px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th,
+.table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #dddddd;
+}
+
+.table th {
+    background-color: #00a65a;
+    color: white;
+    font-weight: 600;
+}
+
+.table tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* Ações na tabela */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Usa toda a altura disponível */
+}
+
+/* Ícones Font Awesome */
+.btn-icon {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    color: #6c757d;
+    transition: color 0.2s ease;
+    font-size: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Centraliza horizontalmente */
+    line-height: 1; /* Ajusta a altura da linha para evitar espaçamento extra */
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    background: none;
+}
+
+.btn-icon i {
+    display: flex; /* Melhora o alinhamento do ícone */
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-edit {
+    color: #00a65a;
+}
+
+.icon-delete {
+    color: #dc3545;
+}
+
+.btn-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.btn-icon:focus {
+    outline: 2px solid rgba(0, 166, 90, 0.5);
+    outline-offset: 2px;
+}
+
+.table th {
+    position: sticky;
+    top: 0;
+}
+
+.fa-pen-to-square,
+.fa-trash-alt {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+}
+
+/* Ajuste de largura para colunas específicas da tabela */
+.table th:nth-child(2), /* Nome */
+.table td:nth-child(2) {
+    width: 22%; /* Aumenta a largura da coluna Nome */
+    min-width: 200px;
+}
+
+.table th:nth-child(3), /* CNPJ/CPF */
+.table td:nth-child(3) {
+    width: 14%; /* Ajustado para equilibrar */
+    min-width: 150px;
+}
+
+.table th:nth-child(6), /* Telefone */
+.table td:nth-child(6) {
+    width: 12%; /* Ajustado para equilibrar */
+    min-width: 130px;
+}
+
+/* Ajuste para coluna de ID (para diminuir e dar mais espaço às outras) */
+.table th:first-child,
+.table td:first-child {
+    width: 6%;
+    min-width: 60px;
+}
+
+/* Ajuste para coluna de Ações (para diminuir e dar mais espaço às outras) */
+.table th:last-child,
+.table td:last-child {
+    width: 8%;
+    min-width: 80px;
+}
+
+/* Ajustes para endereço e email (para equilibrar) */
+.table th:nth-child(4), /* Endereço */
+.table td:nth-child(4) {
+    width: 20%;
+    min-width: 180px; 
+}
+
+.table th:nth-child(5), /* Email */
+.table td:nth-child(5) {
+    width: 18%;
+    min-width: 170px;
+}
+
+/* Ajuste de largura para colunas específicas da tabela */
+.table th:nth-child(3), /* CNPJ/CPF */
+.table td:nth-child(3) {
+    width: 18%; /* Aumenta a largura da coluna CNPJ/CPF */
+    min-width: 150px;
+}
+
+.table th:nth-child(6), /* Telefone */
+.table td:nth-child(6) {
+    width: 15%; /* Aumenta a largura da coluna Telefone */
+    min-width: 130px;
+}
+
+/* Ajuste para coluna de ID (para diminuir e dar mais espaço às outras) */
+.table th:first-child,
+.table td:first-child {
+    width: 7%;
+    min-width: 60px;
+}
+
+/* Ajuste para coluna de Ações (para diminuir e dar mais espaço às outras) */
+.table th:last-child,
+.table td:last-child {
+    width: 10%;
+    min-width: 80px;
+}
+
+/* Ajustes para endereço (caso precise reduzir para equilibrar) */
+.table th:nth-child(4),
+.table td:nth-child(4) {
+    width: 20%;
+}
+
+/* Formulários com layout de duas colunas */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.form-row .form-group {
+    flex: 1 1 calc(50% - 10px);
+    min-width: 200px;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 992px) {
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .form-row .form-group {
+        flex: 1 1 100%;
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .form-container {
+        padding: 12px;
+    }
+    
+    h1 {
+        font-size: 1.5em;
+    }
+    
+    .form-control {
+        padding: 8px;
+        font-size: 14px;
+    }
+    
+    .btn {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    .table th,
+    .table td {
+        padding: 6px 8px;
+        font-size: 0.8em;
+    }
 }
