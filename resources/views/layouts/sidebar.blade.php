@@ -43,7 +43,7 @@
             <i class="fas fa-file-contract"></i>
             Criar Proposta Comercial
         </a>
-        <a href="#" class="menu-item">
+        <a href="{{ route('documents.form')}}" class="menu-item">
             <i class="fas fa-file-alt"></i>
             Relatórios
         </a>
@@ -51,9 +51,14 @@
 
     <div class="menu-section">
         <div class="menu-section-title">Cadastros</div>
-        <a href="{{ route('clientes.create') }}" class="menu-item">
+        <a href="{{ route('empresas.create') }}" class="menu-item">
             <i class="fas fa-user-plus"></i>
             Cadastrar Empresas
+        </a>
+
+        <a href="{{ route('certificado.index') }}" class="menu-item">
+            <i class="fas fa-user-plus"></i>
+            Manutenção de Certificados
         </a>
 
         {{-- <a href="{{ route('clientes.index') }}" class="menu-item">

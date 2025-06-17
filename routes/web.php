@@ -11,10 +11,14 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\DocumentoController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\FormularioController;
+use App\Http\Controllers\SalvarImagensController;
 
 Route::get('/formulario', function () {
     return view('formulario');
 });
+
+Route::get('/formulario-index', [FormularioController::class, 'index'])->name('formulario.index');
 
 Route::post('/gerar-documento', [DocumentoController::class, 'gerar']);
 
@@ -85,9 +89,25 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/generate-document', [DocumentController::class, 'generateDocument'])->name('generate.document');
 
+    Route::post('/store-certificado', [FormularioController::class, 'storeCertificado'])->name('certificado.store');
+    Route::get('/certificado', [FormularioController::class, 'certificado'])->name('certificado.index');
+    Route::put('/certificado-makePrimary', [FormularioController::class, 'makePrimary'])->name('certificado.makePrimary');
+    Route::delete('/certificado-destroy', [FormularioController::class, 'destroyCertificado'])->name('certificado.destroy');
+
     // Rotas para geração de documentos
     Route::get('/documents/form', [DocumentController::class, 'showForm'])->name('documents.form');
     Route::post('/get-placeholders', [DocumentController::class, 'getPlaceholders'])->name('get.placeholders');
     Route::post('/generate-document', [DocumentController::class, 'generateDocument'])->name('generate.document');
+
+    Route::post('/salvar-imagens', [SalvarImagensController::class, 'salvar']);
+    Route::get('/imagem-privada/{nome}', function ($nome) {
+        $path = storage_path('app/privado/imagens/' . $nome);
+
+        if (!file_exists($path)) {
+            abort(404);
+        }
+
+        return response()->file($path);
+    });
 
 });

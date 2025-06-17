@@ -41,20 +41,17 @@ class EmpresaController extends Controller
             'nome' => 'required|string|max:255',
             'cnpj' => 'required|string|max:20',
             'endereco' => 'required|string|max:255',
-            'telefone' => 'required|string|max:20',
-            'email' => 'nullable|email|max:255',
+            'contato' => 'required|string|max:20',
         ]);
 
         Empresa::create([
             'nome' => $request->nome,
             'cnpj' => $request->cnpj,
             'endereco' => $request->endereco,
-            'contato' => $request->telefone,
-            'email' => $request->email,
+            'contato' => $request->contato,
         ]);
 
-        return redirect()->route('empresas.index')
-            ->with('success', 'Empresa cadastrada com sucesso!');
+        return redirect()->route('empresas.index')->with('success', 'Empresa cadastrada com sucesso!');
     }
 
     /**

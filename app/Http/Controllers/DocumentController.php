@@ -12,6 +12,9 @@ use PhpOffice\PhpWord\Element\Text;
 use PhpOffice\PhpWord\Element\TextRun;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use PhpOffice\PhpWord\Element\Image;
+use App\Models\TabelaPerfil;
+use App\Models\ValorColeta;
+use App\Models\Parametro;
 
 class DocumentController extends Controller
 {
@@ -226,6 +229,66 @@ class DocumentController extends Controller
                 ]);
                 $templateProcessor->setValue($key, $value);
             }
+            $validated['data']['perfil'];
+
+            $idPerfil = $validated['data']['perfil'] ?? null;
+
+            if (!$idPerfil) {
+                return response()->json(['error' => 'Perfil não informado'], 400);
+            }
+
+            // Buscar o perfil
+            $perfil = TabelaPerfil::find($idPerfil);
+            if (!$perfil) {
+                return response()->json(['error' => 'Perfil não encontrado'], 404);
+            }
+
+            //pega os valores do perfil e envia para o word
+            foreach ($perfil->getAttributes() as $campo => $valor) {
+                $placeholder = $campo;
+                $templateProcessor->setValue($placeholder, $valor ?? '');
+            }
+
+            //pega os valores de coleta e envia para o word
+            $coletasDetalhadas = ValorColeta::getDetalhesPorPerfil($idPerfil);
+
+            foreach ($coletasDetalhadas as $coleta) {
+                $parametroSlug = str_replace(' ', '_', strtolower($coleta->parametro_nome));
+                $placeholder = "v_{$parametroSlug}_{$coleta->numero_coleta}";
+
+                $templateProcessor->setValue($placeholder, $coleta->valor);
+                $templateProcessor->setValue("u_{$parametroSlug}", $coleta->parametro_unidade); // opcional
+            }
+
+            $valores = [
+                $validated['data']['v_concentração_de_material_particulado_(mg/nm³)_1'] ?? null,
+                $validated['data']['v_concentração_de_material_particulado_(mg/nm³)_2'] ?? null,
+                $validated['data']['v_concentração_de_material_particulado_(mg/nm³)_3'] ?? null,
+            ];
+
+            // Filtra valores nulos e converte para float
+            $valoresFiltrados = array_filter($valores, function ($v) {
+                return is_numeric($v);
+            });
+
+            $media = count($valoresFiltrados) > 0
+                ? array_sum($valoresFiltrados) / count($valoresFiltrados)
+                : 0;
+
+            $templateProcessor->setValue('media_particulado', number_format($media, 2, ',', ''));
+
+            // Média de concentração de monóxido de carbono (mg/Nm³)
+            $valoresCO = [
+                $validated['data']['v_concentração_de_monóxido_de_carbono_(mg/nm³)_1'] ?? null,
+                $validated['data']['v_concentração_de_monóxido_de_carbono_(mg/nm³)_2'] ?? null,
+                $validated['data']['v_concentração_de_monóxido_de_carbono_(mg/nm³)_3'] ?? null,
+            ];
+
+            $valoresFiltradosCO = array_filter($valoresCO, fn($v) => is_numeric($v));
+            $mediaCO = count($valoresFiltradosCO) > 0 ? array_sum($valoresFiltradosCO) / count($valoresFiltradosCO) : 0;
+
+            // Adiciona ao template
+            $templateProcessor->setValue('media_concentracao_monoxido_carbono', number_format($mediaCO, 2, ',', '.'));
 
             // Gera um nome único para o novo documento
             $newFileName = 'document_' . time() . '.docx';

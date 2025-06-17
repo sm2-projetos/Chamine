@@ -279,12 +279,12 @@
                 <div class="form-group">
                     <label for="nomeCliente">Nome do Cliente:</label>
                     <input type="text" name="data[nomeCliente]" id="nomeCliente" class="form-control" value="{{ $dadosAuto['nomeCliente'] ?? '' }}">
-            @method('PUT')
+            {{-- @method('PUT') --}}
 
             <!-- Campo Descrição -->
             <div class="form-group">
                 <label for="descricao">Descrição:</label>
-                <input type="text" name="descricao" id="descricao" class="form-control" value="{{ $os->descricao }}">
+                <input type="text" name="data[descricao]" id="descricao" class="form-control" value="{{ $os->descricao }}">
             </div>
 
             <!-- Checkboxes de Perfil -->
@@ -296,6 +296,7 @@
                             <input 
                                 type="checkbox" 
                                 class="perfil-checkbox" 
+                                name="data[perfil]"
                                 id="perfil_{{ $perfil->id_perfil }}" 
                                 value="{{ $perfil->id_perfil }}"
                                 data-perfil-id="{{ $perfil->id_perfil }}"
@@ -315,8 +316,8 @@
             <div id="profiles-reports-container"></div>
 
                 <div class="form-group">
-                    <label for="nomeDoProcesso">Nome do Processo:</label>
-                    <input type="text" name="data[nomeDoProcesso]" id="nomeDoProcesso" class="form-control">
+                    <label for="tipoChamine">Tipo da Chamine:</label>
+                    <input type="text" name="data[tipoChamine]" id="tipoChamine" class="form-control">
                 </div>
 
                 <div class="form-group">
@@ -332,16 +333,6 @@
                 <div class="form-group">
                     <label for="cnpjEmpresa">CNPJ da Empresa:</label>
                     <input type="text" name="data[cnpjEmpresa]" id="cnpjEmpresa" class="form-control" value="{{ $dadosAuto['cnpjEmpresa'] ?? '' }}">
-                </div>
-
-                <div class="form-group">
-                    <label for="cidadeCliente">Cidade do Cliente:</label>
-                    <input type="text" name="data[cidadeCliente]" id="cidadeCliente" class="form-control" value="{{ $dadosAuto['cidadeCliente'] ?? '' }}">
-                </div>
-
-                <div class="form-group">
-                    <label for="dataColeta">Data da Coleta:</label>
-                    <input type="date" name="data[dataColeta]" id="dataColeta" class="form-control">
                 </div>
             </fieldset>
 
@@ -500,6 +491,19 @@
             // Remove a classe active de todos os botões
             document.querySelectorAll('.template-btn').forEach(btn => {
                 btn.classList.remove('active');
+            });
+            
+            // Adiciona a classe active ao botão clicado
+            button.classList.add('active');
+            
+            // Define o template selecionado
+            document.getElementById('selectedTemplate').value = button.dataset.template;
+            
+            // Mostra o formulário
+            document.getElementById('documentForm').style.display = 'block';
+        }
+
+        // Código para adicionar listeners aos checkboxes, executado quando a página carregar
         document.addEventListener('DOMContentLoaded', function() {
             const perfilCheckboxes = document.querySelectorAll('.perfil-checkbox');
             const profilesReportsContainer = document.getElementById('profiles-reports-container');
@@ -516,38 +520,8 @@
                     }
                 });
             });
-            
-            // Adiciona a classe active ao botão clicado
-            button.classList.add('active');
-            
-            // Define o template selecionado
-            document.getElementById('selectedTemplate').value = button.dataset.template;
-            
-            // Mostra o formulário
-            document.getElementById('documentForm').style.display = 'block';
-        }
 
-        // Adiciona preview de imagem para todos os campos de imagem
-        document.querySelectorAll('input[type="file"]').forEach(input => {
-            input.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    const previewId = this.id.replace('imagem', 'preview');
-                    const containerId = previewId + '-container';
-                    
-                    reader.onload = function(e) {
-                        const preview = document.getElementById(previewId);
-                        const container = document.getElementById(containerId);
-                        preview.src = e.target.result;
-                        container.style.display = 'block';
-                    }
-                    
-                    reader.readAsDataURL(file);
-                }
-            });
-            // Cria um bloco com as 4 opções de relatório para o perfil
-            function createReportsBlock(perfilId) {
+                        function createReportsBlock(perfilId) {
                 // Se já existe, não duplicar
                 if (document.getElementById('reports-block-' + perfilId)) {
                     return;
@@ -610,8 +584,6 @@
                     }
                 }
             }
-
-            // Função para retornar o formulário específico com base no tipo de relatório
             function getReportForm(reportValue, perfilId) {
                 switch (reportValue) {
                     case 'analise':
@@ -631,37 +603,33 @@
             function getAnaliseForm(perfilId) {
                 return `
                     <h4>Formulário de Análise e Amostragem</h4>
-                    <form>
                         <fieldset>
                             <legend>1. Informações da Amostragem</legend>
                             <div class="form-group">
                                 <label for="data-amostragem-${perfilId}">Data da Amostragem:</label>
-                                <input type="date" id="data-amostragem-${perfilId}" class="form-control">
+                                <input type="date" name="data[data-amostragem]" id="data-amostragem-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="local-amostragem-${perfilId}">Local da Amostragem:</label>
-                                <input type="text" id="local-amostragem-${perfilId}" class="form-control">
+                                <input type="text" name="data[local-amostragem]" id="local-amostragem-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="tipo-amostra-${perfilId}">Tipo de Amostra:</label>
-                                <input type="text" id="tipo-amostra-${perfilId}" class="form-control">
+                                <input type="text" name="data[tipo-amostra]" id="tipo-amostra-${perfilId}" class="form-control">
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend>2. Resultados da Análise</legend>
                             <div class="form-group">
                                 <label for="parametros-analise-${perfilId}">Parâmetros Analisados:</label>
-                                <textarea id="parametros-analise-${perfilId}" class="form-control" rows="3"></textarea>
+                                <textarea name="data[parametros-analise]" id="parametros-analise-${perfilId}" class="form-control" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="resultados-analise-${perfilId}">Resultados Obtidos:</label>
-                                <textarea id="resultados-analise-${perfilId}" class="form-control" rows="3"></textarea>
+                                <textarea name="data[resultados-analise]" id="resultados-analise-${perfilId}" class="form-control" rows="3"></textarea>
                             </div>
                         </fieldset>
-                    </form>
-
                     <div>
-                    <p>Olá Mundo </p>
                 `;
             }
 
@@ -669,88 +637,87 @@
             function getRuidoForm(perfilId) {
                 return `
                     <h4>Formulário de Ruído</h4>
-                    <form>
                         <fieldset>
                             <legend>1. Informações Gerais</legend>
                             <div class="form-group">
                                 <label for="data-relatorio-${perfilId}">Data do Relatório:</label>
-                                <input type="date" id="data-relatorio-${perfilId}" class="form-control">
+                                <input type="date" name="data[data-relatorio]" id="data-relatorio-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="local-coleta-${perfilId}">Local da Coleta:</label>
-                                <input type="text" id="local-coleta-${perfilId}" class="form-control">
+                                <input type="text" name="data[local-coleta]" id="local-coleta-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="responsavel-tecnico-${perfilId}">Responsável Técnico:</label>
-                                <input type="text" id="responsavel-tecnico-${perfilId}" class="form-control">
+                                <input type="text" name="data[responsavel-tecnico]" id="responsavel-tecnico-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="empresa-responsavel-${perfilId}">Empresa Responsável:</label>
-                                <input type="text" id="empresa-responsavel-${perfilId}" class="form-control">
+                                <input type="text" name="data[empresa-responsavel]" id="empresa-responsavel-${perfilId}" class="form-control">
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend>2. Condições Climáticas no Momento da Coleta</legend>
                             <div class="form-group">
                                 <label for="temperatura-${perfilId}">Temperatura (°C):</label>
-                                <input type="number" id="temperatura-${perfilId}" class="form-control">
+                                <input type="number" name="data[temperatura]" id="temperatura-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="umidade-${perfilId}">Umidade Relativa (%):</label>
-                                <input type="number" id="umidade-${perfilId}" class="form-control">
+                                <input type="number" name="data[umidade]" id="umidade-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="vento-${perfilId}">Velocidade do Vento (m/s):</label>
-                                <input type="number" id="vento-${perfilId}" class="form-control">
+                                <input type="number" name="data[vento]" id="vento-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="pressao-${perfilId}">Pressão Atmosférica (hPa):</label>
-                                <input type="number" id="pressao-${perfilId}" class="form-control">
+                                <input type="number" name="data[pressao]" id="pressao-${perfilId}" class="form-control">
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend>3. Parâmetros Analisados</legend>
                             <div class="form-group">
                                 <label for="mp-${perfilId}">Material Particulado (MP10, MP2.5):</label>
-                                <input type="number" id="mp-${perfilId}" class="form-control">
+                                <input type="number" name="data[mp]" id="mp-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="so2-${perfilId}">Dióxido de Enxofre (SO₂):</label>
-                                <input type="number" id="so2-${perfilId}" class="form-control">
+                                <input type="number" name="data[so2]" id="so2-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="co-${perfilId}">Monóxido de Carbono (CO):</label>
-                                <input type="number" id="co-${perfilId}" class="form-control">
+                                <input type="number" name="data[co]" id="co-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="o3-${perfilId}">Ozônio (O₃):</label>
-                                <input type="number" id="o3-${perfilId}" class="form-control">
+                                <input type="number" name="data[o3]" id="o3-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="no2-${perfilId}">Dióxido de Nitrogênio (NO₂):</label>
-                                <input type="number" id="no2-${perfilId}" class="form-control">
+                                <input type="number" name="data[no2]" id="no2-${perfilId}" class="form-control">
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend>4. Metodologia e Equipamentos</legend>
                             <div class="form-group">
                                 <label for="equipamentos-${perfilId}">Equipamentos Utilizados:</label>
-                                <input type="text" id="equipamentos-${perfilId}" class="form-control">
+                                <input type="text" name="data[equipamentos]" id="equipamentos-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="normas-${perfilId}">Normas Técnicas Aplicadas:</label>
-                                <input type="text" id="normas-${perfilId}" class="form-control">
+                                <input type="text" name="data[normas]" id="normas-${perfilId}" class="form-control">
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend>5. Resultados e Comparações</legend>
                             <div class="form-group">
                                 <label for="resultados-${perfilId}">Valores Medidos:</label>
-                                <textarea id="resultados-${perfilId}" class="form-control" rows="3"></textarea>
+                                <textarea id="resultados-${perfilId}" name="data[resultados]" class="form-control" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="comparacao-${perfilId}">Comparação com Padrões:</label>
-                                <select id="comparacao-${perfilId}" class="form-control">
+                                <select id="comparacao-${perfilId}" name="data[comparacao]" class="form-control">
                                     <option value="">Selecione uma referência normativa</option>
                                     <option value="norma1">Norma 1</option>
                                     <option value="norma2">Norma 2</option>
@@ -761,28 +728,27 @@
                             <legend>6. Conclusão e Recomendações</legend>
                             <div class="form-group">
                                 <label for="analise-${perfilId}">Análise Crítica dos Dados:</label>
-                                <textarea id="analise-${perfilId}" class="form-control" rows="3"></textarea>
+                                <textarea id="analise-${perfilId}" name="data[analise]" class="form-control" rows="3"></textarea>
                             </div>
                             <div class="form-group">
                                 <label for="acoes-${perfilId}">Ações Sugeridas:</label>
-                                <textarea id="acoes-${perfilId}" class="form-control" rows="3"></textarea>
+                                <textarea id="acoes-${perfilId}" name="data[acoes]" class="form-control" rows="3"></textarea>
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend>7. Anexos e Evidências</legend>
                             <div class="form-group">
                                 <label for="anexos-${perfilId}">Anexar Arquivos:</label>
-                                <input type="file" id="anexos-${perfilId}" class="form-control" multiple>
+                                <input type="file" id="anexos-${perfilId}" name="imagens[anexos]" class="form-control" multiple>
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend>8. Assinaturas</legend>
                             <div class="form-group">
                                 <label for="assinatura-${perfilId}">Assinatura Digital do Responsável Técnico:</label>
-                                <input type="text" id="assinatura-${perfilId}" class="form-control" placeholder="Assinatura Digital">
+                                <input type="text" name="data[assinatura]" id="assinatura-${perfilId}" class="form-control" placeholder="Assinatura Digital">
                             </div>
                         </fieldset>
-                    </form>
                 `;
             }
 
@@ -790,30 +756,28 @@
             function getVibracaoForm(perfilId) {
                 return `
                     <h4>Formulário de Vibração</h4>
-                    <form>
                         <fieldset>
                             <legend>1. Informações Gerais</legend>
                             <div class="form-group">
                                 <label for="data-vibracao-${perfilId}">Data da Medição:</label>
-                                <input type="date" id="data-vibracao-${perfilId}" class="form-control">
+                                <input type="date" name="data[data-vibracao]" id="data-vibracao-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="local-vibracao-${perfilId}">Local da Medição:</label>
-                                <input type="text" id="local-vibracao-${perfilId}" class="form-control">
+                                <input type="text" name="data[local-vibracao]" id="local-vibracao-${perfilId}" class="form-control">
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend>2. Parâmetros Medidos</legend>
                             <div class="form-group">
                                 <label for="frequencia-${perfilId}">Frequência (Hz):</label>
-                                <input type="number" id="frequencia-${perfilId}" class="form-control">
+                                <input type="number" name="data[frequencia]" id="frequencia-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="amplitude-${perfilId}">Amplitude (mm):</label>
-                                <input type="number" id="amplitude-${perfilId}" class="form-control">
+                                <input type="number" name="data[amplitude]" id="amplitude-${perfilId}" class="form-control">
                             </div>
                         </fieldset>
-                    </form>
                 `;
             }
 
@@ -821,34 +785,32 @@
             function getQualidadeArForm(perfilId) {
                 return `
                     <h4>Formulário de Qualidade do Ar</h4>
-                    <form>
                         <fieldset>
                             <legend>1. Informações Gerais</legend>
                             <div class="form-group">
                                 <label for="data-ar-${perfilId}">Data da Medição:</label>
-                                <input type="date" id="data-ar-${perfilId}" class="form-control">
+                                <input type="date" name="data[data-ar]" id="data-ar-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="local-ar-${perfilId}">Local da Medição:</label>
-                                <input type="text" id="local-ar-${perfilId}" class="form-control">
+                                <input type="text" name="data[local-ar]" id="local-ar-${perfilId}" class="form-control">
                             </div>
                         </fieldset>
                         <fieldset>
                             <legend>2. Parâmetros Medidos</legend>
                             <div class="form-group">
                                 <label for="co2-${perfilId}">Dióxido de Carbono (CO₂):</label>
-                                <input type="number" id="co2-${perfilId}" class="form-control">
+                                <input type="number" name="data[co2]" id="co2-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="pm25-${perfilId}">Material Particulado (PM2.5):</label>
-                                <input type="number" id="pm25-${perfilId}" class="form-control">
+                                <input type="number" name="data[pm25]" id="pm25-${perfilId}" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label for="pm10-${perfilId}">Material Particulado (PM10):</label>
-                                <input type="number" id="pm10-${perfilId}" class="form-control">
+                                <input type="number" name="data[pm10]" id="pm10-${perfilId}" class="form-control">
                             </div>
                         </fieldset>
-                    </form>
                 `;
             }
 
@@ -856,14 +818,38 @@
             function getDefaultForm(reportValue, perfilId) {
                 return `
                     <h4>Formulário para ${reportValue}</h4>
-                    <form>
                         <div class="form-group">
                             <label for="${reportValue}-input-${perfilId}">Campo para ${reportValue}:</label>
-                            <input type="text" id="${reportValue}-input-${perfilId}" class="form-control" placeholder="Digite algo...">
+                            <input type="text" name="data[${reportValue}]" id="${reportValue}-input-${perfilId}" class="form-control" placeholder="Digite algo...">
                         </div>
-                    </form>
                 `;
             }
+        });
+
+        // Adiciona preview de imagem para todos os campos de imagem
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    const previewId = this.id.replace('imagem', 'preview');
+                    const containerId = previewId + '-container';
+                    
+                    reader.onload = function(e) {
+                        const preview = document.getElementById(previewId);
+                        const container = document.getElementById(containerId);
+                        preview.src = e.target.result;
+                        container.style.display = 'block';
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            // Cria um bloco com as 4 opções de relatório para o perfil
+
+
+            // Função para retornar o formulário específico com base no tipo de relatório
+            
         });
     </script>
 </body>

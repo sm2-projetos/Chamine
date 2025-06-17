@@ -109,20 +109,20 @@
                     <form action="{{ route('empresas.store') }}" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label for="empresa_nome">Nome</label>
-                            <input type="text" id="empresa_nome" name="empresa_nome" class="form-control" placeholder="Digite o nome da empresa">
+                            <label for="nome">Nome</label>
+                            <input type="text" id="nome" name="nome" class="form-control" placeholder="Digite o nome da empresa">
                         </div>
                         <div class="form-group">
-                            <label for="empresa_cnpj">CNPJ</label>
-                            <input type="text" id="empresa_cnpj" name="empresa_cnpj" class="form-control" placeholder="Digite o CNPJ da empresa">
+                            <label for="cnpj">CNPJ</label>
+                            <input type="text" id="cnpj" name="cnpj" class="form-control" placeholder="Digite o CNPJ da empresa">
                         </div>
                         <div class="form-group">
-                            <label for="empresa_endereco">Endereço</label>
-                            <input type="text" id="empresa_endereco" name="empresa_endereco" class="form-control" placeholder="Digite o endereço da empresa">
+                            <label for="endereco">Endereço</label>
+                            <input type="text" id="endereco" name="endereco" class="form-control" placeholder="Digite o endereço da empresa">
                         </div>
                         <div class="form-group">
-                            <label for="empresa_contato">Contato</label>
-                            <input type="text" id="empresa_contato" name="empresa_contato" class="form-control" placeholder="Digite o contato da empresa">
+                            <label for="contato">Contato</label>
+                            <input type="text" id="contato" name="contato" class="form-control" placeholder="Digite o contato da empresa">
                         </div>
                         <hr>
                         <div class="button-group">
