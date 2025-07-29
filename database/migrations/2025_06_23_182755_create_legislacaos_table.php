@@ -9,13 +9,11 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        Schema::create('certificados', function (Blueprint $table) {
+    public function up(): void {
+        Schema::create('legislacaos', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('path');
-            $table->boolean('is_primary')->default(false);
+            $table->string('nome');
+            $table->text('descricao')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('legislacaos');
     }
 };

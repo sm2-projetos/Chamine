@@ -106,7 +106,7 @@
             <div class="form-container">
                 <div class="form-section">
                     <h2>Cadastrar Empresa</h2>
-                    <form action="{{ route('empresas.store') }}" method="POST">
+                    <form action="{{ route('empresas.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label for="nome">Nome</label>
@@ -121,8 +121,36 @@
                             <input type="text" id="endereco" name="endereco" class="form-control" placeholder="Digite o endereço da empresa">
                         </div>
                         <div class="form-group">
-                            <label for="contato">Contato</label>
-                            <input type="text" id="contato" name="contato" class="form-control" placeholder="Digite o contato da empresa">
+                            <label for="cep">CEP</label>
+                            <input type="text" id="cep" name="cep" class="form-control" placeholder="Digite o cep da empresa">
+                        </div>
+                        <div class="form-group">
+                            <label for="cidade_estado">Cidade / Estado</label>
+                            <input type="text" id="cidade_estado" name="cidade_estado" class="form-control" placeholder="Digite a cidade_estado da empresa">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email da Empresa</label>
+                            <input type="email" id="email" name="email" class="form-control" placeholder="Digite o email da empresa">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone da Empresa</label>
+                            <input type="text" id="telefone" name="telefone" class="form-control" placeholder="Digite o telefone da empresa">
+                        </div>
+                        <div class="form-group">
+                            <label for="nome_contato">Nome do Contato</label>
+                            <input type="text" id="nome_contato" name="nome_contato" class="form-control" placeholder="Digite o nome do contato da empresa">
+                        </div>
+                        <div class="form-group">
+                            <label for="email_contato">Email do Contato</label>
+                            <input type="email" id="email_contato" name="email_contato" class="form-control" placeholder="Digite o email da empresa">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone_contato">Telefone do Contato</label>
+                            <input type="text" id="telefone_contato" name="telefone_contato" class="form-control" placeholder="Digite o telefone da empresa">
+                        </div>
+                        <div class="form-group">
+                            <label for="logo">Logo da Empresa</label>
+                            <input type="file" id="logo" name="logo" class="form-control">
                         </div>
                         <hr>
                         <div class="button-group">
@@ -158,6 +186,7 @@
         // Aplicar máscaras aos campos de CPF/CNPJ e telefone
         $(document).ready(function() {
             $('#telefone').mask('(00) 00000-0000'); // Máscara para telefone
+            $('#telefone_contato').mask('(00) 00000-0000');
 
             $('#cnpj_cpf').on('input', function() {
                 var value = $(this).val().replace(/\D/g, '');

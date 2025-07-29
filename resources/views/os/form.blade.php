@@ -322,17 +322,17 @@
 
                 <div class="form-group">
                     <label for="empresaCliente">Empresa do Cliente:</label>
-                    <input type="text" name="data[empresaCliente]" id="empresaCliente" class="form-control" value="{{ $dadosAuto['empresaCliente'] ?? '' }}">
+                    <input type="text" name="data[empresaCliente]" id="empresaCliente" class="form-control" value="{{ $dadosAuto['empresaCliente'] ?? '' }}" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="cepEmpresa">CEP da Empresa:</label>
-                    <input type="text" name="data[cepEmpresa]" id="cepEmpresa" class="form-control" value="{{ $dadosAuto['cepEmpresa'] ?? '' }}">
+                    <input type="text" name="data[cepEmpresa]" id="cepEmpresa" class="form-control" value="{{ $dadosAuto['cepEmpresa'] ?? '' }}" readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="cnpjEmpresa">CNPJ da Empresa:</label>
-                    <input type="text" name="data[cnpjEmpresa]" id="cnpjEmpresa" class="form-control" value="{{ $dadosAuto['cnpjEmpresa'] ?? '' }}">
+                    <input type="text" name="data[cnpjEmpresa]" id="cnpjEmpresa" class="form-control" value="{{ $dadosAuto['cnpjEmpresa'] ?? '' }}" readonly>
                 </div>
             </fieldset>
 
@@ -353,17 +353,29 @@
                     <label for="listaMetodologiasEmpregadas">Metodologias Empregadas:</label>
                     <textarea name="data[listaMetodologiasEmpregadas]" id="listaMetodologiasEmpregadas" class="form-control" rows="3"></textarea>
                 </div>
+
+                <div class="form-group">
+                    <label for="certificado_id">Certificados:</label>
+                    <select name="certificado_id" id="certificado_id" class="form-control" required>
+                        <option value="">-- Selecione um certificado --</option>
+                        @foreach($certificados as $certificado)
+                            <option value="{{ $certificado->id }}" {{ $certificado->is_primary ? 'selected' : '' }}>
+                                {{ $certificado->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
             </fieldset>
 
             <!-- Informações do Processo -->
             <fieldset class="form-section">
                 <legend>Informações do Processo</legend>
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="tituloTabelaProcessoIndustrial">Título da Tabela do Processo Industrial:</label>
                     <input type="text" name="data[tituloTabelaProcessoIndustrial]" id="tituloTabelaProcessoIndustrial" class="form-control">
-                </div>
+                </div> --}}
 
-                <div class="form-group">
+                {{-- <div class="form-group">
                     <label for="textoLegislacaoEmVigor1">Legislação em Vigor (Parte 1):</label>
                     <textarea name="data[textoLegislacaoEmVigor1]" id="textoLegislacaoEmVigor1" class="form-control" rows="3"></textarea>
                 </div>
@@ -371,6 +383,15 @@
                 <div class="form-group">
                     <label for="textoLegislacaoEmVigor2">Legislação em Vigor (Parte 2):</label>
                     <textarea name="data[textoLegislacaoEmVigor2]" id="textoLegislacaoEmVigor2" class="form-control" rows="3"></textarea>
+                </div> --}}
+                <div class="form-group">
+                    <label for="legislacao_id">Legislação:</label>
+                    <select name="legislacao_id" id="legislacao_id" class="form-control" required>
+                        <option value="" disabled selected>-- Selecione uma legislação --</option>
+                        @foreach($legislacoes as $legislacao)
+                            <option value="{{ $legislacao->id }}">{{ $legislacao->nome }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </fieldset>
 
@@ -405,7 +426,7 @@
                 </div>
             </fieldset>
 
-            <fieldset class="form-section">
+            {{-- <fieldset class="form-section">
                 <legend>Planilhas de Campo</legend>
                 <div class="image-grid">
                     @for($i = 6; $i <= 10; $i++)
@@ -418,9 +439,9 @@
                         </div>
                     @endfor
                 </div>
-            </fieldset>
+            </fieldset> --}}
 
-            <fieldset class="form-section">
+            {{-- <fieldset class="form-section">
                 <legend>Certificados de Calibração</legend>
                 <div class="image-grid">
                     @for($i = 11; $i <= 23; $i++)
@@ -433,9 +454,9 @@
                         </div>
                     @endfor
                 </div>
-            </fieldset>
+            </fieldset> --}}
 
-            <fieldset class="form-section">
+            {{-- <fieldset class="form-section">
                 <legend>Relatório de Análise</legend>
                 <div class="image-grid">
                     @for($i = 24; $i <= 25; $i++)
@@ -448,7 +469,7 @@
                         </div>
                     @endfor
                 </div>
-            </fieldset>
+            </fieldset> --}}
 
             <fieldset class="form-section">
                 <legend>Termo de Responsabilidade</legend>

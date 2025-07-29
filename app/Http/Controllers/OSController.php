@@ -2,26 +2,59 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Certificado;
+use App\Models\Legislacao;
 use App\Models\OS;
 use App\Models\PerfilChamine;
 use App\Models\Empresa;
+use App\Models\Proposta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OSController extends Controller
 {
-    public function create()
+    public function index(){
+        $os = OS::all();
+        return view('os.index', compact('os'));
+    }
+    public function create($id)
     {
-        return view('os.create');
+        $proposta = Proposta::buscarComRelacionamentosPorId($id);
+        return view('os.create', compact('proposta'));
     }
 
     public function store(Request $request)
     {
-        // Lógica para armazenar a OS
-        // Por exemplo:
-        // OS::create($request->all());
+        $validated = $request->validate([
+            'proposta_id' => 'required|exists:propostas,id',
+            'numero_projeto' => 'required|string|max:255',
+            'numero_relatorio' => 'required|string|max:255',
+            'numero_plano' => 'required|string|max:255',
+            'servico' => 'required|string|max:255',
+            'data_amostragem' => 'required|date',
+            'observacao' => 'nullable|string',
+        ]);
 
-        return redirect()->route('os.create')->with('success', 'OS criada com sucesso!');
+         $existe = Os::where('numero_projeto', $validated['numero_projeto'])->exists();
+
+        if ($existe) {
+            return redirect()->back()
+                ->withInput()
+                ->withErrors(['numero_projeto' => 'Já existe uma OS com esse número de projeto.']);
+        }
+
+        $os = Os::create($validated);
+
+        return redirect()->route('os.index')->with('success', 'OS salva com sucesso!');
+    }
+
+    public function showOS($id){
+        $ordem = OS::buscarComRelacionamentosPorId($id);
+        $ze = $ordem->toArray();
+        $pdf = Pdf::loadView('os.pdf', compact('ordem'));
+
+        return $pdf->download("OS-{$ordem->id}.pdf");
     }
 
     public function showForm($id)
@@ -56,6 +89,10 @@ class OSController extends Controller
             })
             ->values();
 
-        return view('os.form', compact('os', 'perfis', 'templates', 'dadosAuto'));
+        $legislacoes = Legislacao::all();
+
+        $certificados = Certificado::all();
+
+        return view('os.form', compact('os', 'perfis', 'templates', 'dadosAuto', 'legislacoes', 'certificados'));
     }
 }

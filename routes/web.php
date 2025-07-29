@@ -9,10 +9,14 @@ use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\OSController; // Adicione esta linha
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\DocumentoController;
-use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\FormularioController;
 use App\Http\Controllers\SalvarImagensController;
+use App\Http\Controllers\LegislacaoController;
+use App\Http\Controllers\EquipamentoController;
+use App\Http\Controllers\InfraestruturaController;
+use App\Models\Infraestrutura;
+
 
 Route::get('/formulario', function () {
     return view('formulario');
@@ -62,27 +66,25 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/empresas/{id}/edit', [EmpresasController::class, 'edit'])->name('empresas.edit');
     Route::put('/empresas/{id}', [EmpresasController::class, 'update'])->name('empresas.update');
     Route::delete('/empresas/{id}', [EmpresasController::class, 'destroy'])->name('empresas.destroy');
-    Route::resource('empresas', EmpresaController::class);
+    Route::resource('empresas', EmpresasController::class);
+    Route::get('/empresas-checkcnpj', [EmpresasController::class, 'checkCnpj'])->name('empresas.checkcnpj');
 
     // Rotas para propostas comerciais
     Route::get('/propostas/create', [PropostasController::class, 'create'])->name('propostas.create');
     Route::post('/propostas', [PropostasController::class, 'store'])->name('propostas.store');
+    Route::get('/propostas/show', [PropostasController::class, 'show'])->name('propostas.show');
+    Route::get('/propostas/os/{id}', [PropostasController::class, 'os'])->name('propostas.os');
     Route::resource('propostas', PropostasController::class);
 
     // Rota para buscar perfis por empresa
     Route::post('/perfis/getProfilesByEmpresa', [PerfilController::class, 'getProfilesByEmpresa'])->name('perfis.getProfilesByEmpresa');
 
     // Rota para o formulário de criação de OS
-    Route::get('/os/create', [OSController::class, 'create'])->name('os.create');
+    Route::get('/os/criar/{id}', [OSController::class, 'create'])->name('os.criar');
+    Route::get('/os/show/{id}', [OSController::class, 'showOS'])->name('os.showos');
     Route::post('/os', [OSController::class, 'store'])->name('os.store'); // Adicione esta linha
     Route::resource('os', OSController::class);
     Route::get('/os/{id}/form', [OSController::class, 'showForm'])->name('os.form');
-    Route::get('/os', 'OsController@index')->name('os.index'); 
-
-    Route::get('/os', function(){
-        return view('os/create');
-    });
-
     Route::post('/os/{perfilId}/generatePDF', [PDFController::class, 'generatePDF'])->name('os.generatePDF');
 
     Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
@@ -91,7 +93,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/store-certificado', [FormularioController::class, 'storeCertificado'])->name('certificado.store');
     Route::get('/certificado', [FormularioController::class, 'certificado'])->name('certificado.index');
-    Route::put('/certificado-makePrimary', [FormularioController::class, 'makePrimary'])->name('certificado.makePrimary');
+    Route::put('/certificado-makePrimary/{id}', [FormularioController::class, 'makePrimary'])->name('certificado.makePrimary');
     Route::delete('/certificado-destroy', [FormularioController::class, 'destroyCertificado'])->name('certificado.destroy');
 
     // Rotas para geração de documentos
@@ -99,15 +101,25 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/get-placeholders', [DocumentController::class, 'getPlaceholders'])->name('get.placeholders');
     Route::post('/generate-document', [DocumentController::class, 'generateDocument'])->name('generate.document');
 
-    Route::post('/salvar-imagens', [SalvarImagensController::class, 'salvar']);
-    Route::get('/imagem-privada/{nome}', function ($nome) {
-        $path = storage_path('app/privado/imagens/' . $nome);
+    Route::get('/legislacao', [LegislacaoController::class, 'index'])->name('legislacao.index');
+    Route::post('/legislacao-store', [LegislacaoController::class, 'store'])->name('legislacao.store');
+    Route::put('/legislacao-update/{id}', [LegislacaoController::class, 'update'])->name('legislacao.update');
+    Route::delete('/legislacao-destroy/{id}', [LegislacaoController::class, 'destroy'])->name('legislacao.destroy');
 
-        if (!file_exists($path)) {
-            abort(404);
-        }
-
-        return response()->file($path);
-    });
-
+    Route::get('/equipamentos/create', [EquipamentoController::class, 'create'])->name('equipamentos.create');
+    Route::post('/equipamentos', [EquipamentoController::class, 'store'])->name('equipamentos.store');
+    
+    Route::get('/infraestruturas/create', [InfraestruturaController::class, 'create'])->name('infraestruturas.create');
+    Route::post('/infraestruturas', [InfraestruturaController::class, 'store'])->name('infraestruturas.store');
 });
+
+    // Route::post('/salvar-imagens', [SalvarImagensController::class, 'salvar']);
+    // Route::get('/imagem-privada/{nome}', function ($nome) {
+    //     $path = storage_path('app/privado/imagens/' . $nome);
+
+    //     if (!file_exists($path)) {
+    //         abort(404);
+    //     }
+
+    //     return response()->file($path);
+    // });

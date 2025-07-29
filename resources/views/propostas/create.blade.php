@@ -17,6 +17,26 @@
             transition: margin-left 0.3s ease, width 0.3s ease;
         }
 
+        .grupo {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        .metodologia {
+            margin-top: 5px;
+        }
+
+        .grupo-inline {
+            display: flex;
+            align-items: center;
+            gap: 8px; /* espaçamento entre label e input */
+            margin-bottom: 10px;
+        }
+
+        .grupo-inline label {
+            white-space: nowrap;
+        }
+
         /* Media queries para diferentes tamanhos de tela */
         @media (max-width: 1200px) {
             .form-section, .form-container {
@@ -77,7 +97,7 @@
 <body>
 
 
-    <form action="{{ route('propostas.store') }}" method="POST" onsubmit="prepararDados()">
+    <form action="{{ route('propostas.store') }}" method="POST" onsubmit="prepararDados()" enctype="multipart/form-data">
         @csrf
 
         <input type="hidden" id="analiseCriticaInput" name="analise_critica">
@@ -89,35 +109,53 @@
         <input type="hidden" id="perfil_id" name="perfil_id" value=""> <!-- Campo hidden para armazenar o ID do perfil selecionado -->
 
         <div class="form-section">
-            <h2>Dados do Cliente</h2>
             <div class="form-group">
-                <label>CPF</label>
-                <input type="text" class="form-control" placeholder="000.000.000-00" id="cpf"
-                    onblur="fetchClientData()">
+                <label>Número da Proposta</label>
+                <input type="text" class="form-control" placeholder="Digite o número da proposta" name="numero_proposta" id="numero_proposta">
+            </div>
+            <h2>Dados da Empresa</h2>
+            <div class="form-group">
+                <label>CNPJ</label>
+                <input type="text" class="form-control" placeholder="000.000.000-00" id="cnpj"
+                    onblur="fetchEmpresaData()">
             </div>
             <div class="form-group" id="nome-group" style="display: none;">
-                <label>Nome do Cliente</label>
-                <input type="text" class="form-control" placeholder="Digite o nome completo" id="clientName" readonly>
+                <label>Nome da Empresa</label>
+                <input type="text" class="form-control" placeholder="Digite o nome completo" id="empresaName" readonly>
             </div>
-            <div class="form-group" id="empresa-group" style="display: none;">
-                <label>Empresas Vinculadas</label>
-                <select class="form-control" id="linkedCompanies">
-                    <option value="">Selecione uma empresa</option>
-                </select>
-                <p id="no-companies-message" style="display: none; color: red;">Nenhuma empresa vinculada a este
-                    cliente.</p>
-            </div>
+
+            {{-- <div class="form-group" id="nome-group" style="display: none;">
+                <label>Número do Projeto</label>
+                <input type="text" class="form-control" placeholder="Digite o nome completo" id="projetoNumero" readonly>
+            </div> --}}
+{{-- 
             <div class="form-group" id="perfil-group" style="display: none;">
                 <label for="perfil_id">Perfis Disponíveis</label>
                 <select class="form-control" id="availableProfiles" name="perfil_id">
                     <option value="">Selecione um perfil</option>
                 </select>
-            </div>
+            </div> --}}
             
         </div>
+        <div class="obs-container">
+            <h3>Texto sobre a proposta:</h3>
+            <textarea class="form-control" name="propostatxt" maxlength="1000">Vimos pelo presente apresentar nossa proposta técnica e comercial de prestação de serviços de amostragens em efluentes
+atmosféricos. Estamos à disposição para maiores esclarecimentos.</textarea>
+        </div>
+        <div class="obs-container">
+            <h3>Apresentação:</h3>
+            <textarea class="form-control" name="apresentacao" maxlength="1000">A presente proposta refere-se a trabalho de coleta isocinética e análise dos efluentes gasosos nas fontes de emissão descritas
+no escopo e foi elaborado com base nas informações fornecidas pelo cliente.
+            </textarea>
+        </div>
 
-        <br>
-        <br>
+        <div class="obs-container">
+            <h3>Objetivos:</h3>
+            <textarea class="form-control" name="objetivo" maxlength="1000">Fornecer as condições técnicas e comerciais para avaliação da concentração de Material Particulado (MP), Óxidos de
+Nitrogênio (NOX), Monóxido de carbono (CO) e taxa de emissão dos poluentes, bem como umidade, temperatura e vazão dos
+gases das fontes de emissão.
+            </textarea>
+        </div>
 
         <div class="form-container">
             <div class="form-header">
@@ -177,11 +215,11 @@
                     </td>
                     <td colspan="2">
                         <ul class="chemical-list" id="providersList" style="display: none;">
-                            <li><input type="checkbox"> Cloreto de Hidrogênio (HCl)</li>
-                            <li><input type="checkbox"> Fluoreto de Hidrogênio (HF)</li>
-                            <li><input type="checkbox"> Dioxinas e Furanos</li>
-                            <li><input type="checkbox"> Compostos orgânicos voláteis (VOC)</li>
-                            <li><input type="checkbox"> Compostos orgânicos semivoláteis (SVOC)</li>
+                            <li><input type="checkbox" name="provedores[]" value="Cloreto de Hidrogênio (HCl)"> Cloreto de Hidrogênio (HCl)</li>
+                            <li><input type="checkbox" name="provedores[]" value="Fluoreto de Hidrogênio (HF)"> Fluoreto de Hidrogênio (HF)</li>
+                            <li><input type="checkbox" name="provedores[]" value="Dioxinas e Furanos"> Dioxinas e Furanos</li>
+                            <li><input type="checkbox" name="provedores[]" value="Compostos orgânicos voláteis (VOC)"> Compostos orgânicos voláteis (VOC)</li>
+                            <li><input type="checkbox" name="provedores[]" value="Compostos orgânicos semivoláteis (SVOC)"> Compostos orgânicos semivoláteis (SVOC)</li>
                         </ul>
                     </td>
                 </tr>
@@ -211,24 +249,95 @@
 
         <br>
         <br>
+        <div class="form-container">
+            <div class="form-header">
+                <div>
+                    <h2>Metodologias</h2>
+                </div>
+            </div>
+            <div id="grupos-container"></div>
 
+            <button type="button" class="btn btn-secondary" onclick="adicionarGrupo()">Adicionar Grupo</button>
+        </div>
+        <br>
+        <br>
+        <div class="form-container">
+            <div class="form-header">
+                <div>
+                    <h2>Equipamentos</h2>
+                </div>
+            </div>
+            <div class="form-check mb-2">
+                <input type="checkbox" class="form-check-input" id="selecionarTodos">
+                <label for="selecionarTodos" class="form-check-label">Selecionar Todos</label>
+            </div>
+
+            <!-- Lista de equipamentos com checkboxes -->
+            @foreach($equipamentos as $equipamento)
+                <div class="form-check">
+                    <input
+                        type="checkbox"
+                        name="equipamentos[]"
+                        value="{{ $equipamento->id }}"
+                        class="form-check-input equipamento-checkbox"
+                        id="equipamento-{{ $equipamento->id }}"
+                    >
+                    <label for="equipamento-{{ $equipamento->id }}" class="form-check-label">
+                        {{ $equipamento->nome }}
+                    </label>
+                </div>
+            @endforeach
+        </div>
+
+                <div class="form-container">
+                    <div class="form-header">
+                <div>
+                    <h2>Infraestrutura</h2>
+                </div>
+            </div>
+            <div class="form-check mb-2">
+                <input type="checkbox" class="form-check-input" id="selecionarTodosInfra">
+                <label for="selecionarTodos" class="form-check-label">Selecionar Todos</label>
+            </div>
+
+            <!-- Lista de equipamentos com checkboxes -->
+            @foreach($infraestruturas as $infraestrutura)
+                <div class="form-check">
+                    <input
+                        type="checkbox"
+                        name="infraestruturas[]"
+                        value="{{ $infraestrutura->conjunto_id }}"
+                        class="form-check-input infraestrutura-checkbox"
+                        id="infraestrutura-{{ $infraestrutura->conjunto_id }}"
+                    >
+                    <label for="infraestrutura-{{ $infraestrutura->conjunto_id }}" class="form-check-label">
+                        {{ $infraestrutura->conjunto_nome }}
+                    </label>
+                </div>
+            @endforeach
+        </div>
         <div class="form-container">
 
             <h2>ESCOPO DOS TRABALHOS</h2>
-            <table>
-                <tr>
-                    <th>Fonte de Emissão</th>
-                    <th>Número de Fontes</th>
-                    <th>Parâmetro</th>
-                </tr>
-                <tr>
-                    <td><input type="text" name="fonte_emissao" value="Chaminé da caldeira a lenha"></td>
-                    <td><input type="text" name="numero_fontes" value="1"
-                            oninput="this.value = this.value.replace(/\D/g, '')"></td>
-                    <td><input type="text" name="parametros" value="MP / CO / NOx"></td>
-                </tr>
+            <table id="trabalhoTable">
+                <thead>
+                    <tr>
+                        <th>Fonte de Emissão</th>
+                        <th>Número de Fontes</th>
+                        <th>Número de Coleta</th>
+                        <th>Parâmetro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="form-control" name="fonte_emissao[0][fonte]" value="Chaminé da caldeira a lenha"></td>
+                        <td><input type="number" class="form-control" name="fonte_emissao[0][numero_fontes]" value="1"></td>
+                        <td><input type="number" class="form-control" name="fonte_emissao[0][numero_coletas]" value="1"></td>
+                        <td><input type="text" class="form-control" name="fonte_emissao[0][parametros]" value="MP / CO / NOx"></td>
+                    </tr>
+                </tbody>
             </table>
-
+            <button type="button" class="btn btn-secondary" onclick="addRowTrabalho()">Adicionar Linha</button>
         </div>
         <br>
         <br>
@@ -245,20 +354,22 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     <tr>
-                        <td><input type="text" class="form-control" value="Determinação de MP / CO / NOX"></td>
-                        <td><input type="number" class="form-control" oninput="calculateTotal(this)"></td>
-                        <td><input type="number" class="form-control" oninput="calculateTotal(this)"></td>
-                        <td><input type="number" class="form-control" oninput="calculateTotal(this)"></td>
-                        <td><input type="text" class="form-control" readonly></td>
+                        <td><input type="text" class="form-control" name="servico[0][descricao]" value="Determinação de MP / CO / NOX"></td>
+                        <td><input type="number" class="form-control" name="servico[0][coletas_por_fonte]" oninput="calculateTotal(this)"></td>
+                        <td><input type="number" class="form-control" name="servico[0][qtd_fontes]" oninput="calculateTotal(this)"></td>
+                        <td><input type="number" class="form-control" name="servico[0][valor_por_fonte]" oninput="calculateTotal(this)"></td>
+                        <td><input type="text" class="form-control" name="servico[0][total]" readonly></td>
                     </tr>
                     <tr>
-                        <td><input type="text" class="form-control" value="Deslocamento"></td>
-                        <td><input type="number" class="form-control" oninput="calculateTotal(this)"></td>
-                        <td><input type="number" class="form-control" oninput="calculateTotal(this)"></td>
-                        <td><input type="number" class="form-control" oninput="calculateTotal(this)"></td>
-                        <td><input type="text" class="form-control" readonly></td>
+                        <td><input type="text" class="form-control" name="servico[1][descricao]" value="Deslocamento"></td>
+                        <td><input type="number" class="form-control" name="servico[1][coletas_por_fonte]" oninput="calculateTotal(this)"></td>
+                        <td><input type="number" class="form-control" name="servico[1][qtd_fontes]" oninput="calculateTotal(this)"></td>
+                        <td><input type="number" class="form-control" name="servico[1][valor_por_fonte]" oninput="calculateTotal(this)"></td>
+                        <td><input type="text" class="form-control" name="servico[1][total]" readonly></td>
                     </tr>
+
                 </tbody>
                 <tfoot>
                     <tr>
@@ -267,7 +378,7 @@
                     </tr>
                 </tfoot>
             </table>
-            <button type="button" class="btn btn-secondary" onclick="addRow()">Adicionar Linha</button>
+            <button type="button" class="btn btn-secondary" onclick="addRowServico()">Adicionar Linha</button>
         </div>
 
         <br>
@@ -289,6 +400,7 @@
 
         function setStatusAndSubmit(status) {
             document.getElementById('status').value = status;
+            console.log('salada');
             document.querySelector('form').submit();
         }
 
@@ -308,106 +420,137 @@
             $('#cpf').mask('000.000.000-00');
         });
 
-        function fetchClientData() {
-            const cpf = document.getElementById('cpf').value;
-            if (cpf) {
+        document.getElementById('selecionarTodos').addEventListener('change', function () {
+            const checkboxes = document.querySelectorAll('.equipamento-checkbox');
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        });
+
+        document.getElementById('selecionarTodosInfra').addEventListener('change', function () {
+            const checkboxes = document.querySelectorAll('.infraestrutura-checkbox');
+            checkboxes.forEach(cb => cb.checked = this.checked);
+        });
+
+        let grupoIndex = 0;
+
+        function adicionarGrupo() {
+            const container = document.getElementById('grupos-container');
+
+            const grupoDiv = document.createElement('div');
+            grupoDiv.classList.add('grupo');
+            grupoDiv.setAttribute('data-grupo-index', grupoIndex);
+
+            grupoDiv.innerHTML = `
+                <div class="grupo-inline">
+                    <label>Grupo:</label>
+                    <input type="text" class="form-control" name="grupos[${grupoIndex}][nome]" placeholder="Nome do grupo">
+                </div>
+                <div class="metodologias-container" id="metodologias-${grupoIndex}"></div>
+                <button type="button" class="btn btn-secondary" onclick="adicionarMetodologia(${grupoIndex})">Adicionar Metodologia</button>
+            `;
+
+            container.appendChild(grupoDiv);
+            grupoIndex++;
+        }
+
+        function adicionarMetodologia(grupoIndex) {
+            const container = document.getElementById(`metodologias-${grupoIndex}`);
+            const metodologiaIndex = container.children.length;
+
+            const wrapper = document.createElement('div');
+            wrapper.style.display = 'flex';
+            wrapper.style.alignItems = 'center';
+            wrapper.style.gap = '10px';
+            wrapper.style.marginBottom = '8px';
+
+            // Input de nome da metodologia
+            const inputNome = document.createElement('input');
+            inputNome.type = 'text';
+            inputNome.name = `grupos[${grupoIndex}][metodologias][${metodologiaIndex}][nome]`;
+            inputNome.placeholder = 'Metodologia';
+            inputNome.classList.add('form-control');
+            inputNome.style.flex = '1';
+
+            // Hidden para garantir valor 0
+            const hidden = document.createElement('input');
+            hidden.type = 'hidden';
+            hidden.name = `grupos[${grupoIndex}][metodologias][${metodologiaIndex}][acreditado]`;
+            hidden.value = '0';
+
+            // Checkbox
+            const checkbox = document.createElement('input');
+            checkbox.type = 'checkbox';
+            checkbox.value = '1';
+            checkbox.name = `grupos[${grupoIndex}][metodologias][${metodologiaIndex}][acreditado]`;
+            checkbox.style.margin = '0 5px 0 0'; // margem direita pequena
+
+            // Label para checkbox
+            const label = document.createElement('label');
+            label.textContent = 'Acreditado';
+            label.style.margin = '0';
+            label.style.userSelect = 'none';
+            label.style.cursor = 'pointer';
+
+            // Faz label clicar no checkbox
+            const checkboxId = `acreditado-${grupoIndex}-${metodologiaIndex}`;
+            checkbox.id = checkboxId;
+            label.htmlFor = checkboxId;
+
+            wrapper.appendChild(inputNome);
+            wrapper.appendChild(hidden);
+            wrapper.appendChild(checkbox);
+            wrapper.appendChild(label);
+
+            container.appendChild(wrapper);
+        }
+
+
+
+
+        function fetchEmpresaData() {
+            const cnpj = document.getElementById('cnpj').value;
+
+            if (cnpj) {
                 $.ajax({
-                    url: '{{ route("clientes.checkCpf") }}',
-                    method: 'POST',
+                    url: '{{ route("empresas.checkcnpj") }}',
+                    method: 'GET',
                     data: {
                         _token: '{{ csrf_token() }}',
-                        cnpj_cpf: cpf
+                        cnpj: cnpj
                     },
-                    success: function (response) {
-                        if (response.exists) {
-                            $.ajax({
-                                url: '{{ route("clientes.getClientData") }}',
-                                method: 'POST',
-                                data: {
-                                    _token: '{{ csrf_token() }}',
-                                    cnpj_cpf: cpf
-                                },
-                                success: function (data) {
-                                    console.log("Dados retornados:", data);  // Adicione esta linha para ver o retorno no console
+                    success: function (data) {
+                        console.log("Dados da empresa retornados:", data);  // Log de depuração
 
-                                    document.getElementById('clientName').value = data.nome;
-                                    document.getElementById('nome-group').style.display = 'block';
+                        // Preencher nome da empresa
+                        document.getElementById('empresaName').value = data.nome;
+                        document.getElementById('nome-group').style.display = 'block';
 
-                                    document.querySelector('input[name="id_cliente"]').value = data.id;
-                                    // caso "data.id" seja o ID do cliente retornado pela rota
+                        // Preencher campo oculto com ID da empresa
+                        document.querySelector('input[name="id_empresa"]').value = data.id;
 
-                                    const empresaSelect = document.getElementById('linkedCompanies');
-                                    const noCompaniesMessage = document.getElementById('no-companies-message');
+                        // // Preencher select de perfis
+                        // const perfilSelect = document.getElementById("availableProfiles");
+                        // perfilSelect.innerHTML = '<option value="">Selecione um perfil</option>';
 
-                                    empresaSelect.innerHTML = '<option value="">Selecione uma empresa</option>';
-
-                                    if (data.empresas.length > 0) {
-                                        data.empresas.forEach(function (empresa) {
-                                            const option = document.createElement('option');
-                                            option.value = empresa.id;
-                                            option.textContent = empresa.nome; // Exibe apenas o nome da empresa
-                                            empresaSelect.appendChild(option);
-                                        });
-                                        empresaSelect.style.display = 'block';
-                                        noCompaniesMessage.style.display = 'none';
-                                    } else {
-                                        empresaSelect.style.display = 'none';
-                                        noCompaniesMessage.style.display = 'block';
-                                    }
-
-                                    document.getElementById('empresa-group').style.display = 'block';
-
-                                    empresaSelect.addEventListener("change", function () {
-                                        const empresaNome = this.options[this.selectedIndex].text; // Pegando o nome da empresa selecionada
-                                        const selectedOption = this.options[this.selectedIndex];
-                                        document.querySelector('input[name="id_empresa"]').value = selectedOption.value;
-                                        if (empresaNome) {
-                                            $.ajax({
-                                                url: "{{ route('perfis.getProfilesByEmpresa') }}",
-                                                method: "POST", // Certifique-se de que o método é POST
-                                                data: {
-                                                    _token: "{{ csrf_token() }}",
-                                                    empresa_nome: empresaNome, // Enviando o nome da empresa
-
-                                                },
-                                                success: function (response) {
-                                                    console.log("Perfis recebidos:", response.perfis); // Log de depuração
-
-                                                    const perfilSelect = document.getElementById("availableProfiles");
-                                                    perfilSelect.innerHTML = '<option value="">Selecione um perfil</option>';
-
-                                                    if (response.perfis.length > 0) {
-                                                        response.perfis.forEach(function (perfil) {
-                                                            const option = document.createElement("option");
-                                                            option.value = perfil.id_perfil; // Usar id_perfil como valor
-                                                            option.textContent = `${perfil.projeto} / ${perfil.empresa_nome || ''}`; // Exibir projeto e empresa_nome (se disponível)
-                                                            perfilSelect.appendChild(option);
-                                                        });
-                                                        document.getElementById("perfil-group").style.display = "block";
-                                                        console.log("Select de perfis atualizado e visível"); // Log de depuração
-                                                    } else {
-                                                        document.getElementById("perfil-group").style.display = "none";
-                                                        console.log("Nenhum perfil encontrado"); // Log de depuração
-                                                    }
-                                                },
-                                                error: function (xhr, status, error) {
-                                                    console.error("Erro na requisição AJAX:", error); // Log de depuração
-                                                },
-                                            });
-                                        } else {
-                                            document.getElementById("perfil-group").style.display = "none";
-                                        }
-                                    });
-
-                                }
-                            });
-                        } else {
-                            alert('CPF não encontrado.');
-                        }
+                        // if (data.perfis && data.perfis.length > 0) {
+                        //     data.perfis.forEach(function (perfil) {
+                        //         const option = document.createElement("option");
+                        //         option.value = perfil.id_perfil;
+                        //         option.textContent = `${perfil.projeto} / ${perfil.empresa_nome || ''}`;
+                        //         perfilSelect.appendChild(option);
+                        //     });
+                        //     document.getElementById("perfil-group").style.display = "block";
+                        // } else {
+                        //     document.getElementById("perfil-group").style.display = "none";
+                        // }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Erro na requisição AJAX:", error);
+                        alert("Erro ao buscar dados da empresa. Verifique o CNPJ e tente novamente.");
                     }
                 });
             }
         }
+
 
         function calculateTotal(input) {
             const row = input.closest('tr');
@@ -430,33 +573,47 @@
             document.getElementById('grandTotal').value = grandTotal.toFixed(2);
         }
 
-        function addRow() {
-            const table = document.getElementById('servicesTable').getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow();
+ function addRowServico() {
+    const table = document.getElementById('servicesTable').getElementsByTagName('tbody')[0];
+    const rowCount = table.rows.length;
+    const newRow = table.insertRow();
 
-            const descriptions = ['Descrição', 'Quantidade de Coleta/ Fonte', 'Quantidade de Fontes', 'Valor Unitário/fonte', 'Total'];
-            descriptions.forEach((desc, index) => {
-                const newCell = newRow.insertCell(index);
-                if (index === 0) {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = 'form-control';
-                    newCell.appendChild(input);
-                } else if (index === 4) {
-                    const input = document.createElement('input');
-                    input.type = 'text';
-                    input.className = 'form-control';
-                    input.readOnly = true;
-                    newCell.appendChild(input);
-                } else {
-                    const input = document.createElement('input');
-                    input.type = 'number';
-                    input.className = 'form-control';
-                    input.oninput = function () { calculateTotal(input); };
-                    newCell.appendChild(input);
-                }
-            });
+    const campos = ['descricao', 'coletas_por_fonte', 'qtd_fontes', 'valor_por_fonte', 'total'];
+    campos.forEach((campo, index) => {
+        const newCell = newRow.insertCell(index);
+        const input = document.createElement('input');
+        input.className = 'form-control';
+
+        if (campo === 'total') {
+            input.type = 'text';
+            input.readOnly = true;
+        } else {
+            input.type = campo === 'descricao' ? 'text' : 'number';
+            input.oninput = function () { calculateTotal(input); };
         }
+
+        input.name = `servico[${rowCount}][${campo}]`;
+        newCell.appendChild(input);
+    });
+}
+
+function addRowTrabalho() {
+    const table = document.getElementById('trabalhoTable').getElementsByTagName('tbody')[0];
+    const rowCount = table.rows.length;
+    const newRow = table.insertRow();
+
+    const campos = ['fonte', 'numero_fontes', 'numero_coletas', 'parametros'];
+    campos.forEach((campo, index) => {
+        const newCell = newRow.insertCell(index);
+        const input = document.createElement('input');
+        input.className = 'form-control';
+
+        input.type = (campo === 'numero_fontes' || campo === 'numero_coletas') ? 'number' : 'text';
+
+        input.name = `fonte_emissao[${rowCount}][${campo}]`;
+        newCell.appendChild(input);
+    });
+}
     </script>
     <script>
         function getFormData() {

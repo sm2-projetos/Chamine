@@ -10,11 +10,12 @@ class CreateOsTable extends Migration
         Schema::create('os', function (Blueprint $table) {
             $table->id();
             $table->foreignId('proposta_id')->constrained('propostas')->onDelete('cascade');
-            $table->foreignId('perfil_id')->nullable()->constrained('perfis')->onDelete('cascade');
-            $table->json('metodologia_documentos');
-            $table->json('equipamentos_necessarios');
+            $table->string('numero_projeto');
+            $table->string('numero_relatorio');
+            $table->string('numero_plano');
+            $table->string('servico');
+            $table->date('data_amostragem');
             $table->text('observacao')->nullable();
-            $table->boolean('lixeira')->default(false);
             $table->timestamps();
         });
     }

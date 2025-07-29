@@ -21,34 +21,40 @@ class FormularioController extends Controller
         return view('certificado', compact('certificados'));
     }
 
-    public function storeCertificado(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:5120',
-            'is_primary' => 'nullable|boolean',
-        ]);
+public function storeCertificado(Request $request)
+{
+    $request->validate([
+        'name'        => 'required|string|max:255',
+        'files'       => 'required|array',
+        'files.*'     => 'file|mimes:jpg,jpeg,png,pdf|max:40960',
+        'is_primary'  => 'nullable|boolean',
+    ]);
 
-        $file = $request->file('file');
+    $name = $request->input('name');
+    $folderPath = "public/uploads/{$name}";
 
-        $filename = uniqid() . '.' . $file->getClientOriginalExtension();
-        $path = $file->storeAs('public/uploads', $filename);
-
-        // Se for marcado como principal, zera os outros
-        if ($request->boolean('is_primary')) {
-            Certificado::where('is_primary', true)->update(['is_primary' => false]);
-        }
-
-        Certificado::create([
-            'filename'   => $filename,
-            'path'       => Storage::url('uploads/' . $filename),
-            'type'       => $file->getClientMimeType() === 'application/pdf' ? 'pdf' : 'image',
-            'is_primary' => $request->boolean('is_primary'),
-        ]);
-
-        return redirect()->route('certificado.index')->with('success', 'Arquivo enviado com sucesso!');
+    // Salva todos os arquivos com seus nomes originais
+    foreach ($request->file('files') as $file) {
+        $file->storeAs($folderPath, $file->getClientOriginalName());
     }
 
-        public function destroy($id)
+    // Se for marcado como principal, zera os outros
+    if ($request->boolean('is_primary')) {
+        Certificado::where('is_primary', true)->update(['is_primary' => false]);
+    }
+
+    // Cria o conjunto no banco
+    Certificado::create([
+        'name'       => $name,
+        'path'       => Storage::url("uploads/{$name}"),
+        'is_primary' => $request->boolean('is_primary'),
+    ]);
+
+    return redirect()->route('certificado.index')->with('success', 'Conjunto enviado com sucesso!');
+}
+
+
+        public function destroyCertificado($id)
     {
         $doc = Certificado::findOrFail($id);
 
@@ -66,6 +72,9 @@ class FormularioController extends Controller
         // Atualiza o escolhido
         Certificado::where('id', $id)->update(['is_primary' => true]);
 
-        return back()->with('success', 'Arquivo definido como principal.');
+        return response()->json([
+        'message' => 'Definido como principal',
+        'redirect' => route('certificado.index'),
+        ]);
     }
 }

@@ -263,7 +263,12 @@
 
                     <div class="form-group">
                         <label for="endereco">Endereço</label>
-                        <input type="text" id="endereco" name="endereco" class="form-control" value="{{ $empresa->endereco }}" placeholder="Digite o endereço da empresa" required>
+                        <input type="text" id="endereco" name="endereco" class="form-control" value="{{ $empresa->endereco ?? ''}}" placeholder="Digite o endereço da empresa" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cep">CEP</label>
+                        <input type="text" id="cep" name="cep" class="form-control" value="{{ $empresa->cep ?? ''}}" placeholder="Digite o cep da empresa" required>
                     </div>
 
                     <div class="form-row">
@@ -274,18 +279,25 @@
 
                         <div class="form-group">
                             <label for="telefone">Telefone</label>
-                            <input type="text" id="telefone" name="telefone" class="form-control telefone-mask" value="{{ $empresa->telefone ?? $empresa->contato }}" placeholder="Digite o telefone da empresa" required>
+                            <input type="text" id="telefone" name="telefone" class="form-control telefone-mask" value="{{ $empresa->telefone ?? '' }}" placeholder="Digite o telefone da empresa" required>
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="cliente_id">Cliente Vinculado</label>
-                        <select id="cliente_id" name="cliente_id" class="form-control">
-                            <option value="">Selecione um cliente (opcional)</option>
-                            @foreach($clientes as $cliente)
-                                <option value="{{ $cliente->id_cliente }}">{{ $cliente->nome }}</option>
-                            @endforeach
-                        </select>
+                        <label for="nome_contato">Nome do Contato</label>
+                        <input type="text" id="nome_contato" name="nome_contato" class="form-control" value="{{ $empresa->nome_contato ?? $empresa->nome_contato }}" placeholder="Digite o nome do contato da empresa" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email_contato">E-mail</label>
+                            <input type="email_contato" id="email_contato" name="email_contato" class="form-control" value="{{ $empresa->email_contato ?? '' }}" placeholder="Digite o e-mail do contato">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefone_contato">Telefone</label>
+                            <input type="text" id="telefone_contato" name="telefone_contato" class="form-control telefone-mask" value="{{ $empresa->telefone_contato ?? '' }}" placeholder="Digite o telefone do contato" required>
+                        </div>
                     </div>
                 </div>
 

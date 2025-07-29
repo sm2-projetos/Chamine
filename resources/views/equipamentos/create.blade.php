@@ -103,83 +103,32 @@
 @include('layouts.sidebar')
 <body>
         <div class="container">
-    <h2>Cadastrar OS</h2>
+    <h2>Cadastrar Equipamento</h2>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-<form action="{{ route('os.store') }}" method="POST">
-    @csrf
-    <input type="hidden" name="proposta_id" value="{{ $proposta->id }}">
-    <h3>{{ $proposta->numero_proposta }}</h3>
-    <div>
-        <label>Número do Projeto</label>
-        <input type="text" name="numero_projeto" class="form-control" required>
-    </div>
+    <form action="{{ route('equipamentos.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
 
-    <div>
-        <label>Número do Relatório de Análise</label>
-        <input type="text" name="numero_relatorio" class="form-control" required>
-    </div>
+        <div class="form-group mb-3">
+            <label for="nome">Nome</label>
+            <input type="text" name="nome" id="nome" class="form-control" required>
+        </div>
 
-    <div>
-        <label>Número do Plano de Amostragem</label>
-        <input type="text" name="numero_plano" class="form-control" required>
-    </div>
+        <div class="form-group mb-3">
+            <label for="descricao">Descrição</label>
+            <textarea name="descricao" id="descricao" rows="4" class="form-control"></textarea>
+        </div>
 
-    <div>
-        <label>Serviço</label>
-        <input type="text" name="servico" class="form-control" required>
-    </div>
+        <div class="form-group mb-3">
+            <label for="imagem">Imagem</label>
+            <input type="file" name="imagem" id="imagem" class="form-control">
+        </div>
 
-    <div>
-        <label>Data da Amostragem</label>
-        <input type="date" name="data_amostragem" class="form-control" required>
-    </div>
-
-    <div>
-        <label>Observação</label>
-        <textarea name="observacao" class="form-control"></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-3">Salvar</button>
-</form>
-
-<script>
-    let index = 1;
-
-    function adicionarBloco() {
-        const container = document.getElementById('blocos');
-        const bloco = document.createElement('div');
-        bloco.className = 'bloco';
-
-        bloco.innerHTML = `
-            <select name="blocos[${index}][tipo]" onchange="alternarCampos(this)">
-                <option value="texto">Texto</option>
-                <option value="imagem">Imagem</option>
-            </select>
-            <textarea name="blocos[${index}][conteudo]" class="conteudo-texto"></textarea>
-            <input type="file" name="blocos[${index}][conteudo]" class="conteudo-imagem" style="display: none;">
-            <button type="button" onclick="removerBloco(this)">Remover</button>
-            <hr>
-        `;
-
-        container.appendChild(bloco);
-        index++;
-    }
-
-    function alternarCampos(select) {
-        const bloco = select.parentElement;
-        bloco.querySelector('.conteudo-texto').style.display = select.value === 'texto' ? 'block' : 'none';
-        bloco.querySelector('.conteudo-imagem').style.display = select.value === 'imagem' ? 'block' : 'none';
-    }
-
-    function removerBloco(botao) {
-        botao.parentElement.remove();
-    }
-</script>
-
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
 </div>
 </body>
 </html>

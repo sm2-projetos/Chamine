@@ -3,34 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Cliente</title>
+    <title>Legislação</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 
 @include('layouts.sidebar')
+
 <div class="certificado-layout">
     <div class="certificado-lista">
-        <h2 class="certificado-header">📂 Conjuntos de Documentos</h2>
+        <h2 class="certificado-header">📚 Legislações Existentes</h2>
 
-        @if($certificados->count())
+        @if($legislacoes->count())
             <div class="certificado-container">
-                @foreach($certificados as $conjunto)
+                @foreach($legislacoes as $legislacao)
                     <div class="certificado-card">
                         <div class="certificado-header">
-                            {{ $conjunto->name }}
-                            @if($conjunto->is_primary)
-                                <span class="certificado-primary"> (Principal)</span>
-                            @endif
+                            {{ $legislacao->nome }}
                         </div>
+                        <p style="margin-top: 8px;">{{ $legislacao->descricao }}</p>
 
                         <div class="certificado-actions">
-                            @if(!$conjunto->is_primary)
-                                <button type="button" class="btn-make-primary" data-id="{{ $conjunto->id }}" name="makePrimaryBtn">
-                                    Tornar Principal
-                                </button>
-                            @endif
+                            <button class="btn-editar-legislacao" data-id="{{ $legislacao->id }}" data-nome="{{ $legislacao->nome }}" data-descricao="{{ $legislacao->descricao }}">
+                                Editar
+                            </button>
 
-                            <form action="{{ route('certificado.destroy', $conjunto->id) }}" method="DELETE" class="ajax-delete-certificado">
+                            <form action="{{ route('legislacao.destroy', $legislacao->id) }}" method="POST" class="ajax-delete-legislacao">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="danger">Excluir</button>
@@ -40,34 +37,32 @@
                 @endforeach
             </div>
         @else
-            <p>Nenhum conjunto enviado ainda.</p>
+            <p>Nenhuma legislação cadastrada ainda.</p>
         @endif
     </div>
 
     <div class="certificado-formulario">
-        <h2 class="certificado-header">📤 Upload de Arquivos</h2>
+        <h2 class="certificado-header" id="form-title">📥 Criar Nova Legislação</h2>
 
-        <form action="{{ route('certificado.store') }}" method="POST" enctype="multipart/form-data" class="form-upload-container">
+        <form action="{{ route('legislacao.store') }}" method="POST" class="form-upload-container" id="form-legislacao">
             @csrf
+                @csrf
+    <input type="hidden" name="id" id="id">
+    <div id="put-method-field"></div>
 
-            <label for="name">Nome do conjunto:</label>
-            <input type="text" name="name" id="name" required>
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" required>
 
-            <label for="files">Arquivos:</label>
-            <input type="file" name="files[]" id="files" accept=".jpg,.jpeg,.png,.pdf" multiple required>
+            <label for="descricao">Descrição:</label>
+            <input type="text" name="descricao" id="descricao" required>
 
-            <label>
-                <input type="checkbox" name="is_primary" value="1">
-                Marcar como principal
-            </label>
-
-            <br><br>
-            <button type="submit">Enviar</button>
+            <div style="display: flex; justify-content: space-between; gap: 10px; margin-top: 16px;">
+                <button type="submit" id="submit-btn" class="btn-salvar">Salvar</button>
+                <button type="button" id="btn-cadastrar-novo" class="btn-salvar" style="display: none;">Cadastrar Novo</button>
+            </div>
         </form>
-    </div>
+  </div>
 </div>
-
-
 <style>
     .certificado-layout {
         display: flex;
@@ -199,68 +194,47 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    document.querySelector('input[name="files[]"]').addEventListener('change', function(e) {
-        const select = document.querySelector('select[name="primary_file_name"]');
-        select.innerHTML = '<option value="">-- Nenhum --</option>';
-
-        for (let i = 0; i < e.target.files.length; i++) {
-            const option = document.createElement('option');
-            option.value = e.target.files[i].name;
-            option.text = e.target.files[i].name;
-            select.appendChild(option);
-        }
-    });
     $(document).ready(function() {
-    // AJAX para "Tornar Principal"
-        $('.btn-make-primary').click(function() {
-            let btn = $(this);
-            let id = btn.data('id');
-            let url = `/certificado-makePrimary/${id}`;
+        $('.ajax-delete-legislacao').submit(function(e) {
+            e.preventDefault();
+            if (!confirm('Tem certeza que deseja excluir esta legislação?')) return;
 
-            btn.prop('disabled', true);
-
+            let form = $(this);
             $.ajax({
-                url: url,
-                method: 'PUT',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
                 success: function(response) {
-                    alert(response.message);
-                    window.location.href = response.redirect;
+                    alert('Legislação excluída com sucesso!');
+                    location.reload();
                 },
                 error: function(xhr) {
-                    alert('Erro: ' + xhr.responseText);
+                    alert('Erro ao excluir: ' + xhr.responseText);
                 }
             });
         });
 
+        $('.btn-editar-legislacao').click(function() {
+            const id = $(this).data('id');
+            $('#form-title').text('✏️ Editar Legislação');
+            $('#submit-btn').text('Atualizar');
+            $('#id').val($(this).data('id'));
+            $('#nome').val($(this).data('nome'));
+            $('#descricao').val($(this).data('descricao'));
+            $('#form-legislacao').attr('action', '/legislacao-update/' + id);
+            $('#put-method-field').html('<input type="hidden" name="_method" value="PUT">');
+            $('#btn-cadastrar-novo').show();
+        });
 
-    // AJAX para "Excluir"
-    $('.ajax-delete-certificado').submit(function(e) {
-        e.preventDefault();
-
-        if (!confirm('Tem certeza que quer excluir?')) {
-            return;
-        }
-
-        let form = $(this);
-        let url = form.attr('action');
-        let method = form.find('input[name="_method"]').val() || 'POST';
-
-        $.ajax({
-            url: url,
-            type: method,
-            data: form.serialize(),
-            success: function(response) {
-                alert('Conjunto excluído com sucesso!');
-                location.reload(); // ou remova o item da página dinamicamente
-            },
-            error: function(xhr) {
-                alert('Erro ao excluir o conjunto.');
-            }
+        $('#btn-cadastrar-novo').click(function() {
+            $('#form-title').text('📄 Criar Nova Legislação');
+            $('#submit-btn').text('Salvar');
+            $('#id').val('');
+            $('#nome').val('');
+            $('#descricao').val('');
+            $('#form-legislacao').attr('action', '{{ route('legislacao.store') }}');
+            $('#put-method-field').html('');
+            $('#btn-cadastrar-novo').hide();
         });
     });
-});
 </script>
-

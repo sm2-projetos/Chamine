@@ -51,14 +51,29 @@
 
     <div class="menu-section">
         <div class="menu-section-title">Cadastros</div>
-        <a href="{{ route('empresas.create') }}" class="menu-item">
+        {{-- <a href="{{ route('empresas.create') }}" class="menu-item">
             <i class="fas fa-user-plus"></i>
             Cadastrar Empresas
-        </a>
+        </a> --}}
 
         <a href="{{ route('certificado.index') }}" class="menu-item">
             <i class="fas fa-user-plus"></i>
             Manutenção de Certificados
+        </a>
+
+        <a href="{{ route('legislacao.index') }}" class="menu-item">
+            <i class="fas fa-user-plus"></i>
+            Manutenção de Legislação
+        </a>
+
+        <a href="{{ route('equipamentos.create') }}" class="menu-item">
+            <i class="fas fa-user-plus"></i>
+            Equipamentos
+        </a>
+
+        <a href="{{ route('infraestruturas.create') }}" class="menu-item">
+            <i class="fas fa-user-plus"></i>
+            Infraestrutura
         </a>
 
         {{-- <a href="{{ route('clientes.index') }}" class="menu-item">
@@ -69,7 +84,7 @@
             <i class="fas fa-list"></i>
             Listar Empresas
         </a>
-        <a href="{{ route('home') }}" class="menu-item">
+        <a href="{{ route('os.index') }}" class="menu-item">
             <i class="fas fa-tasks"></i>
             Ver Todas OS
         </a>

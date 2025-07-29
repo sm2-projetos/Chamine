@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('certificados', function (Blueprint $table) {
+        Schema::create('infraestruturas', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('path');
-            $table->boolean('is_primary')->default(false);
+            $table->integer('conjunto_id');
+            $table->text('conjunto_nome'); 
+            $table->integer('ordem')->default(0);
+            $table->enum('tipo', ['texto', 'imagem']);
+            $table->text('conteudo'); // Caminho ou texto
             $table->timestamps();
+
         });
     }
 
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('infraestruturas');
     }
 };

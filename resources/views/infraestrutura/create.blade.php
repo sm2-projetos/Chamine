@@ -59,7 +59,7 @@
             display: flex;
             gap: 15px;
             justify-content: flex-end;
-            margin-top: 30px;
+            margin-top: 10px;
             padding-top: 20px;
             border-top: 1px solid #eee;
         }
@@ -103,81 +103,81 @@
 @include('layouts.sidebar')
 <body>
         <div class="container">
-    <h2>Cadastrar OS</h2>
+    <h2>Cadastrar Infraestrutura</h2>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-<form action="{{ route('os.store') }}" method="POST">
+<form method="POST" action="{{ route('infraestruturas.store') }}" enctype="multipart/form-data">
     @csrf
-    <input type="hidden" name="proposta_id" value="{{ $proposta->id }}">
-    <h3>{{ $proposta->numero_proposta }}</h3>
-    <div>
-        <label>Número do Projeto</label>
-        <input type="text" name="numero_projeto" class="form-control" required>
+    <div class="form-group">
+        <label for="conjunto_nome">Nome do Conjunto de Blocos</label>
+        <input type="text" id="conjunto_nome" name="conjunto_nome" class="form-control" required>
+    </div>
+    <div id="blocos">
+        <div class="bloco">
+        </div>
     </div>
 
-    <div>
-        <label>Número do Relatório de Análise</label>
-        <input type="text" name="numero_relatorio" class="form-control" required>
-    </div>
-
-    <div>
-        <label>Número do Plano de Amostragem</label>
-        <input type="text" name="numero_plano" class="form-control" required>
-    </div>
-
-    <div>
-        <label>Serviço</label>
-        <input type="text" name="servico" class="form-control" required>
-    </div>
-
-    <div>
-        <label>Data da Amostragem</label>
-        <input type="date" name="data_amostragem" class="form-control" required>
-    </div>
-
-    <div>
-        <label>Observação</label>
-        <textarea name="observacao" class="form-control"></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+    <button type="button" class="btn btn-dark" onclick="adicionarBloco()">+ Adicionar Mais Conteúdo</button>
+    <button type="submit" class="btn btn-primary">Salvar</button>
 </form>
 
 <script>
     let index = 1;
 
-    function adicionarBloco() {
-        const container = document.getElementById('blocos');
-        const bloco = document.createElement('div');
-        bloco.className = 'bloco';
+function adicionarBloco() {
+    const container = document.getElementById('blocos');
+    const bloco = document.createElement('div');
+    bloco.className = 'bloco-estrutura';
 
-        bloco.innerHTML = `
-            <select name="blocos[${index}][tipo]" onchange="alternarCampos(this)">
+    bloco.innerHTML = `
+        <div class="form-group">
+            <label for="tipo-${index}">Tipo do conteúdo</label>
+            <select name="blocos[${index}][tipo]" class="form-control" onchange="alternarCampos(this)">
                 <option value="texto">Texto</option>
                 <option value="imagem">Imagem</option>
             </select>
-            <textarea name="blocos[${index}][conteudo]" class="conteudo-texto"></textarea>
-            <input type="file" name="blocos[${index}][conteudo]" class="conteudo-imagem" style="display: none;">
-            <button type="button" onclick="removerBloco(this)">Remover</button>
-            <hr>
-        `;
+        </div>
 
-        container.appendChild(bloco);
-        index++;
-    }
+        <div class="form-group campo-texto">
+            <label for="conteudo-${index}">Conteúdo (Texto)</label>
+            <textarea name="blocos[${index}][conteudo]" class="form-control" rows="4"></textarea>
+        </div>
 
-    function alternarCampos(select) {
-        const bloco = select.parentElement;
-        bloco.querySelector('.conteudo-texto').style.display = select.value === 'texto' ? 'block' : 'none';
-        bloco.querySelector('.conteudo-imagem').style.display = select.value === 'imagem' ? 'block' : 'none';
-    }
+        <div class="form-group campo-imagem" style="display: none;">
+            <label for="imagem-${index}">Conteúdo (Imagem)</label>
+            <input type="file" name="blocos[${index}][conteudo]" class="form-control">
+        </div>
 
-    function removerBloco(botao) {
-        botao.parentElement.remove();
+        <div class="button-group">
+            <button type="button" class="btn btn-secondary" onclick="removerBloco(this)">Remover</button>
+        </div>
+        <hr>
+    `;
+
+    container.appendChild(bloco);
+    index++;
+}
+
+function alternarCampos(select) {
+    const bloco = select.closest('.bloco-estrutura');
+    const campoTexto = bloco.querySelector('.campo-texto');
+    const campoImagem = bloco.querySelector('.campo-imagem');
+
+    if (select.value === 'texto') {
+        campoTexto.style.display = 'block';
+        campoImagem.style.display = 'none';
+    } else {
+        campoTexto.style.display = 'none';
+        campoImagem.style.display = 'block';
     }
+}
+
+function removerBloco(button) {
+    button.closest('.bloco-estrutura').remove();
+}
 </script>
 
 </div>

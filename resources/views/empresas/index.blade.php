@@ -8,12 +8,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
     <link rel="stylesheet" href="{{ asset('css/empresas.css') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     @include('layouts.sidebar')
     <div class="main-content empresas-lista-container">
         <div class="table-lista-empresas">
             <h1>Lista de Empresas</h1>
+            <div class="d-flex justify-content-end mb-3">
+                <a href="{{ route('empresas.create') }}" class="btn btn-primary">Nova Empresa</a>
+            </div>
             @if(session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -26,6 +30,8 @@
                         <th>CNPJ</th>
                         <th>Endereço</th>
                         <th>Contato</th>
+                        <th>Email</th>
+                        <th>Telefone</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
@@ -35,7 +41,9 @@
                             <td>{{ $empresa->nome }}</td>
                             <td>{{ $empresa->cnpj }}</td>
                             <td>{{ $empresa->endereco }}</td>
-                            <td>{{ $empresa->contato }}</td>
+                            <td>{{ $empresa->nome_contato }}</td>
+                            <td>{{ $empresa->email }}</td>
+                            <td>{{ $empresa->telefone }}</td>
                             <td>
                                 <div class="action-buttons">
                                     <a href="{{ route('empresas.edit', $empresa->id) }}" class="btn-icon icon-edit" title="Editar">

@@ -9,14 +9,15 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('certificados', function (Blueprint $table) {
+        Schema::create('proposta_grupos', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('path');
-            $table->boolean('is_primary')->default(false);
+            $table->unsignedBigInteger('proposta_id');
+            $table->string('nome');
             $table->timestamps();
+
+            $table->foreign('proposta_id')->references('id')->on('propostas')->onDelete('cascade');
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('proposta_grupos');
     }
 };

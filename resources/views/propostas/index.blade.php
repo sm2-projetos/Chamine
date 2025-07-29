@@ -40,7 +40,6 @@
                     <thead>
                         <tr>
                             <th>#ID</th>
-                            <th>Cliente</th>
                             <th>Empresa</th>
                             <th>Status</th>
                             <th>Serviços</th>
@@ -52,55 +51,40 @@
                         @foreach($propostas as $proposta)
                         <tr>
                             <td>{{ $proposta->id }}</td>
-                            <td>{{ $proposta->id_cliente }}</td>
-                            <td>{{ $proposta->id_empresa }}</td>
+                            <td>{{ $proposta->nome_empresa }}</td>
                             <td>
                                 <span class="status-badge status-{{ strtolower(str_replace(' ', '-', $proposta->status)) }}">
                                     {{ $proposta->status }}
                                 </span>
                             </td>
-                            <td>
-                                @php
-                                $servicosCustos = $proposta->servicos_custos;
-                                @endphp
-                                @if(isset($servicosCustos['tableData']))
-                                <ul>
-                                    @foreach($servicosCustos['tableData'] as $servico)
-                                    <li>{{ $servico['descricao'] }} - <span class="proposta-valor">R$ {{ $servico['total'] }}</span></li>
-                                    @endforeach
-                                </ul>
-                                @endif
+                            <td class="proposta-servicos">
+                                {{ $proposta->descricoes_servicos ?? 'N/A' }}
                             </td>
                             <td class="proposta-valor">
-                                R$ {{ $servicosCustos['totalGeral'] ?? 'N/A' }}
+                                R$ {{ $proposta->soma_total_servicos ?? 'N/A' }},00
                             </td>
                             <td class="action-cell">
-                                @if($proposta->status == 'Aprovado')
-                                @if($proposta->os)
-                                    <a href="{{ route('os.form', $proposta->os->id) }}" class="btn btn-info">
-                                        <i class="fas fa-eye"></i> Ver OS
-                                    </a>
-                                @else
-                                    <span class="text-danger">OS não disponível</span>
-                                @endif
-                                <a href="{{ route('propostas.edit', $proposta->id) }}" class="btn btn-warning">
-                                    <i class="fas fa-edit"></i> Editar
-                                </a>
-                                <form action="{{ route('propostas.destroy', $proposta->id) }}" method="POST" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja cancelar esta proposta?')">
-                                        <i class="fas fa-times"></i> Cancelar
-                                    </button>
-                                </form>
-                                
-                                @elseif($proposta->status == 'Cancelado')
                                 <a href="{{ route('propostas.show', $proposta->id) }}" class="btn btn-info">
                                     <i class="fas fa-eye"></i> Ver
                                 </a>
-                                <a href="{{ route('propostas.edit', $proposta->id) }}" class="btn btn-warning">
-                                    <i class="fas fa-edit"></i> Editar
-                                </a>
+                                @if($proposta->status == 'Aprovado')
+                                    @if($proposta->possui_os == 0)
+                                        <a href="{{ route('os.criar', $proposta->id) }}" class="btn btn-info">
+                                            <i class="fas fa-eye"></i> Gerar OS
+                                        </a>
+                                    @endif
+                                        {{-- <a href="{{ route('os.form', $proposta->id) }}" class="btn btn-secondary">
+                                            <i class="fas fa-eye"></i> Ver Relatório
+                                        </a> --}}
+                                    <form action="{{ route('propostas.destroy', $proposta->id) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja cancelar esta proposta?')">
+                                            <i class="fas fa-times"></i> Cancelar
+                                        </button>
+                                    </form>
+                                
+                                @elseif($proposta->status == 'Cancelado')
                                 <form action="{{ route('propostas.destroy', $proposta->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
@@ -126,9 +110,6 @@
                                         <i class="fas fa-times"></i> Cancelar
                                     </button>
                                 </form>
-                                <a href="{{ route('propostas.edit', $proposta->id) }}" class="btn btn-warning">
-                                    <i class="fas fa-edit"></i> Editar
-                                </a>
                                 @endif
                             </td>
                         </tr>

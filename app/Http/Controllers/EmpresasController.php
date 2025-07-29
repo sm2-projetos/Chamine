@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
 use App\Models\ClienteEmpresa;
+use Intervention\Image\ImageManager;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver as GdDriver;
 
 class EmpresasController extends Controller
 {
@@ -14,30 +17,79 @@ class EmpresasController extends Controller
         return view('empresas.index', compact('empresas'));
     }
 
+    public function checkCnpj(Request $request)
+    {
+        $cnpj = $request->input('cnpj');
+
+        $dados = Empresa::where('cnpj', $cnpj)->first();
+
+        if ($dados) {
+            return response()->json($dados);
+        } else {
+            return response()->json(['message' => 'Empresa não encontrada.'], 404);
+        }
+    }
+
+
     public function create()
     {
         return view('empresas.create');
     }
     public function store(Request $request)
     {
-        $empresaNome = $request->input('empresa_nome');
-        $empresaCnpj = $request->input('empresa_cnpj');
-        $empresaEndereco = $request->input('empresa_endereco');
-        $empresaContato = $request->input('empresa_contato');
+        $nome = $request->input('nome');
+        $cnpj = $request->input('cnpj');
+        $endereco = $request->input('endereco');
+        $email = $request->input('email');
+        $cep = $request->input('cep');
+        $cidade_estado = $request->input('cidade_estado');
+        $cep = $cep . ' - ' . $cidade_estado;
+        $telefone = $request->input('telefone');
+        $nome_contato = $request->input('nome_contato');
+        $email_contato = $request->input('email_contato');
+        $telefone_contato = $request->input('telefone_contato');
 
         $request->validate([
-            'empresa_nome' => 'nullable|string|max:255',
-            'empresa_cnpj' => 'nullable|string|max:20',
-            'empresa_endereco' => 'nullable|string|max:255',
-            'empresa_contato' => 'nullable|string|max:100',
+            'nome' => 'required|string|max:255',
+            'cnpj' => 'nullable|string|max:20',
+            'endereco' => 'nullable|string|max:255',
+            'cep' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:200',
+            'telefone' => 'nullable|string|max:45',
+            'nome_contato' => 'nullable|string|max:80',
+            'email_contato' => 'nullable|email|max:200',
+            'telefone_contato' => 'nullable|string|max:45',
         ]);
 
         $empresa = Empresa::create([
-            'nome' => $empresaNome,
-            'cnpj' => $empresaCnpj ?? null,
-            'endereco' => $empresaEndereco ?? null,
-            'contato' => $empresaContato ?? null,
+            'nome' => $nome,
+            'cnpj' => $cnpj,
+            'endereco' => $endereco,
+            'cep' => $cep,
+            'email' => $email,
+            'telefone' => $telefone,
+            'nome_contato' => $nome_contato,
+            'email_contato' => $email_contato,
+            'telefone_contato' => $telefone_contato,
         ]);
+
+        if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
+            $path = "public/imagens/empresa";
+
+            if (!file_exists($path)) {
+                mkdir($path, 0777, true);
+            }
+            $path =  "public/imagens/empresa/empresa-{$empresa->id}.png";
+            $imageManager = new ImageManager(new GdDriver());
+
+            // Converte e salva como PNG
+            $image = $imageManager
+                ->read($request->file('logo')->getPathname())
+                ->toPng();
+
+            Storage::put($path, (string) $image);
+
+        }
 
         return redirect()->route('empresas.index')->with('success', 'Empresa cadastrada com sucesso!');
     }
@@ -54,10 +106,14 @@ class EmpresasController extends Controller
         // Validação dos dados
         $request->validate([
             'nome' => 'required|string|max:255',
-            'cnpj' => 'required|string|max:20',
-            'endereco' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'telefone' => 'required|string|max:20',
+            'cnpj' => 'nullable|string|max:20',
+            'endereco' => 'nullable|string|max:255',
+            'cep' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:200',
+            'telefone' => 'nullable|string|max:45',
+            'nome_contato' => 'nullable|string|max:80',
+            'email_contato' => 'nullable|email|max:200',
+            'telefone_contato' => 'nullable|string|max:45',
         ]);
 
         // Atualização da empresa
@@ -66,9 +122,12 @@ class EmpresasController extends Controller
             'nome' => $request->input('nome'),
             'cnpj' => $request->input('cnpj'),
             'endereco' => $request->input('endereco'),
+            'cep' => $request->input('cep'),
             'email' => $request->input('email'),
-            'contato' => $request->input('telefone'), // Compatibilidade com campo existente
             'telefone' => $request->input('telefone'),
+            'contato' => $request->input('nome_contato'),
+            'email_contato' => $request->input('email_contato'),
+            'telefone_contato' => $request->input('telefone_contato'),
         ]);
 
         return redirect()->route('empresas.index')->with('success', 'Empresa atualizada com sucesso!');
