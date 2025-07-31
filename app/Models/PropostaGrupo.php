@@ -23,6 +23,6 @@ class PropostaGrupo extends Model
 
     public function metodologias()
     {
-        return $this->hasMany(PropostaMetodologia::class, 'grupo_id');
+        return $this->hasMany(Metodologia::class, 'grupo_id');
     }
 }

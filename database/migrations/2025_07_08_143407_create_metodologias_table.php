@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('proposta_metodologias', function (Blueprint $table) {
+        Schema::create('metodologias', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('grupo_id');
             $table->string('nome');

@@ -15,7 +15,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class OSController extends Controller
 {
     public function index(){
-        $os = OS::all();
+        $os = OS::orderByDesc('id')->get();
         return view('os.index', compact('os'));
     }
     public function create($id)

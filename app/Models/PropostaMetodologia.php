@@ -2,23 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PropostaMetodologia extends Model
 {
-    use HasFactory;
-
-    protected $table = 'proposta_metodologias';
+    protected $table = 'proposta_metodologia';
 
     protected $fillable = [
-        'grupo_id',
-        'nome',
-        'acreditado'
+        'proposta_id',
+        'metodologia_id',
     ];
 
-    public function grupo()
+    public function proposta()
     {
-        return $this->belongsTo(PropostaGrupo::class, 'grupo_id');
+        return $this->belongsTo(Proposta::class);
+    }
+
+    public function metodologia()
+    {
+        return $this->belongsTo(Metodologia::class);
     }
 }

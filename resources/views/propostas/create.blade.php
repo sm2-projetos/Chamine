@@ -384,10 +384,10 @@ gases das fontes de emissão.
         <br>
         <br>
         
-        <div class="obs-container">
+        {{-- <div class="obs-container">
             <h3>Observações:</h3>
             <textarea class="form-control" name="observacoes" placeholder="Digite suas observações aqui..."></textarea>
-        </div>
+        </div> --}}
 
         <div class="button-group">
             <button class="btn btn-secondary" type="submit" onclick="setStatus('Cancelado')">Cancelar</button>

@@ -65,6 +65,7 @@ class Proposta extends Model
             ->when($status, function ($query) use ($status) {
                 $query->where('status', $status);
             })
+            ->orderByDesc('id')
             ->get()
             ->map(function ($proposta) {
                 // Soma dos valores 'total'

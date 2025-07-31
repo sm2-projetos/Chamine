@@ -4,10 +4,12 @@
     <title>Proposta de Prestação de Serviço</title>
     <style>
         body {
-                font-family: DejaVu Sans, sans-serif;
-                font-size: 11px;
+                font-family: Arial, sans-serif;
+                font-size: 10px;
                 line-height: 1.1;
                 margin: 1px;
+                margin: 10px; /* ou 0, ou o valor que desejar */
+                padding: 0
             }
 
             .header {
@@ -282,7 +284,7 @@
         {{$proposta->propostatxt}}
     </div>
     {{-- page 1 acima --}}
-
+    <div class="page-break"></div>
     <!-- Página 2 -->
     <table class="top-header-table" style="width: 100%;">
             <tr>
@@ -382,21 +384,7 @@
         <table style="width: 100%; margin-bottom: 20px;">
             <tr>
                 <td style="width: 40%;">
-                    {{-- @php
-                    $path = storage_path('app/public/imagens/equipamento/' . $equipamento['filename']);
-
-                    // Converter para caminho URI compatível:
-                    $path = str_replace('\\', '/', $path); // barras para frente
-                    $path = 'file:///' . $path;
-                    @endphp --}}
-                    {{-- <img src="{{ public_path('storage/imagens/equipamento/' . $equipamento['filename']) }}" alt="Equipamento" style="width: 100%; max-width: 200px;"> --}}
-                     <img src="{{ public_path('storage/imagens/equipamento/' . $equipamento['filename']) }}" alt="Equipamento" style="width: 100%; max-width: 200px;">
-                   
-                        {{-- <img src="{{ $path }}" style="max-width:200px;" />
-                        <h2>{{$equipamento['filename']}}</h2>
-                        <h2>{{$path}}</h2> --}}
-                        {{-- <img src="{{ public_path('storage/imagens/equipamento/' . $equipamento['filename']) }}" alt="Equipamento" style="width: 100%; max-width: 200px;"> --}}
-                    
+                   <img src="{{ public_path('storage/imagens/equipamento/' . $equipamento['filename']) }}" alt="Equipamento" style="width: 100%; max-width: 200px;">
                 </td>
                 <td style="vertical-align: top; padding-left: 10px;">
                     <p style="font-weight: bold; margin: 0;">{{ $equipamento['nome'] }}</p>
@@ -416,7 +404,11 @@
     @foreach (collect($proposta->infraestruturas_detalhes)->sortBy('ordem') as $infraestrutura_conjuntos)
         @foreach ($infraestrutura_conjuntos as $infraestrutura)
             @if ($infraestrutura['tipo'] === 'imagem')
-                            <img src="{{ public_path('storage/' . $infraestrutura['conteudo']) }}" alt="Infraestrutura Imagem" style="width: 100%; max-width: 200px;">
+              <div style="width: 45%; page-break-inside: avoid;">
+                    <img src="{{ public_path('storage/' . $infraestrutura['conteudo']) }}"
+                         alt="Infraestrutura Imagem"
+                         style="width: 100%; max-height: 240px; object-fit: contain; display: block; margin-bottom: 10px;">
+                </div>
             @elseif ($infraestrutura['tipo'] === 'texto')
                 <p style="margin-bottom: 20px;">{!! nl2br(e($infraestrutura['conteudo'])) !!}</p>
             @endif
@@ -554,59 +546,113 @@
                 </td>
                 <td style="width: 30%;">PROPOSTA DE PRESTAÇÃO DE SERVIÇO</td>
                 <td style="width: 20%; text-align: right;">
-                    FOR 16 Revisão: 06<br>
+                    FOR 17 Revisão: 03<br>
                     <strong>Página: 5/5</strong>
                 </td>
             </tr>
         </table>
 
-<div class="section">
-    <strong>AUTORIZAÇÃO DE SERVIÇOS</strong><br><br>
-    Nº da Proposta enviada: _______________________________________<br><br>
-    Enviar autorização de serviços para o e-mail: <strong>chaminesolucoes@chaminesolucoes.com.br</strong><br><br>
-    <strong>Dados Cadastrais:</strong><br>
-    Chaminé Soluções em Monitoramento Ambiental Ltda<br>
-    Rua João Gualberto dos Santos 151, Céu Azul, CEP: 31748-492, Belo Horizonte / MG<br>
-    CNPJ: 11.407.678/0001-00 — Inscrição Estadual: Isento
-</div>
+<style>
+    table.autorizacao {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-<div class="section">
-    <strong>Fatura ou cobrança deve ser emitida para</strong><br>
-    Razão Social: ___________________________________________<br>
-    Endereço: ______________________________________________<br>
-    Bairro: _________________________________________________<br>
-    Cidade: ____________________ Estado: ________ CEP: ___________<br>
-    CNPJ/CPF: _______________________ IE: ___________________<br>
-    Fone: _____________________ Fax: _______________________<br>
-    E-mail: _________________________________________________<br>
-    Nome Completo de quem receberá a cobrança/fatura: __________________________
-</div>
+    table.autorizacao td, table.autorizacao th {
+        padding: 5px;
+        vertical-align: top;
+    }
 
-<div class="section">
-    <strong>Relatório deve ser emitido para</strong><br>
-    Razão Social: ___________________________________________<br>
-    Endereço: ______________________________________________<br>
-    Bairro: _________________________________________________<br>
-    Cidade: ____________________ Estado: ________ CEP: ___________<br>
-    CNPJ/CPF: _______________________ IE: ___________________<br>
-    Nome Completo de quem receberá o relatório: __________________________<br>
-    Departamento: ___________________________________________<br>
-    Nome Completo do contato técnico: _________________________<br>
-    Departamento: ___________________________________________<br>
-    Fone: ___________________________________________
-</div>
+    .titulo {
+        font-weight: bold;
+        background-color: #f0f0f0;
+        padding: 10px;
+    }
 
-<div class="section">
-    <strong>Autorizo a realização de todos os serviços da proposta em referência</strong><br>
-    (     ) SIM  (     ) NÃO<br><br>
-    Observações: ___________________________________________________________<br><br><br>
+    .espaco {
+        height: 20px;
+    }
+</style>
 
-    ___/___/______<br><br>
-    ___________________________________________<br>
-    ASSINATURA<br><br>
-    ___________________________________________<br>
-    CARIMBO
-</div>
+<table class="autorizacao">
+    <tr><td class="titulo" colspan="3">AUTORIZAÇÃO DE SERVIÇOS</td></tr>
+    <tr><td colspan="3">Nº da Proposta enviada:</td></tr>
+    <tr><td colspan="3">Enviar autorização de serviços para o e-mail: <strong>chaminesolucoes@chaminesolucoes.com.br</strong></td></tr>
+    <tr>
+        <td colspan="3">
+            <strong>Dados Cadastrais:</strong>Chaminé Soluções em Monitoramento Ambiental Ltda<br>
+            Rua João Gualberto dos Santos 151, Céu Azul, CEP: 31748-492, Belo Horizonte / MG<br>
+            CNPJ: 11.407.678/0001-00 — Inscrição Estadual: Isento
+        </td>
+    </tr>
+    <tr><td class="titulo" colspan="3">Fatura ou cobrança deve ser emitida para</td></tr>
+    <tr><td colspan="3">Razão Social:</td></tr>
+    <tr><td colspan="3">Endereço:</td></tr>
+    <tr><td colspan="3">Bairro:</td></tr>
+    <tr>
+        <td style="width: 50%;">Cidade:</td>
+        <td style="width: 25%;">Estado:</td>
+        <td style="width: 25%;">CEP:</td>
+    </tr>
+    <tr>
+        <td style="width: 50%;">CNPJ/CPF:</td>
+        <td style="width: 50%;" colspan="2">IE:</td>
+    </tr>
+    <tr>
+        <td style="width: 50%;" colspan="2">Fone:</td>
+        <td style="width: 50%;">Fax:</td>
+    </tr>
+    <tr>
+        <td colspan="3">E-mail:</td>
+    </tr>
+    <tr>
+        <td colspan="3">Nome Completo de quem receberá a cobrança/fatura: </td>
+    </tr>
+    <tr><td class="titulo" colspan="3">Relatório deve ser emitido para</td></tr>
+    <tr><td colspan="3">Razão Social: </td></tr>
+    <tr><td colspan="3">Endereço: </td></tr>
+    <tr><td colspan="3">Bairro: </td></tr>
+    <tr>
+        <td style="width: 50%;">Cidade: </td>
+        <td style="width: 25%;">Estado: </td>
+        <td style="width: 25%;">CEP: </td>
+    </tr>
+    <tr>
+        <td style="width: 50%;">CNPJ/CPF:</td>
+        <td style="width: 50%;" colspan="2">IE:</td>
+    </tr>
+    <tr><td colspan="3">Nome Completo de quem receberá o relatório:</td></tr>
+    <tr><td colspan="3">Departamento:</td></tr>
+    <tr><td colspan="3">Nome Completo do contato técnico:</td></tr>
+    <tr><td colspan="3">Departamento:</td></tr>
+    <tr><td colspan="3">Fone:</td></tr>
+    <tr><td class="titulo" colspan="3">Autorização</td></tr>
+    <tr>
+        <td colspan="3">
+            Autorizo a realização de todos os serviços da proposta em referência<br>
+        </td>
+    </tr>
+    <tr>
+        <td style="width: 50%;">(     ) SIM</td>
+        <td style="width: 50%;" colspan="2">(     ) NÃO</td>
+    </tr>
+    <tr>
+        <td colspan="3">Observações:<br><br><br></td>
+    </tr>
+    <tr>
+        <td style="text-align: center;">
+            <br><br><br>___/___/______<br>DATA
+        </td>
+        <td style="text-align: center;">
+            <br><br><br>___________________________________________<br>ASSINATURA
+        </td>
+        <td style="text-align: center;">
+            <br><br><br>___________________________________________<br>CARIMBO
+        </td>
+    </tr>
+
+</table>
+
 
 </body>
 </html>

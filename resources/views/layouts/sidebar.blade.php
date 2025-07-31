@@ -39,10 +39,10 @@
             <i class="fas fa-home"></i>
             Dashboard
         </a>
-        <a href="{{ route('propostas.create') }}" class="menu-item">
+        {{-- <a href="{{ route('propostas.create') }}" class="menu-item">
             <i class="fas fa-file-contract"></i>
             Criar Proposta Comercial
-        </a>
+        </a> --}}
         <a href="{{ route('documents.form')}}" class="menu-item">
             <i class="fas fa-file-alt"></i>
             Relatórios
@@ -74,6 +74,10 @@
         <a href="{{ route('infraestruturas.create') }}" class="menu-item">
             <i class="fas fa-user-plus"></i>
             Infraestrutura
+        </a>
+        <a href="{{ route('metodologias.index') }}" class="menu-item">
+            <i class="fas fa-user-plus"></i>
+            Metodologia
         </a>
 
         {{-- <a href="{{ route('clientes.index') }}" class="menu-item">

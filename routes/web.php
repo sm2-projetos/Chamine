@@ -15,8 +15,9 @@ use App\Http\Controllers\SalvarImagensController;
 use App\Http\Controllers\LegislacaoController;
 use App\Http\Controllers\EquipamentoController;
 use App\Http\Controllers\InfraestruturaController;
+use App\Http\Controllers\MetodologiaController;
 use App\Models\Infraestrutura;
-
+use App\Models\Metodologia;
 
 Route::get('/formulario', function () {
     return view('formulario');
@@ -111,6 +112,13 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/infraestruturas/create', [InfraestruturaController::class, 'create'])->name('infraestruturas.create');
     Route::post('/infraestruturas', [InfraestruturaController::class, 'store'])->name('infraestruturas.store');
+
+    Route::get('/metodologias/create', [MetodologiaController::class, 'create'])->name('metodologias.create');
+    Route::post('/metodologias/store', [MetodologiaController::class, 'store'])->name('metodologias.store');
+    Route::get('/metodologias', [MetodologiaController::class, 'index'])->name('metodologias.index');
+
+    
+    
 });
 
     // Route::post('/salvar-imagens', [SalvarImagensController::class, 'salvar']);

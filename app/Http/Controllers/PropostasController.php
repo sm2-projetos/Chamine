@@ -176,8 +176,7 @@ class PropostasController extends Controller
         $proposta = Proposta::findOrFail($id);
         $proposta->update($request->all());
 
-
-        return redirect()->route('propostas.index')
-                         ->with('success', 'Proposta atualizada com sucesso!');
+        return redirect()->route('os.criar', ['id' => $id])
+                        ->with('success', 'Proposta atualizada com sucesso!');
     }
 }
